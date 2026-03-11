@@ -69,9 +69,9 @@ export function HamburgerMenu() {
                 <a
                   href={link.url}
                   onClick={() => setIsOpen(false)}
-                  className="block text-[var(--lightest-slate)] hover:text-[var(--green)] transition-colors text-[var(--fz-lg)] p-[10px]"
+                  className="block text-[var(--lightest-slate)] hover:text-[var(--green)] transition-colors text-[18px] p-[10px]"
                 >
-                  <span className="block text-[var(--green)] text-[var(--fz-sm)] mb-[5px]">
+                  <span className="block text-[var(--green)] text-[14px] mb-[5px]">
                     {`0${i + 1}.`}
                   </span>
                   {link.name}
@@ -81,7 +81,7 @@ export function HamburgerMenu() {
           </ol>
           <a
             href="/resume.pdf"
-            className="outline-button py-[18px] px-[50px] text-[var(--fz-sm)]"
+            className="outline-button py-[18px] px-[50px]"
             target="_blank"
             rel="noreferrer"
           >

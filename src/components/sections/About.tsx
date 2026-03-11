@@ -1,13 +1,13 @@
-import Image from 'next/image';
-
 export function About() {
   const skills = [
     'JavaScript (ES6+)',
     'TypeScript',
+    'Angular',
     'React',
-    'Eleventy',
     'Node.js',
-    'WordPress',
+    'Python',
+    'Firebase',
+    'Selenium',
   ];
 
   return (
@@ -17,49 +17,40 @@ export function About() {
       <div className="grid grid-cols-[3fr_2fr] gap-[50px]">
         {/* Text Column */}
         <div>
-          <div className="text-[var(--slate)] text-[var(--fz-xl)] space-y-4">
+          <div className="text-[var(--slate)] text-[20px] space-y-4">
             <p>
-              Hello! My name is Brittany and I enjoy creating things that live on the internet. My
-              interest in web development started back in 2012 when I decided to try editing custom
-              Tumblr themes — turns out hacking together a custom reblog button taught me a lot about
-              HTML &amp; CSS!
+              Hello! My name is Gal and I&apos;m a fullstack developer and tech lead based in Tel Aviv.
+              With a background in military leadership as an officer and company commander in the
+              Israeli Air Force, I bring strong strategic thinking and team management skills to
+              every project I work on.
             </p>
             <p>
-              Fast-forward to today, and I&apos;ve had the privilege of working at{' '}
-              <a href="https://us.mullenlowe.com/" className="inline-link" target="_blank" rel="noreferrer">
-                an advertising agency
+              I&apos;ve had the privilege of working across startups in Israel and Australia, from{' '}
+              <a href="https://www.lagoonads.com/" className="inline-link" target="_blank" rel="noreferrer">
+                affiliate marketing platforms
               </a>
-              ,{' '}
-              <a href="https://starry.com/" className="inline-link" target="_blank" rel="noreferrer">
-                a start-up
+              {' '}to{' '}
+              <a href="#" className="inline-link" target="_blank" rel="noreferrer">
+                CRM systems
               </a>
-              ,{' '}
-              <a href="https://www.apple.com/" className="inline-link" target="_blank" rel="noreferrer">
-                a huge corporation
+              {' '}to{' '}
+              <a href="#" className="inline-link" target="_blank" rel="noreferrer">
+                QA automation
               </a>
-              , and{' '}
-              <a href="https://www.upstatement.com/" className="inline-link" target="_blank" rel="noreferrer">
-                a student-led design studio
+              . My main focus these days is leading the development of an affiliate marketing CRM
+              system at{' '}
+              <a href="https://www.lagoonads.com/" className="inline-link" target="_blank" rel="noreferrer">
+                Lagoonads
               </a>
-              . My main focus these days is building accessible, inclusive products and digital
-              experiences at{' '}
-              <a href="https://www.upstatement.com/" className="inline-link" target="_blank" rel="noreferrer">
-                Upstatement
-              </a>{' '}
-              for a variety of clients.
+              .
             </p>
             <p>
-              I also recently{' '}
-              <a
-                href="https://www.newline.co/courses/build-a-spotify-connected-app"
-                className="inline-link"
-                target="_blank"
-                rel="noreferrer"
-              >
-                launched a course
+              Outside of work, I&apos;m passionate about surfing, extreme sports, traveling, and
+              volunteering — I&apos;ve been teaching youth at risk how to surf with{' '}
+              <a href="#" className="inline-link" target="_blank" rel="noreferrer">
+                My Wave
               </a>{' '}
-              that covers everything you need to build a web app with the Spotify API using Node &amp;
-              React.
+              since 2020.
             </p>
           </div>
 
@@ -69,7 +60,7 @@ export function About() {
             {skills.map((skill) => (
               <li
                 key={skill}
-                className="relative pl-[30px] mb-[10px] font-mono text-[var(--fz-xs)] text-[var(--slate)] before:content-['▹'] before:absolute before:left-0 before:text-[var(--green)] before:text-[var(--fz-sm)] before:leading-[20px]"
+                className="relative pl-[30px] mb-[10px] font-mono text-[13px] text-[var(--slate)] before:content-['▹'] before:absolute before:left-0 before:text-[var(--green)] before:text-[14px] before:leading-[20px]"
               >
                 {skill}
               </li>
@@ -79,21 +70,22 @@ export function About() {
 
         {/* Photo Column */}
         <div className="relative max-w-[300px]">
-          <div className="relative group block">
+          <div className="relative group block w-full aspect-square">
             {/* Green border offset box */}
             <div
-              className="absolute -inset-0 top-[15px] left-[15px] border-2 border-[var(--green)] rounded z-[-1] transition-all duration-250 ease-custom group-hover:top-[10px] group-hover:left-[10px]"
+              className="absolute top-[15px] left-[15px] w-full h-full border-2 border-[var(--green)] rounded transition-all duration-250 ease-custom group-hover:top-[10px] group-hover:left-[10px]"
             />
-            {/* Image with overlay */}
-            <div className="relative rounded overflow-hidden">
-              <div className="absolute inset-0 bg-[var(--green-tint)] mix-blend-screen z-10 transition-all duration-250 ease-custom group-hover:bg-transparent" />
-              <Image
-                src="/images/profile.jpg"
+            {/* Image with green tint overlay */}
+            <div className="relative rounded overflow-hidden w-full h-full">
+              {/* Green tint overlay */}
+              <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-40 transition-all duration-250 ease-custom group-hover:opacity-0" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/profile.svg"
                 alt="Headshot"
                 width={300}
                 height={300}
-                className="relative rounded w-full grayscale contrast-100 transition-all duration-250 ease-custom group-hover:grayscale-0 group-hover:mix-blend-normal"
-                priority={false}
+                className="relative rounded w-full h-full object-cover filter grayscale contrast-[1] brightness-90 transition-all duration-250 ease-custom group-hover:grayscale-0 group-hover:brightness-100"
               />
             </div>
           </div>

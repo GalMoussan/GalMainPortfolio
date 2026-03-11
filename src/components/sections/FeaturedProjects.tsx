@@ -28,9 +28,12 @@ export function FeaturedProjects() {
                   className="relative block w-full h-full rounded bg-[var(--green)] group"
                 >
                   <div className="absolute inset-0 bg-[var(--navy)] opacity-60 z-10 rounded transition-opacity duration-250 ease-custom group-hover:opacity-0" />
-                  <div className="w-full h-[350px] bg-[var(--light-navy)] rounded flex items-center justify-center text-[var(--slate)] font-mono text-[var(--fz-xs)]">
-                    {project.title}
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-[350px] object-cover rounded bg-[var(--light-navy)]"
+                  />
                 </a>
               </div>
 
@@ -40,7 +43,7 @@ export function FeaturedProjects() {
                   isOdd ? 'col-start-7 text-right' : 'col-start-1 text-left'
                 } row-start-1 z-10`}
               >
-                <p className="font-mono text-[var(--green)] text-[var(--fz-xs)] mb-[10px]">
+                <p className="font-mono text-[var(--green)] text-[13px] mb-[10px]">
                   Featured Project
                 </p>
                 <h3 className="text-[28px] font-semibold text-[var(--lightest-slate)] mb-5">
@@ -48,11 +51,11 @@ export function FeaturedProjects() {
                     {project.title}
                   </a>
                 </h3>
-                <div className="relative p-[25px] rounded bg-[var(--light-navy)] text-[var(--light-slate)] text-[var(--fz-lg)] shadow-navy">
+                <div className="relative p-[25px] rounded bg-[var(--light-navy)] text-[var(--light-slate)] text-[18px] shadow-navy">
                   <p>{project.description}</p>
                 </div>
                 <ul
-                  className={`flex flex-wrap gap-x-5 gap-y-[5px] list-none p-0 mt-[25px] mb-[10px] font-mono text-[var(--fz-xs)] text-[var(--light-slate)] ${
+                  className={`flex flex-wrap gap-x-5 gap-y-[5px] list-none p-0 mt-[25px] mb-[10px] font-mono text-[13px] text-[var(--light-slate)] ${
                     isOdd ? 'justify-end' : 'justify-start'
                   }`}
                 >

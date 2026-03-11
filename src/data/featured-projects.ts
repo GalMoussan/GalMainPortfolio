@@ -9,29 +9,24 @@ export interface FeaturedProject {
 
 export const featuredProjects: FeaturedProject[] = [
   {
-    title: 'Halcyon Theme',
+    title: 'Lagoonads CRM',
     description:
-      'A minimal, dark blue theme for VS Code, Sublime Text, Atom, iTerm, and more currently available on Visual Studio Marketplace, Package Control, Atom Package Manager, and npm.',
-    tech: ['VS Code', 'Sublime Text', 'Atom', 'iTerm2', 'Hyper'],
-    github: 'https://github.com/bchiang7/halcyon-site',
-    external: 'https://halcyon-theme.netlify.com/',
-    image: '/images/halcyon.png',
+      'A comprehensive affiliate marketing CRM system built for managing campaigns, tracking performance, and handling affiliate relationships. Features real-time dashboards, reporting tools, and multi-role user management.',
+    tech: ['Angular', 'Node.js', 'TypeScript', 'REST API'],
+    image: '/images/halcyon.svg',
   },
   {
-    title: 'Spotify Profile',
+    title: '121Brokers CRM',
     description:
-      'A web app for visualizing personalized Spotify data. View your top artists, top tracks, recently played tracks, and detailed audio information about each track. Create and save new playlists of recommended tracks based on your existing playlists and more.',
-    tech: ['React', 'Styled Components', 'Express', 'Spotify API', 'Heroku'],
-    github: 'https://github.com/bchiang7/spotify-profile',
-    external: 'https://spotify-profile.herokuapp.com/',
-    image: '/images/spotify.png',
+      'A full-featured CRM platform with three distinct user interfaces for brokers, managers, and administrators. Built to handle complex financial workflows, client management, and real-time data synchronization.',
+    tech: ['Angular', 'Node.js', 'Firebase', 'TypeScript'],
+    image: '/images/spotify.svg',
   },
   {
-    title: 'Build a Spotify Connected App',
+    title: 'QA Automation Framework',
     description:
-      'Having struggled myself with Spotify\'s developer documentation, I wanted to build a comprehensive course to help other developers make sense of the API and its many endpoints. This course takes a hands-on approach, walking viewers through building a full-stack Spotify connected app.',
-    tech: ['React', 'Express', 'Spotify API', 'Styled Components'],
-    external: 'https://www.newline.co/courses/build-a-spotify-connected-app',
-    image: '/images/course.png',
+      'Led the migration of manual QA processes to a fully automated testing pipeline at Netlinkz. Built a robust framework that dramatically reduced regression testing time and improved deployment confidence.',
+    tech: ['Selenium', 'TestNG', 'JavaScript', 'Node.js'],
+    image: '/images/course.svg',
   },
 ];

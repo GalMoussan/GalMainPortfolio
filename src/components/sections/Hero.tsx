@@ -17,32 +17,30 @@ export function Hero() {
   }, [prefersReducedMotion]);
 
   const items = [
-    <p key="1" className="mb-[30px] ml-[4px] font-mono text-[var(--green)] text-[var(--fz-md)]">
+    <p key="1" className="mb-[30px] ml-[4px] font-mono text-[var(--green)] text-[16px]">
       Hi, my name is
     </p>,
     <h2 key="2" className="text-[clamp(40px,8vw,80px)] font-semibold text-[var(--lightest-slate)] leading-[1.1] m-0">
-      Brittany Chiang.
+      Gal Moussan.
     </h2>,
     <h3 key="3" className="text-[clamp(40px,8vw,80px)] font-semibold text-[var(--slate)] leading-[1.1] mt-[10px]">
       I build things for the web.
     </h3>,
-    <p key="4" className="mt-5 max-w-[540px] text-[var(--slate)] text-[var(--fz-xl)]">
-      I&apos;m a software engineer specializing in building (and occasionally designing) exceptional
-      digital experiences. Currently, I&apos;m focused on building accessible, human-centered products
-      at{' '}
-      <a href="https://www.upstatement.com/" className="inline-link" target="_blank" rel="noreferrer">
-        Upstatement
+    <p key="4" className="mt-5 max-w-[540px] text-[var(--slate)] text-[20px]">
+      I&apos;m a fullstack developer and tech lead with a background in military leadership,
+      specializing in building CRM systems and web applications. Currently, I&apos;m leading
+      development at{' '}
+      <a href="https://www.lagoonads.com/" className="inline-link" target="_blank" rel="noreferrer">
+        Lagoonads
       </a>
       .
     </p>,
     <div key="5" className="mt-[50px]">
       <a
-        href="https://www.newline.co/courses/build-a-spotify-connected-app"
-        className="outline-button inline-block py-5 px-7 text-[var(--fz-sm)] leading-[1]"
-        target="_blank"
-        rel="noreferrer"
+        href="mailto:galmoussan@gmail.com"
+        className="outline-button inline-block py-5 px-7 leading-[1]"
       >
-        Check out my course!
+        Get In Touch
       </a>
     </div>,
   ];

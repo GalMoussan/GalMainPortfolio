@@ -8,50 +8,59 @@ export interface OtherProject {
 
 export const otherProjects: OtherProject[] = [
   {
-    title: 'Integrating Algolia Search with WordPress Multisite',
+    title: 'VeracityAds Affiliate Platform',
     description:
-      'Building a custom multisite compatible WordPress plugin to add Algolia instant search functionality to flavor network flavor profiles and recipe content.',
-    tech: ['Algolia', 'WordPress', 'PHP'],
-    github: 'https://github.com/bchiang7',
-    external: 'https://example.com',
+      'Built and optimized a full-stack affiliate marketing CRM system with campaign management, analytics dashboards, and real-time reporting capabilities.',
+    tech: ['React', 'Python', 'Node.js'],
+    github: 'https://github.com/galmoussan',
   },
   {
-    title: 'Time to Have More Fun',
+    title: 'Tarific-Digital Websites',
     description:
-      'A single page web app for helping me decide what to do when I have mass amounts of free time. Uses the Bored API to generate random activities.',
-    tech: ['Next.js', 'Tailwind CSS', 'Firebase'],
-    github: 'https://github.com/bchiang7',
-    external: 'https://example.com',
+      'Designed and maintained multiple client-facing websites with responsive layouts, modern UI patterns, and optimized performance.',
+    tech: ['React', 'Node.js', 'CSS'],
+    github: 'https://github.com/galmoussan',
   },
   {
-    title: 'Building a Headless Mobile App CMS From Scratch',
+    title: 'My Wave Volunteer Platform',
     description:
-      'Find movies, TV shows and celebrities. Rate your favorites and create custom watchlists, all while managing your content in a powerful CMS.',
-    tech: ['Node', 'Express', 'Firebase', 'Vue'],
-    github: 'https://github.com/bchiang7',
+      'A web presence for the My Wave surf therapy program, teaching youth at risk how to surf and handle life challenges through ocean therapy.',
+    tech: ['React', 'Tailwind CSS', 'Firebase'],
+    github: 'https://github.com/galmoussan',
   },
   {
-    title: 'OctoProfile',
+    title: 'Heroes for Life Community Portal',
     description:
-      'A nicer look at your GitHub profile and repo stats. Includes data visualizations of your top languages, starred repositories, and sort through your top repos by number of stars, forks, and size.',
-    tech: ['Next.js', 'Chart.js', 'GitHub API'],
-    github: 'https://github.com/bchiang7/octoprofile',
-    external: 'https://octoprofile.now.sh',
+      'Community service coordination platform for backpacker volunteers providing school tutoring in developing countries around the world.',
+    tech: ['Node.js', 'Express', 'MongoDB'],
+    github: 'https://github.com/galmoussan',
   },
   {
-    title: 'Google Keep Clone',
+    title: 'Automated Test Dashboard',
     description:
-      'A simple Google Keep clone built with Vue and Firebase. Includes features such as notes, checklists, and reminders.',
-    tech: ['Vue', 'Firebase'],
-    github: 'https://github.com/bchiang7',
-    external: 'https://example.com',
+      'A real-time dashboard for monitoring automated test runs, displaying pass/fail rates, execution times, and historical trends across test suites.',
+    tech: ['JavaScript', 'Selenium', 'Chart.js'],
+    github: 'https://github.com/galmoussan',
   },
   {
-    title: 'Apple Music Embeddable Web Player Widget',
+    title: 'Campaign Analytics Tool',
     description:
-      'Embeddable web player widget for Apple Music that lets users search for and bytes preview songs, albums, and artists. Built for the MusicKit JS framework.',
-    tech: ['MusicKit.js', 'JS', 'SCSS'],
-    github: 'https://github.com/bchiang7',
-    external: 'https://example.com',
+      'A lightweight analytics tool for tracking affiliate campaign performance metrics, ROI calculations, and conversion funnels.',
+    tech: ['Angular', 'TypeScript', 'D3.js'],
+    github: 'https://github.com/galmoussan',
+  },
+  {
+    title: 'Portfolio Website',
+    description:
+      'This very portfolio site — a pixel-perfect clone of a popular developer portfolio design, built with Next.js and Tailwind CSS.',
+    tech: ['Next.js', 'Tailwind CSS', 'TypeScript'],
+    github: 'https://github.com/galmoussan',
+  },
+  {
+    title: 'Firebase Auth Starter',
+    description:
+      'A reusable authentication boilerplate with Firebase Auth, role-based access control, and protected route patterns for Angular and React apps.',
+    tech: ['Firebase', 'Angular', 'TypeScript'],
+    github: 'https://github.com/galmoussan',
   },
 ];

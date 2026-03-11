@@ -19,25 +19,15 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Brittany Chiang | Software Engineer",
+  title: "Gal Moussan | Fullstack Developer & Tech Lead",
   description:
-    "Brittany Chiang is a software engineer who specializes in building (and occasionally designing) exceptional digital experiences.",
-  metadataBase: new URL("https://brittanychiang.com"),
+    "Gal Moussan is a fullstack developer and tech lead based in Tel Aviv, specializing in building CRM systems and web applications.",
   openGraph: {
-    title: "Brittany Chiang | Software Engineer",
+    title: "Gal Moussan | Fullstack Developer & Tech Lead",
     description:
-      "Brittany Chiang is a software engineer who specializes in building exceptional digital experiences.",
-    url: "https://brittanychiang.com",
-    siteName: "Brittany Chiang",
+      "Gal Moussan is a fullstack developer and tech lead based in Tel Aviv, specializing in building CRM systems and web applications.",
     locale: "en_US",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Brittany Chiang | Software Engineer",
-    description:
-      "Brittany Chiang is a software engineer who specializes in building exceptional digital experiences.",
-    creator: "@bchiang7",
   },
   robots: {
     index: true,
@@ -56,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${firaCode.variable}`}>
       <body>
-        <a href="#content" className="absolute -top-10 left-0 bg-[var(--green)] text-[var(--navy)] py-3 px-5 z-[100] font-mono text-[var(--fz-sm)] focus:top-0 transition-all duration-200">
+        <a href="#content" className="absolute -top-10 left-0 bg-[var(--green)] text-[var(--navy)] py-3 px-5 z-[100] font-mono text-[14px] focus:top-0 transition-all duration-200">
           Skip to Content
         </a>
         <Nav />

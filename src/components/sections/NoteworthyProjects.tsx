@@ -11,10 +11,10 @@ export function NoteworthyProjects() {
 
   return (
     <section className="max-w-[1000px] mx-auto py-[100px] text-center">
-      <h2 className="text-[var(--fz-heading)] font-semibold text-[var(--lightest-slate)]">
+      <h2 className="text-[32px] font-semibold text-[var(--lightest-slate)]">
         Other Noteworthy Projects
       </h2>
-      <a href="/archive" className="inline-block font-mono text-[var(--fz-sm)] text-[var(--green)] mt-[10px] mb-[50px] hover:underline">
+      <a href="/archive" className="inline-block font-mono text-[14px] text-[var(--green)] mt-[10px] mb-[50px] hover:underline">
         view the archive
       </a>
 
@@ -54,7 +54,7 @@ export function NoteworthyProjects() {
                     )}
                   </div>
                 </div>
-                <h3 className="text-[var(--fz-xxl)] font-semibold text-[var(--lightest-slate)] mb-[10px] text-left">
+                <h3 className="text-[22px] font-semibold text-[var(--lightest-slate)] mb-[10px] text-left">
                   <a
                     href={project.external || project.github || '#'}
                     target="_blank"
@@ -64,13 +64,13 @@ export function NoteworthyProjects() {
                     {project.title}
                   </a>
                 </h3>
-                <p className="text-[var(--fz-sm)] text-[var(--light-slate)] text-left">
+                <p className="text-[14px] text-[var(--light-slate)] text-left">
                   {project.description}
                 </p>
               </div>
 
               {/* Footer */}
-              <ul className="flex flex-wrap gap-x-[15px] gap-y-[5px] list-none p-0 mt-5 font-mono text-[var(--fz-xxs)] text-[var(--slate)]">
+              <ul className="flex flex-wrap gap-x-[15px] gap-y-[5px] list-none p-0 mt-5 font-mono text-[12px] text-[var(--slate)]">
                 {project.tech.map((t) => (
                   <li key={t}>{t}</li>
                 ))}
@@ -83,7 +83,7 @@ export function NoteworthyProjects() {
       {otherProjects.length > GRID_LIMIT && (
         <button
           onClick={() => setShowMore(!showMore)}
-          className="outline-button mt-20 py-[18px] px-7 text-[var(--fz-xs)]"
+          className="outline-button mt-20 py-[18px] px-7"
         >
           Show {showMore ? 'Less' : 'More'}
         </button>

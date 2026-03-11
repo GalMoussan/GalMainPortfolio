@@ -34,13 +34,13 @@ export function Nav() {
             {navLinks.map((link) => (
               <li
                 key={link.name}
-                className="font-mono text-[var(--fz-xs)] [counter-increment:item_1]"
+                className="font-mono text-[13px] [counter-increment:item_1]"
               >
                 <a
                   href={link.url}
                   className="p-[10px] text-[var(--lightest-slate)] hover:text-[var(--green)] transition-colors"
                 >
-                  <span className="text-[var(--green)] text-[var(--fz-xxs)] mr-[5px]">
+                  <span className="text-[var(--green)] text-[12px] mr-[5px]">
                     {`0${navLinks.indexOf(link) + 1}.`}
                   </span>
                   {link.name}
@@ -50,7 +50,7 @@ export function Nav() {
           </ol>
           <a
             href="/resume.pdf"
-            className="outline-button ml-[15px] py-3 px-4 text-[var(--fz-xs)] hidden md:inline-block"
+            className="outline-button ml-[15px] py-3 px-4 hidden md:inline-block"
             target="_blank"
             rel="noreferrer"
           >

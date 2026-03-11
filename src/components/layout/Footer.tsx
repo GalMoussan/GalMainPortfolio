@@ -30,12 +30,12 @@ export function Footer() {
         })}
       </div>
       <a
-        href="https://github.com/bchiang7/v4"
+        href="https://github.com/galmoussan"
         target="_blank"
         rel="noreferrer"
-        className="font-mono text-[var(--fz-xxs)] text-[var(--slate)] hover:text-[var(--green)] transition-colors leading-[1]"
+        className="font-mono text-[12px] text-[var(--slate)] hover:text-[var(--green)] transition-colors leading-[1]"
       >
-        <div>Designed &amp; Built by Brittany Chiang</div>
+        <div>Built by Gal Moussan</div>
       </a>
     </footer>
   );

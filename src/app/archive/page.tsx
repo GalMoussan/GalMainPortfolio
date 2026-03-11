@@ -36,14 +36,14 @@ export default function ArchivePage() {
       <header className="mb-[50px]">
         <a
           href="/"
-          className="inline-block font-mono text-[var(--green)] text-[var(--fz-sm)] mb-2 hover:underline"
+          className="inline-block font-mono text-[var(--green)] text-[14px] mb-2 hover:underline"
         >
           &larr; Back
         </a>
         <h1 className="text-[clamp(40px,5vw,60px)] font-semibold text-[var(--lightest-slate)]">
           Archive
         </h1>
-        <p className="font-mono text-[var(--green)] text-[var(--fz-md)]">
+        <p className="font-mono text-[var(--green)] text-[16px]">
           A big list of things I&apos;ve worked on
         </p>
       </header>
@@ -52,19 +52,19 @@ export default function ArchivePage() {
         <table className="w-full border-collapse text-left">
           <thead>
             <tr>
-              <th className="py-[10px] pr-[20px] font-mono text-[var(--fz-sm)] text-[var(--green)] font-normal">
+              <th className="py-[10px] pr-[20px] font-mono text-[14px] text-[var(--green)] font-normal">
                 Year
               </th>
-              <th className="py-[10px] pr-[20px] font-mono text-[var(--fz-sm)] text-[var(--green)] font-normal">
+              <th className="py-[10px] pr-[20px] font-mono text-[14px] text-[var(--green)] font-normal">
                 Title
               </th>
-              <th className="py-[10px] pr-[20px] font-mono text-[var(--fz-sm)] text-[var(--green)] font-normal hidden lg:table-cell">
+              <th className="py-[10px] pr-[20px] font-mono text-[14px] text-[var(--green)] font-normal hidden lg:table-cell">
                 Made at
               </th>
-              <th className="py-[10px] pr-[20px] font-mono text-[var(--fz-sm)] text-[var(--green)] font-normal hidden md:table-cell">
+              <th className="py-[10px] pr-[20px] font-mono text-[14px] text-[var(--green)] font-normal hidden md:table-cell">
                 Built with
               </th>
-              <th className="py-[10px] font-mono text-[var(--fz-sm)] text-[var(--green)] font-normal">
+              <th className="py-[10px] font-mono text-[14px] text-[var(--green)] font-normal">
                 Link
               </th>
             </tr>
@@ -72,16 +72,16 @@ export default function ArchivePage() {
           <tbody>
             {allProjects.map((project) => (
               <tr key={project.title} className="border-b border-[var(--lightest-navy)]">
-                <td className="py-[10px] pr-[20px] font-mono text-[var(--fz-sm)] text-[var(--green)]">
+                <td className="py-[10px] pr-[20px] font-mono text-[14px] text-[var(--green)]">
                   {project.year}
                 </td>
-                <td className="py-[10px] pr-[20px] text-[var(--fz-xl)] font-semibold text-[var(--lightest-slate)]">
+                <td className="py-[10px] pr-[20px] text-[20px] font-semibold text-[var(--lightest-slate)]">
                   {project.title}
                 </td>
-                <td className="py-[10px] pr-[20px] text-[var(--fz-lg)] text-[var(--light-slate)] hidden lg:table-cell">
+                <td className="py-[10px] pr-[20px] text-[18px] text-[var(--light-slate)] hidden lg:table-cell">
                   {project.madeAt || '—'}
                 </td>
-                <td className="py-[10px] pr-[20px] font-mono text-[var(--fz-xxs)] text-[var(--slate)] hidden md:table-cell">
+                <td className="py-[10px] pr-[20px] font-mono text-[12px] text-[var(--slate)] hidden md:table-cell">
                   {project.tech.join(' · ')}
                 </td>
                 <td className="py-[10px]">
