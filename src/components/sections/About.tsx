@@ -2,12 +2,16 @@ export function About() {
   const skills = [
     'JavaScript (ES6+)',
     'TypeScript',
-    'Angular',
     'React',
+    'Next.js',
     'Node.js',
     'Python',
+    'Tailwind CSS',
+    'AI/LLM APIs',
     'Firebase',
-    'Selenium',
+    'Angular',
+    'Playwright',
+    'Vitest',
   ];
 
   return (

@@ -9,24 +9,35 @@ export interface FeaturedProject {
 
 export const featuredProjects: FeaturedProject[] = [
   {
-    title: 'Lagoonads CRM',
+    title: 'AI Forge',
     description:
-      'A comprehensive affiliate marketing CRM system built for managing campaigns, tracking performance, and handling affiliate relationships. Features real-time dashboards, reporting tools, and multi-role user management.',
-    tech: ['Angular', 'Node.js', 'TypeScript', 'REST API'],
-    image: '/images/halcyon.svg',
+      'A community platform for AI builders — share projects, discover tools, and connect with other developers building with AI. Features project showcases, discussion threads, and curated AI resource discovery.',
+    tech: ['TypeScript', 'Next.js', 'React', 'Tailwind CSS'],
+    github: 'https://github.com/GalMoussan/ai-forge',
+    image: '/images/ai-forge.svg',
   },
   {
-    title: '121Brokers CRM',
+    title: 'ReelSearch',
     description:
-      'A full-featured CRM platform with three distinct user interfaces for brokers, managers, and administrators. Built to handle complex financial workflows, client management, and real-time data synchronization.',
-    tech: ['Angular', 'Node.js', 'Firebase', 'TypeScript'],
-    image: '/images/spotify.svg',
+      'A modern movie and TV show discovery app with an intuitive search interface, detailed metadata, and personalized watchlist management. Built with a focus on fast search UX and clean visual design.',
+    tech: ['TypeScript', 'React', 'Tailwind CSS'],
+    github: 'https://github.com/GalMoussan/reelSearch',
+    image: '/images/reel-search.svg',
   },
   {
-    title: 'QA Automation Framework',
+    title: 'CIM',
     description:
-      'Led the migration of manual QA processes to a fully automated testing pipeline at Netlinkz. Built a robust framework that dramatically reduced regression testing time and improved deployment confidence.',
-    tech: ['Selenium', 'TestNG', 'JavaScript', 'Node.js'],
-    image: '/images/course.svg',
+      'A content intelligence manager that streamlines editorial workflows. Helps teams plan, organize, and track content pipelines with a clean kanban-style interface and AI-assisted content suggestions.',
+    tech: ['TypeScript', 'Next.js', 'React'],
+    github: 'https://github.com/GalMoussan/CIM',
+    image: '/images/cim.svg',
+  },
+  {
+    title: 'X Intelligence Pipeline',
+    description:
+      'An automated data pipeline that ingests posts from X (Twitter), processes them through NLP enrichment, and surfaces actionable intelligence signals. Useful for trend monitoring and audience research.',
+    tech: ['Python', 'NLP', 'Data Pipeline'],
+    github: 'https://github.com/GalMoussan/x-intelligence-pipeline',
+    image: '/images/x-pipeline.svg',
   },
 ];

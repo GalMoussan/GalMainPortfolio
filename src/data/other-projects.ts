@@ -8,59 +8,59 @@ export interface OtherProject {
 
 export const otherProjects: OtherProject[] = [
   {
-    title: 'VeracityAds Affiliate Platform',
+    title: 'movieSearch',
     description:
-      'Built and optimized a full-stack affiliate marketing CRM system with campaign management, analytics dashboards, and real-time reporting capabilities.',
-    tech: ['React', 'Python', 'Node.js'],
-    github: 'https://github.com/galmoussan',
+      'A fresh take on movie discovery — search films and TV shows in a new way with a sleek interface and rich metadata from public APIs.',
+    tech: ['TypeScript', 'React'],
+    github: 'https://github.com/GalMoussan/movieSearch',
   },
   {
-    title: 'Tarific-Digital Websites',
+    title: 'Content Factory',
     description:
-      'Designed and maintained multiple client-facing websites with responsive layouts, modern UI patterns, and optimized performance.',
-    tech: ['React', 'Node.js', 'CSS'],
-    github: 'https://github.com/galmoussan',
+      'AI-powered content creation engine with zero human touch. Automates the full content lifecycle from ideation to publishing using LLM pipelines.',
+    tech: ['TypeScript', 'Next.js', 'AI/LLM APIs'],
+    github: 'https://github.com/GalMoussan/Content-factory',
   },
   {
-    title: 'My Wave Volunteer Platform',
+    title: 'InfluencerBuddy',
     description:
-      'A web presence for the My Wave surf therapy program, teaching youth at risk how to surf and handle life challenges through ocean therapy.',
-    tech: ['React', 'Tailwind CSS', 'Firebase'],
-    github: 'https://github.com/galmoussan',
+      'An AI-driven assistant for influencer marketing — helps creators and brands streamline outreach, track campaigns, and analyze engagement.',
+    tech: ['TypeScript', 'React', 'AI/LLM APIs'],
+    github: 'https://github.com/GalMoussan/InfluencerBuddy',
   },
   {
-    title: 'Heroes for Life Community Portal',
+    title: 'Top LagoonAds Website',
     description:
-      'Community service coordination platform for backpacker volunteers providing school tutoring in developing countries around the world.',
-    tech: ['Node.js', 'Express', 'MongoDB'],
-    github: 'https://github.com/galmoussan',
+      'Production marketing website for LagoonAds — a fast, responsive landing site built with modern tooling and a polished UI.',
+    tech: ['TypeScript', 'React', 'Vite', 'Tailwind CSS'],
+    github: 'https://github.com/GalMoussan/Top_LagoonAds_website',
   },
   {
-    title: 'Automated Test Dashboard',
+    title: 'LeadsFactory',
     description:
-      'A real-time dashboard for monitoring automated test runs, displaying pass/fail rates, execution times, and historical trends across test suites.',
-    tech: ['JavaScript', 'Selenium', 'Chart.js'],
-    github: 'https://github.com/galmoussan',
+      'A backend system for automated lead discovery and organization — scrapes, enriches, and structures lead data for sales pipelines.',
+    tech: ['Python'],
+    github: 'https://github.com/GalMoussan/LeadsFactory',
   },
   {
-    title: 'Campaign Analytics Tool',
+    title: 'TelStudy',
     description:
-      'A lightweight analytics tool for tracking affiliate campaign performance metrics, ROI calculations, and conversion funnels.',
-    tech: ['Angular', 'TypeScript', 'D3.js'],
-    github: 'https://github.com/galmoussan',
+      'A study enhancement app that helps users learn more effectively with structured sessions, progress tracking, and spaced repetition tools.',
+    tech: ['TypeScript', 'React'],
+    github: 'https://github.com/GalMoussan/TelStudy',
   },
   {
-    title: 'Portfolio Website',
+    title: 'invert-chrome-extension',
     description:
-      'This very portfolio site — a pixel-perfect clone of a popular developer portfolio design, built with Next.js and Tailwind CSS.',
-    tech: ['Next.js', 'Tailwind CSS', 'TypeScript'],
-    github: 'https://github.com/galmoussan',
+      'A lightweight Chrome extension that inverts web page colors for improved readability in low-light environments or for accessibility needs.',
+    tech: ['JavaScript'],
+    github: 'https://github.com/GalMoussan/invert-chrome-extension',
   },
   {
-    title: 'Firebase Auth Starter',
+    title: 'Family Net',
     description:
-      'A reusable authentication boilerplate with Firebase Auth, role-based access control, and protected route patterns for Angular and React apps.',
-    tech: ['Firebase', 'Angular', 'TypeScript'],
-    github: 'https://github.com/galmoussan',
+      'A private social network mock app for family and close friends — share posts, photos, and updates in a safe, closed community space.',
+    tech: ['TypeScript', 'React'],
+    github: 'https://github.com/GalMoussan/Family-net',
   },
 ];
