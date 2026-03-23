@@ -85,7 +85,7 @@ export function About() {
               <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-40 transition-all duration-250 ease-custom group-hover:opacity-0" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/profile.svg"
+                src="/images/profile.jpg"
                 alt="Headshot"
                 width={300}
                 height={300}
