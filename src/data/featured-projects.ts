@@ -9,20 +9,22 @@ export interface FeaturedProject {
 
 export const featuredProjects: FeaturedProject[] = [
   {
-    title: 'AI Forge',
+    title: 'CinemaQuery',
     description:
-      'A community platform for AI builders — share projects, discover tools, and connect with other developers building with AI. Features project showcases, discussion threads, and curated AI resource discovery.',
-    tech: ['TypeScript', 'Next.js', 'React', 'Tailwind CSS'],
-    github: 'https://github.com/GalMoussan/ai-forge',
-    image: '/images/AI-forge.png',
+      'A semantic movie search engine powered by AI embeddings from OpenAI and intelligent re-ranking via Claude. Features a persona blending system that learns your preferences to deliver highly personalized movie recommendations tailored to your viewing mood.',
+    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'OpenAI', 'Claude', 'pgvector', 'Prisma', 'TanStack Query'],
+    github: 'https://github.com/galmoussan/cinemaquery',
+    external: 'https://cinemaquery.vercel.app',
+    image: '/images/cinema-query.png',
   },
   {
-    title: 'ReelSearch',
+    title: 'Snake',
     description:
-      'A modern movie and TV show discovery app with an intuitive search interface, detailed metadata, and personalized watchlist management. Built with a focus on fast search UX and clean visual design.',
-    tech: ['TypeScript', 'React', 'Tailwind CSS'],
-    github: 'https://github.com/GalMoussan/reelSearch',
-    image: '/images/reel-search.png',
+      'A classic Snake game built with TypeScript and HTML5 Canvas, demonstrating modern web development practices. Features smooth controls, progressive difficulty, persistent high scores, and a retro arcade aesthetic. Implemented with a modular entity-component-system architecture, comprehensive testing (80%+ coverage), and immutable data patterns.',
+    tech: ['TypeScript', 'HTML5 Canvas', 'Vite', 'Vitest', 'Playwright', 'ESLint', 'Prettier'],
+    github: 'https://github.com/GalMoussan/Snake',
+    external: 'https://snake-pi-gray.vercel.app',
+    image: '/images/snake.png',
   },
   {
     title: 'CIM',
@@ -41,21 +43,11 @@ export const featuredProjects: FeaturedProject[] = [
     image: '/images/x-pipeline.png',
   },
   {
-    title: 'CinemaQuery',
+    title: 'ReelSearch',
     description:
-      'A semantic movie search engine powered by AI embeddings from OpenAI and intelligent re-ranking via Claude. Features a persona blending system that learns your preferences to deliver highly personalized movie recommendations tailored to your viewing mood.',
-    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'OpenAI', 'Claude', 'pgvector', 'Prisma', 'TanStack Query'],
-    github: 'https://github.com/galmoussan/cinemaquery',
-    external: 'https://cinemaquery.vercel.app',
-    image: '/images/cinema-query.png',
-  },
-  {
-    title: 'Snake',
-    description:
-      'A classic Snake game built with TypeScript and HTML5 Canvas, demonstrating modern web development practices. Features smooth controls, progressive difficulty, persistent high scores, and a retro arcade aesthetic. Implemented with a modular entity-component-system architecture, comprehensive testing (80%+ coverage), and immutable data patterns.',
-    tech: ['TypeScript', 'HTML5 Canvas', 'Vite', 'Vitest', 'Playwright', 'ESLint', 'Prettier'],
-    github: 'https://github.com/GalMoussan/Snake',
-    external: 'https://snake-pi-gray.vercel.app',
-    image: '/images/snake.png',
+      'A modern movie and TV show discovery app with an intuitive search interface, detailed metadata, and personalized watchlist management. Built with a focus on fast search UX and clean visual design.',
+    tech: ['TypeScript', 'React', 'Tailwind CSS'],
+    github: 'https://github.com/GalMoussan/reelSearch',
+    image: '/images/reel-search.png',
   },
 ];
