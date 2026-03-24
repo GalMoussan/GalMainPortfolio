@@ -22,7 +22,7 @@ export function NoteworthyProjects() {
         {projects.map((project) => (
           <li
             key={project.title}
-            className="bg-[var(--light-navy)] rounded p-8 transition-all duration-250 ease-custom hover:-translate-y-[5px] cursor-default"
+            className="noteworthy-card bg-[var(--light-navy)] rounded p-8 cursor-default"
           >
             <div className="flex flex-col justify-between h-full">
               {/* Top */}
