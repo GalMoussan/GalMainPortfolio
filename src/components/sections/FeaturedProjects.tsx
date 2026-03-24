@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { featuredProjects } from '@/data/featured-projects';
 import { IconGitHub, IconExternalLink } from '@/components/ui/Icons';
 
@@ -89,6 +90,15 @@ export function FeaturedProjects() {
                     >
                       <IconExternalLink />
                     </a>
+                  )}
+                  {project.title === 'CinemaQuery' && (
+                    <Link
+                      href="/tools/cinema-query"
+                      className="border-2 border-[var(--green)] text-[var(--green)] rounded px-4 py-2 font-mono text-[13px] hover:bg-[rgba(0,255,136,0.1)] transition-colors duration-300"
+                      aria-label="View CinemaQuery Tool"
+                    >
+                      View Tool →
+                    </Link>
                   )}
                 </div>
               </div>

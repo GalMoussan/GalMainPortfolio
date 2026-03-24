@@ -40,4 +40,13 @@ export const featuredProjects: FeaturedProject[] = [
     github: 'https://github.com/GalMoussan/x-intelligence-pipeline',
     image: '/images/x-pipeline.png',
   },
+  {
+    title: 'CinemaQuery',
+    description:
+      'A semantic movie search engine powered by AI embeddings from OpenAI and intelligent re-ranking via Claude. Features a persona blending system that learns your preferences to deliver highly personalized movie recommendations tailored to your viewing mood.',
+    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'OpenAI', 'Claude', 'pgvector', 'Prisma', 'TanStack Query'],
+    github: 'https://github.com/galmoussan/cinemaquery',
+    external: 'https://cinemaquery.vercel.app',
+    image: '/images/cinema-query.png',
+  },
 ];
