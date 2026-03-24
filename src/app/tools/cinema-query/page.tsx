@@ -26,7 +26,7 @@ export default function CinemaQueryPage() {
 
       <div className="flex-1 mb-[50px]">
         <iframe
-          src="https://cinemaquery.vercel.app/embed"
+          src="https://movie-search-three-theta.vercel.app/embed"
           title="CinemaQuery Movie Search"
           className="w-full border-0 rounded-[var(--border-radius)] bg-[var(--light-navy)]"
           style={{
