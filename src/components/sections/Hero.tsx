@@ -20,10 +20,10 @@ export function Hero() {
     <p key="1" className="mb-[30px] ml-[4px] font-mono text-[var(--green)] text-[16px]">
       Hi, my name is
     </p>,
-    <h2 key="2" className="text-[clamp(40px,8vw,80px)] font-semibold text-[var(--lightest-slate)] leading-[1.1] m-0">
+    <h2 key="2" className="text-[clamp(32px,8vw,80px)] font-semibold text-[var(--lightest-slate)] leading-[1.1] m-0">
       Gal Moussan.
     </h2>,
-    <h3 key="3" className="text-[clamp(40px,8vw,80px)] font-semibold text-[var(--slate)] leading-[1.1] mt-[10px]">
+    <h3 key="3" className="text-[clamp(32px,8vw,80px)] font-semibold text-[var(--slate)] leading-[1.1] mt-[10px]">
       I build things for the web.
     </h3>,
     <p key="4" className="mt-5 max-w-[540px] text-[var(--slate)] text-[20px]">
@@ -46,7 +46,7 @@ export function Hero() {
   ];
 
   return (
-    <section className="flex flex-col justify-center min-h-screen max-w-[1000px] mx-auto py-0 px-0">
+    <section className="flex flex-col justify-center min-h-screen max-w-[1000px] mx-auto py-0 px-0 pt-[100px] md:pt-0">
       <div>
         {items.map((item, i) => (
           <div

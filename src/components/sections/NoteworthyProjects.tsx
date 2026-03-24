@@ -18,11 +18,11 @@ export function NoteworthyProjects() {
         view the archive
       </a>
 
-      <ul className="grid grid-cols-3 gap-[15px] list-none p-0 m-0">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[15px] list-none p-0 m-0">
         {projects.map((project) => (
           <li
             key={project.title}
-            className="noteworthy-card bg-[var(--light-navy)] rounded p-8 cursor-default"
+            className="noteworthy-card bg-[var(--light-navy)] rounded p-5 md:p-8 cursor-default"
           >
             <div className="flex flex-col justify-between h-full">
               {/* Top */}

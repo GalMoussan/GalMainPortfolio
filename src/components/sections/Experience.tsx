@@ -1,18 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { jobs } from '@/data/jobs';
 
 export function Experience() {
   const [activeTab, setActiveTab] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <section id="jobs" className="max-w-[700px] mx-auto py-[100px]">
       <h2 className="numbered-heading">Where I&apos;ve Worked</h2>
 
-      <div className="flex min-h-[340px]">
+      <div className="flex flex-col min-h-[340px] md:flex-row">
         {/* Tab List */}
-        <div role="tablist" aria-label="Job tabs" className="relative w-max z-10 flex flex-col">
+        <div role="tablist" aria-label="Job tabs" className="relative z-10 flex flex-row overflow-x-auto md:flex-col md:w-max">
           {jobs.map((job, i) => (
             <button
               key={job.company}
@@ -21,10 +32,10 @@ export function Experience() {
               aria-controls={`panel-${i}`}
               id={`tab-${i}`}
               onClick={() => setActiveTab(i)}
-              className={`flex items-center w-[var(--tab-width)] h-[var(--tab-height)] px-5 py-0 border-l-2 bg-transparent font-mono text-[13px] text-left whitespace-nowrap cursor-pointer transition-all duration-250 ease-custom ${
+              className={`flex items-center w-full md:w-[var(--tab-width)] h-[var(--tab-height)] px-5 py-0 border-b-2 md:border-b-0 md:border-l-2 bg-transparent font-mono text-[13px] text-left whitespace-nowrap cursor-pointer transition-all duration-250 ease-custom ${
                 activeTab === i
-                  ? 'text-[var(--green)] border-l-[var(--green)] bg-[var(--green-tint)]'
-                  : 'text-[var(--slate)] border-l-[var(--lightest-navy)] hover:text-[var(--green)] hover:bg-[var(--lightest-navy)]'
+                  ? 'text-[var(--green)] border-b-[var(--green)] md:border-l-[var(--green)] bg-[var(--green-tint)]'
+                  : 'text-[var(--slate)] border-b-[var(--lightest-navy)] md:border-l-[var(--lightest-navy)] hover:text-[var(--green)] hover:bg-[var(--lightest-navy)]'
               }`}
             >
               {job.company}
@@ -33,13 +44,17 @@ export function Experience() {
 
           {/* Animated highlight indicator */}
           <div
-            className="absolute top-0 left-0 w-[2px] h-[var(--tab-height)] bg-[var(--green)] transition-transform duration-250 ease-custom"
-            style={{ transform: `translateY(calc(${activeTab} * var(--tab-height)))` }}
+            className="absolute bottom-0 left-0 h-[2px] w-full md:top-0 md:left-0 md:w-[2px] md:h-[var(--tab-height)] bg-[var(--green)] transition-transform duration-250 ease-custom"
+            style={{
+              transform: isMobile
+                ? `translateX(calc(${activeTab} * 100%))`
+                : `translateY(calc(${activeTab} * var(--tab-height)))`
+            }}
           />
         </div>
 
         {/* Tab Panels */}
-        <div className="relative ml-[30px] w-full">
+        <div className="relative mt-[20px] md:mt-0 md:ml-[30px] w-full">
           {jobs.map((job, i) => (
             <div
               key={job.company}

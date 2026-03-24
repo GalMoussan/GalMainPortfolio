@@ -18,10 +18,10 @@ export function About() {
     <section id="about" className="max-w-[900px] mx-auto py-[100px]">
       <h2 className="numbered-heading">About Me</h2>
 
-      <div className="grid grid-cols-[3fr_2fr] gap-[50px]">
+      <div className="grid grid-cols-1 gap-[30px] md:grid-cols-[3fr_2fr] md:gap-[50px]">
         {/* Text Column */}
         <div>
-          <div className="text-[var(--slate)] text-[20px] space-y-4">
+          <div className="text-[var(--slate)] text-[16px] md:text-[20px] space-y-4">
             <p>
               Hello! My name is Gal and I&apos;m a fullstack developer and tech lead based in Tel Aviv.
               With a background in military leadership as an officer and company commander in the
@@ -60,7 +60,7 @@ export function About() {
 
           <p className="mt-5 text-[var(--slate)]">Here are a few technologies I&apos;ve been working with recently:</p>
 
-          <ul className="grid grid-cols-2 gap-x-2 gap-y-0 p-0 mt-5 list-none overflow-hidden">
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-1 p-0 mt-5 list-none">
             {skills.map((skill) => (
               <li
                 key={skill}
@@ -73,7 +73,7 @@ export function About() {
         </div>
 
         {/* Photo Column */}
-        <div className="relative max-w-[300px]">
+        <div className="relative mx-auto max-w-[250px] w-full md:max-w-[300px]">
           <div className="relative group block w-full aspect-square">
             {/* Green border offset box */}
             <div

@@ -14,13 +14,13 @@ export function FeaturedProjects() {
           return (
             <li
               key={project.title}
-              className="relative grid grid-cols-12 items-center gap-[10px] mb-[100px] last:mb-0"
+              className="relative grid grid-cols-12 items-center gap-[10px] mb-[70px] md:mb-[100px] last:mb-0"
             >
               {/* Project Image */}
               <div
-                className={`relative col-span-7 ${
-                  isOdd ? 'col-start-1' : 'col-start-6'
-                } row-start-1`}
+                className={`relative col-span-12 row-start-1 ${
+                  isOdd ? 'md:col-span-7 md:col-start-1' : 'md:col-span-7 md:col-start-6'
+                }`}
               >
                 <a
                   href={project.external || project.github || '#'}
@@ -40,9 +40,9 @@ export function FeaturedProjects() {
 
               {/* Project Content */}
               <div
-                className={`project-text-panel relative col-span-6 ${
-                  isOdd ? 'col-start-7 text-right' : 'col-start-1 text-left'
-                } row-start-1 z-10`}
+                className={`project-text-panel relative col-span-12 row-start-2 text-left z-10 ${
+                  isOdd ? 'md:col-span-6 md:col-start-7 md:text-right md:row-start-1' : 'md:col-span-6 md:col-start-1 md:row-start-1'
+                }`}
               >
                 <p className="font-mono text-[var(--green)] text-[13px] mb-[10px]">
                   Featured Project
