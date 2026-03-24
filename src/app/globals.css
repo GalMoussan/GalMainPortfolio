@@ -140,6 +140,35 @@
     margin-left: 20px;
   }
 
+  /* Mobile responsive for numbered headings */
+  @media (max-width: 768px) {
+    .numbered-heading {
+      white-space: normal;
+      font-size: 24px;
+      flex-wrap: wrap;
+    }
+
+    .numbered-heading::before {
+      font-size: 16px;
+      margin-right: 8px;
+    }
+
+    .numbered-heading::after {
+      margin-left: 10px;
+      min-width: 50px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .numbered-heading {
+      font-size: 20px;
+    }
+
+    .numbered-heading::after {
+      display: none;
+    }
+  }
+
   .bullet-list li {
     position: relative;
     padding-left: 30px;
