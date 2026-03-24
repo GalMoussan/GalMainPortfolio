@@ -25,14 +25,14 @@ export function FeaturedProjects() {
                   href={project.external || project.github || '#'}
                   target="_blank"
                   rel="noreferrer"
-                  className="relative block w-full h-full rounded bg-[var(--green)] group"
+                  className="project-img-link relative block w-full h-full rounded bg-[var(--green)] group"
                 >
-                  <div className="absolute inset-0 bg-[var(--navy)] opacity-60 z-10 rounded transition-opacity duration-250 ease-custom group-hover:opacity-0" />
+                  <div className="absolute inset-0 bg-[var(--navy)] opacity-60 z-10 rounded transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-[350px] object-cover rounded bg-[var(--light-navy)]"
+                    className="project-img w-full h-[350px] object-cover rounded bg-[var(--light-navy)]"
                   />
                 </a>
               </div>
