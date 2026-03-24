@@ -39,7 +39,7 @@ export function FeaturedProjects() {
 
               {/* Project Content */}
               <div
-                className={`relative col-span-6 ${
+                className={`project-text-panel relative col-span-6 ${
                   isOdd ? 'col-start-7 text-right' : 'col-start-1 text-left'
                 } row-start-1 z-10`}
               >
