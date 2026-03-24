@@ -21,7 +21,7 @@ export function Experience() {
               aria-controls={`panel-${i}`}
               id={`tab-${i}`}
               onClick={() => setActiveTab(i)}
-              className={`job-tab flex items-center w-[var(--tab-width)] h-[var(--tab-height)] px-5 py-0 border-l-2 bg-transparent font-mono text-[13px] text-left whitespace-nowrap cursor-pointer ${
+              className={`flex items-center w-[var(--tab-width)] h-[var(--tab-height)] px-5 py-0 border-l-2 bg-transparent font-mono text-[13px] text-left whitespace-nowrap cursor-pointer transition-all duration-250 ease-custom ${
                 activeTab === i
                   ? 'text-[var(--green)] border-l-[var(--green)] bg-[var(--green-tint)]'
                   : 'text-[var(--slate)] border-l-[var(--lightest-navy)] hover:text-[var(--green)] hover:bg-[var(--lightest-navy)]'
@@ -47,7 +47,7 @@ export function Experience() {
               role="tabpanel"
               aria-labelledby={`tab-${i}`}
               hidden={activeTab !== i}
-              className="job-panel w-full"
+              className="w-full"
             >
               <h3 className="text-[22px] font-medium text-[var(--lightest-slate)] mb-[2px]">
                 {job.title}{' '}

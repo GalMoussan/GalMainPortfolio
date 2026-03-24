@@ -189,31 +189,6 @@
             drop-shadow(rgba(87, 203, 255, 0.15) 0px 0px 40px);
   }
 
-  /* Jobs: tab buttons */
-  .job-tab {
-    will-change: filter;
-    filter: drop-shadow(rgba(87, 203, 255, 0) 0px 0px 0px) drop-shadow(rgba(87, 203, 255, 0) 0px 0px 0px);
-    transition: filter 0.6s cubic-bezier(0.25, 0.8, 0.25, 1),
-                color 0.25s ease, background-color 0.25s ease;
-  }
-
-  .job-tab:hover {
-    filter: drop-shadow(rgba(87, 203, 255, 0.5) 0px 0px 6px) drop-shadow(rgba(87, 203, 255, 0.2) 0px 0px 18px);
-  }
-
-  /* Jobs: active tab content panel */
-  .job-panel {
-    will-change: filter, transform;
-    filter: drop-shadow(rgba(87, 203, 255, 0) 0px 0px 0px) drop-shadow(rgba(87, 203, 255, 0) 0px 0px 0px) drop-shadow(rgba(87, 203, 255, 0) 0px 0px 0px);
-    transition: filter 0.65s cubic-bezier(0.25, 0.8, 0.25, 1) 0.1s,
-                transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .job-panel:hover {
-    transform: scale(1.01);
-    filter: drop-shadow(rgba(87, 203, 255, 0.5) 0px 0px 8px) drop-shadow(rgba(87, 203, 255, 0.25) 0px 0px 20px) drop-shadow(rgba(87, 203, 255, 0.12) 0px 0px 40px);
-  }
-
   /* Noteworthy project cards */
   .noteworthy-card {
     will-change: filter, transform;
