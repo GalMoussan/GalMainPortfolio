@@ -7,7 +7,7 @@
       <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1d3461" stroke-width="1"/>
     </pattern>
     <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#64ffda" stop-opacity="0.15"/>
+      <stop offset="0%" stop-color="#fa3434" stop-opacity="0.15"/>
       <stop offset="100%" stop-color="#112240" stop-opacity="0"/>
     </radialGradient>
   </defs>
@@ -16,17 +16,17 @@
 
   <!-- Network nodes connecting outward from center -->
   <!-- Center forge icon circle -->
-  <circle cx="600" cy="295" r="72" fill="none" stroke="#64ffda" stroke-width="2" opacity="0.9"/>
-  <circle cx="600" cy="295" r="58" fill="#0a192f" stroke="#64ffda" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="600" cy="295" r="72" fill="none" stroke="#fa3434" stroke-width="2" opacity="0.9"/>
+  <circle cx="600" cy="295" r="58" fill="#0a192f" stroke="#fa3434" stroke-width="1.5" opacity="0.6"/>
 
   <!-- Forge flame shape -->
-  <path d="M600 250 C588 262 578 275 582 292 C584 302 592 308 598 315 C602 320 602 328 600 335 C612 325 620 312 616 298 C614 289 606 284 604 275 C612 280 618 290 616 300 C624 286 622 268 610 258 Z" fill="#64ffda" opacity="0.9"/>
+  <path d="M600 250 C588 262 578 275 582 292 C584 302 592 308 598 315 C602 320 602 328 600 335 C612 325 620 312 616 298 C614 289 606 284 604 275 C612 280 618 290 616 300 C624 286 622 268 610 258 Z" fill="#fa3434" opacity="0.9"/>
   <path d="M595 268 C588 276 585 286 588 296 C590 303 596 307 598 315 C604 307 608 298 604 289 C602 283 597 280 597 273 Z" fill="#57cbff" opacity="0.7"/>
 
   <!-- Outer nodes -->
-  <circle cx="440" cy="200" r="10" fill="none" stroke="#64ffda" stroke-width="2"/>
-  <circle cx="442" cy="200" r="5" fill="#64ffda" opacity="0.6"/>
-  <line x1="530" y1="245" x2="450" y2="205" stroke="#64ffda" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="440" cy="200" r="10" fill="none" stroke="#fa3434" stroke-width="2"/>
+  <circle cx="442" cy="200" r="5" fill="#fa3434" opacity="0.6"/>
+  <line x1="530" y1="245" x2="450" y2="205" stroke="#fa3434" stroke-width="1.5" opacity="0.4"/>
 
   <circle cx="760" cy="200" r="10" fill="none" stroke="#57cbff" stroke-width="2"/>
   <circle cx="760" cy="200" r="5" fill="#57cbff" opacity="0.6"/>
@@ -36,13 +36,13 @@
   <circle cx="430" cy="380" r="5" fill="#57cbff" opacity="0.6"/>
   <line x1="530" y1="345" x2="440" y2="375" stroke="#57cbff" stroke-width="1.5" opacity="0.4"/>
 
-  <circle cx="770" cy="380" r="10" fill="none" stroke="#64ffda" stroke-width="2"/>
-  <circle cx="770" cy="380" r="5" fill="#64ffda" opacity="0.6"/>
-  <line x1="670" y1="345" x2="760" y2="375" stroke="#64ffda" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="770" cy="380" r="10" fill="none" stroke="#fa3434" stroke-width="2"/>
+  <circle cx="770" cy="380" r="5" fill="#fa3434" opacity="0.6"/>
+  <line x1="670" y1="345" x2="760" y2="375" stroke="#fa3434" stroke-width="1.5" opacity="0.4"/>
 
   <!-- Second ring nodes -->
-  <circle cx="380" cy="290" r="7" fill="none" stroke="#64ffda" stroke-width="1.5" opacity="0.5"/>
-  <line x1="527" y1="295" x2="387" y2="290" stroke="#64ffda" stroke-width="1" opacity="0.25"/>
+  <circle cx="380" cy="290" r="7" fill="none" stroke="#fa3434" stroke-width="1.5" opacity="0.5"/>
+  <line x1="527" y1="295" x2="387" y2="290" stroke="#fa3434" stroke-width="1" opacity="0.25"/>
 
   <circle cx="820" cy="290" r="7" fill="none" stroke="#57cbff" stroke-width="1.5" opacity="0.5"/>
   <line x1="673" y1="295" x2="813" y2="290" stroke="#57cbff" stroke-width="1" opacity="0.25"/>
@@ -50,26 +50,26 @@
   <circle cx="530" cy="145" r="7" fill="none" stroke="#57cbff" stroke-width="1.5" opacity="0.5"/>
   <line x1="572" y1="224" x2="532" y2="152" stroke="#57cbff" stroke-width="1" opacity="0.25"/>
 
-  <circle cx="670" cy="145" r="7" fill="none" stroke="#64ffda" stroke-width="1.5" opacity="0.5"/>
-  <line x1="628" y1="224" x2="668" y2="152" stroke="#64ffda" stroke-width="1" opacity="0.25"/>
+  <circle cx="670" cy="145" r="7" fill="none" stroke="#fa3434" stroke-width="1.5" opacity="0.5"/>
+  <line x1="628" y1="224" x2="668" y2="152" stroke="#fa3434" stroke-width="1" opacity="0.25"/>
 
   <!-- Cross-connections between outer nodes -->
-  <line x1="450" y1="205" x2="530" y2="145" stroke="#64ffda" stroke-width="0.8" opacity="0.15"/>
+  <line x1="450" y1="205" x2="530" y2="145" stroke="#fa3434" stroke-width="0.8" opacity="0.15"/>
   <line x1="750" y1="205" x2="670" y2="145" stroke="#57cbff" stroke-width="0.8" opacity="0.15"/>
   <line x1="440" y1="375" x2="387" y2="290" stroke="#57cbff" stroke-width="0.8" opacity="0.15"/>
-  <line x1="760" y1="375" x2="813" y2="290" stroke="#64ffda" stroke-width="0.8" opacity="0.15"/>
+  <line x1="760" y1="375" x2="813" y2="290" stroke="#fa3434" stroke-width="0.8" opacity="0.15"/>
 
   <!-- Labels -->
-  <text x="600" y="420" text-anchor="middle" font-family="monospace" font-size="22" fill="#64ffda" letter-spacing="4" opacity="0.9">AI FORGE</text>
+  <text x="600" y="420" text-anchor="middle" font-family="monospace" font-size="22" fill="#fa3434" letter-spacing="4" opacity="0.9">AI FORGE</text>
   <text x="600" y="450" text-anchor="middle" font-family="monospace" font-size="13" fill="#8892b0" letter-spacing="2">AI Community Platform</text>
 
   <!-- Corner accent lines -->
-  <line x1="30" y1="30" x2="80" y2="30" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="30" y1="30" x2="30" y2="80" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="1170" y1="30" x2="1120" y2="30" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="1170" y1="30" x2="1170" y2="80" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="30" y1="600" x2="80" y2="600" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="30" y1="600" x2="30" y2="550" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="1170" y1="600" x2="1120" y2="600" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
-  <line x1="1170" y1="600" x2="1170" y2="550" stroke="#64ffda" stroke-width="2" opacity="0.4"/>
+  <line x1="30" y1="30" x2="80" y2="30" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="30" y1="30" x2="30" y2="80" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="1170" y1="30" x2="1120" y2="30" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="1170" y1="30" x2="1170" y2="80" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="30" y1="600" x2="80" y2="600" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="30" y1="600" x2="30" y2="550" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="1170" y1="600" x2="1120" y2="600" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
+  <line x1="1170" y1="600" x2="1170" y2="550" stroke="#fa3434" stroke-width="2" opacity="0.4"/>
 </svg>

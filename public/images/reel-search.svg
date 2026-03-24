@@ -62,14 +62,14 @@
 
   <!-- Frame content - play triangles and abstract shapes -->
   <polygon points="420,230 420,276 458,253" fill="#57cbff" opacity="0.35"/>
-  <polygon points="575,230 575,276 613,253" fill="#64ffda" opacity="0.35"/>
+  <polygon points="575,230 575,276 613,253" fill="#fa3434" opacity="0.35"/>
   <!-- Search icon in middle top frame -->
-  <circle cx="742" cy="238" r="22" fill="none" stroke="#64ffda" stroke-width="3" opacity="0.7"/>
-  <line x1="758" y1="254" x2="774" y2="270" stroke="#64ffda" stroke-width="3" opacity="0.7" stroke-linecap="round"/>
+  <circle cx="742" cy="238" r="22" fill="none" stroke="#fa3434" stroke-width="3" opacity="0.7"/>
+  <line x1="758" y1="254" x2="774" y2="270" stroke="#fa3434" stroke-width="3" opacity="0.7" stroke-linecap="round"/>
 
-  <polygon points="420,338 420,384 458,361" fill="#64ffda" opacity="0.25"/>
+  <polygon points="420,338 420,384 458,361" fill="#fa3434" opacity="0.25"/>
   <polygon points="575,338 575,384 613,361" fill="#57cbff" opacity="0.25"/>
-  <polygon points="730,338 730,384 768,361" fill="#64ffda" opacity="0.25"/>
+  <polygon points="730,338 730,384 768,361" fill="#fa3434" opacity="0.25"/>
 
   <!-- Labels -->
   <text x="600" y="510" text-anchor="middle" font-family="monospace" font-size="22" fill="#57cbff" letter-spacing="4" opacity="0.9">REELSEARCH</text>

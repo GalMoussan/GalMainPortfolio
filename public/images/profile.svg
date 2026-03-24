@@ -4,9 +4,9 @@
       <circle cx="150" cy="150" r="140"/>
     </clipPath>
     <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#64ffda"/>
+      <stop offset="0%" stop-color="#fa3434"/>
       <stop offset="50%" stop-color="#57cbff"/>
-      <stop offset="100%" stop-color="#64ffda"/>
+      <stop offset="100%" stop-color="#fa3434"/>
     </linearGradient>
     <pattern id="geo-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 20 0 L 40 20 L 20 40 L 0 20 Z" fill="none" stroke="#1d3461" stroke-width="1"/>
@@ -17,10 +17,10 @@
   <circle cx="150" cy="150" r="140" fill="url(#geo-pattern)" clip-path="url(#circle-clip)" opacity="0.6"/>
   <circle cx="150" cy="150" r="110" fill="none" stroke="#112240" stroke-width="1.5" opacity="0.5"/>
   <circle cx="150" cy="150" r="80" fill="none" stroke="#1d3461" stroke-width="1" opacity="0.5"/>
-  <text x="150" y="178" text-anchor="middle" font-family="monospace" font-size="72" font-weight="700" fill="#64ffda" letter-spacing="4">GM</text>
-  <line x1="100" y1="192" x2="200" y2="192" stroke="#64ffda" stroke-width="1.5" opacity="0.5"/>
-  <circle cx="150" cy="56" r="4" fill="#64ffda" opacity="0.4"/>
-  <circle cx="150" cy="244" r="4" fill="#64ffda" opacity="0.4"/>
+  <text x="150" y="178" text-anchor="middle" font-family="monospace" font-size="72" font-weight="700" fill="#fa3434" letter-spacing="4">GM</text>
+  <line x1="100" y1="192" x2="200" y2="192" stroke="#fa3434" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="150" cy="56" r="4" fill="#fa3434" opacity="0.4"/>
+  <circle cx="150" cy="244" r="4" fill="#fa3434" opacity="0.4"/>
   <circle cx="56" cy="150" r="4" fill="#57cbff" opacity="0.4"/>
   <circle cx="244" cy="150" r="4" fill="#57cbff" opacity="0.4"/>
 </svg>
