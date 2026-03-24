@@ -10,7 +10,7 @@
       <stop offset="100%" stop-color="#112240" stop-opacity="0"/>
     </radialGradient>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M 0 0 L 6 3 L 0 6 z" fill="#fa3434" opacity="0.8"/>
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#57cbff" opacity="0.8"/>
     </marker>
     <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M 0 0 L 6 3 L 0 6 z" fill="#57cbff" opacity="0.8"/>
@@ -29,53 +29,53 @@
   <text x="200" y="307" font-family="monospace" font-size="10" fill="#8892b0">Stream</text>
 
   <!-- Arrow 1 -->
-  <line x1="280" y1="300" x2="340" y2="300" stroke="#fa3434" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
+  <line x1="280" y1="300" x2="340" y2="300" stroke="#57cbff" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
 
   <!-- Stage 2: Process -->
-  <rect x="340" y="255" width="160" height="90" rx="8" fill="#0a192f" stroke="#fa3434" stroke-width="2"/>
+  <rect x="340" y="255" width="160" height="90" rx="8" fill="#0a192f" stroke="#57cbff" stroke-width="2"/>
   <!-- Gear icon approximation -->
-  <circle cx="395" cy="300" r="18" fill="none" stroke="#fa3434" stroke-width="2"/>
-  <circle cx="395" cy="300" r="8" fill="#fa3434" opacity="0.4"/>
-  <text x="425" y="295" font-family="monospace" font-size="11" fill="#fa3434" opacity="0.8">PROCESS</text>
+  <circle cx="395" cy="300" r="18" fill="none" stroke="#57cbff" stroke-width="2"/>
+  <circle cx="395" cy="300" r="8" fill="#57cbff" opacity="0.4"/>
+  <text x="425" y="295" font-family="monospace" font-size="11" fill="#57cbff" opacity="0.8">PROCESS</text>
   <text x="425" y="310" font-family="monospace" font-size="10" fill="#8892b0">NLP/Parse</text>
 
   <!-- Arrow 2 -->
-  <line x1="500" y1="300" x2="560" y2="300" stroke="#fa3434" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
+  <line x1="500" y1="300" x2="560" y2="300" stroke="#57cbff" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
 
   <!-- Stage 3: Enrich (AI/Neural) -->
-  <rect x="560" y="225" width="180" height="150" rx="8" fill="#0a192f" stroke="#fa3434" stroke-width="2.5"/>
+  <rect x="560" y="225" width="180" height="150" rx="8" fill="#0a192f" stroke="#57cbff" stroke-width="2.5"/>
   <!-- Neural network dots -->
-  <circle cx="595" cy="270" r="5" fill="#fa3434" opacity="0.7"/>
-  <circle cx="595" cy="300" r="5" fill="#fa3434" opacity="0.7"/>
-  <circle cx="595" cy="330" r="5" fill="#fa3434" opacity="0.7"/>
+  <circle cx="595" cy="270" r="5" fill="#57cbff" opacity="0.7"/>
+  <circle cx="595" cy="300" r="5" fill="#57cbff" opacity="0.7"/>
+  <circle cx="595" cy="330" r="5" fill="#57cbff" opacity="0.7"/>
   <circle cx="625" cy="255" r="5" fill="#57cbff" opacity="0.7"/>
   <circle cx="625" cy="285" r="5" fill="#57cbff" opacity="0.7"/>
   <circle cx="625" cy="315" r="5" fill="#57cbff" opacity="0.7"/>
   <circle cx="625" cy="345" r="5" fill="#57cbff" opacity="0.7"/>
-  <circle cx="655" cy="270" r="5" fill="#fa3434" opacity="0.7"/>
-  <circle cx="655" cy="300" r="5" fill="#fa3434" opacity="0.7"/>
-  <circle cx="655" cy="330" r="5" fill="#fa3434" opacity="0.7"/>
+  <circle cx="655" cy="270" r="5" fill="#57cbff" opacity="0.7"/>
+  <circle cx="655" cy="300" r="5" fill="#57cbff" opacity="0.7"/>
+  <circle cx="655" cy="330" r="5" fill="#57cbff" opacity="0.7"/>
   <!-- Neural connections -->
-  <line x1="600" y1="270" x2="620" y2="255" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="270" x2="620" y2="285" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="270" x2="620" y2="315" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="300" x2="620" y2="285" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="300" x2="620" y2="315" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="300" x2="620" y2="345" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="330" x2="620" y2="315" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
-  <line x1="600" y1="330" x2="620" y2="345" stroke="#fa3434" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="270" x2="620" y2="255" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="270" x2="620" y2="285" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="270" x2="620" y2="315" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="300" x2="620" y2="285" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="300" x2="620" y2="315" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="300" x2="620" y2="345" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="330" x2="620" y2="315" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
+  <line x1="600" y1="330" x2="620" y2="345" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
   <line x1="630" y1="255" x2="650" y2="270" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
   <line x1="630" y1="285" x2="650" y2="270" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
   <line x1="630" y1="285" x2="650" y2="300" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
   <line x1="630" y1="315" x2="650" y2="300" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
   <line x1="630" y1="315" x2="650" y2="330" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
   <line x1="630" y1="345" x2="650" y2="330" stroke="#57cbff" stroke-width="0.8" opacity="0.4"/>
-  <text x="668" y="290" font-family="monospace" font-size="11" fill="#fa3434" opacity="0.9">AI</text>
-  <text x="662" y="305" font-family="monospace" font-size="11" fill="#fa3434" opacity="0.9">ENRICH</text>
+  <text x="668" y="290" font-family="monospace" font-size="11" fill="#57cbff" opacity="0.9">AI</text>
+  <text x="662" y="305" font-family="monospace" font-size="11" fill="#57cbff" opacity="0.9">ENRICH</text>
   <text x="660" y="320" font-family="monospace" font-size="10" fill="#8892b0">LLM</text>
 
   <!-- Arrow 3 -->
-  <line x1="740" y1="300" x2="800" y2="300" stroke="#fa3434" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
+  <line x1="740" y1="300" x2="800" y2="300" stroke="#57cbff" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
 
   <!-- Stage 4: Output/Signals -->
   <rect x="800" y="255" width="160" height="90" rx="8" fill="#0a192f" stroke="#57cbff" stroke-width="2"/>
@@ -87,7 +87,7 @@
   <text x="890" y="310" font-family="monospace" font-size="10" fill="#8892b0">Signals</text>
 
   <!-- Labels -->
-  <text x="600" y="510" text-anchor="middle" font-family="monospace" font-size="20" fill="#fa3434" letter-spacing="3" opacity="0.9">X INTELLIGENCE PIPELINE</text>
+  <text x="600" y="510" text-anchor="middle" font-family="monospace" font-size="20" fill="#57cbff" letter-spacing="3" opacity="0.9">X INTELLIGENCE PIPELINE</text>
   <text x="600" y="540" text-anchor="middle" font-family="monospace" font-size="13" fill="#8892b0" letter-spacing="2">Automated Data Pipeline · Python · NLP</text>
 
   <!-- Corner accents -->
