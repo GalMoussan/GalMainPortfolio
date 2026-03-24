@@ -49,4 +49,13 @@ export const featuredProjects: FeaturedProject[] = [
     external: 'https://cinemaquery.vercel.app',
     image: '/images/cinema-query.png',
   },
+  {
+    title: 'Snake',
+    description:
+      'A classic Snake game built with TypeScript and HTML5 Canvas, demonstrating modern web development practices. Features smooth controls, progressive difficulty, persistent high scores, and a retro arcade aesthetic. Implemented with a modular entity-component-system architecture, comprehensive testing (80%+ coverage), and immutable data patterns.',
+    tech: ['TypeScript', 'HTML5 Canvas', 'Vite', 'Vitest', 'Playwright', 'ESLint', 'Prettier'],
+    github: 'https://github.com/GalMoussan/Snake',
+    external: 'https://snake-pi-gray.vercel.app',
+    image: '/images/snake.png',
+  },
 ];

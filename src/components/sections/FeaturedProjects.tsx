@@ -100,6 +100,15 @@ export function FeaturedProjects() {
                       View Tool →
                     </Link>
                   )}
+                  {project.title === 'Snake' && (
+                    <Link
+                      href="/tools/snake"
+                      className="inline-flex items-center px-4 py-2 border-2 border-[var(--green)] text-[var(--green)] rounded font-mono text-[13px] hover:bg-[rgba(0,255,136,0.1)] transition-colors duration-300"
+                      aria-label="View Snake Game Tool"
+                    >
+                      View Tool →
+                    </Link>
+                  )}
                 </div>
               </div>
             </li>
