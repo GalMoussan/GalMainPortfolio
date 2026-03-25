@@ -77,19 +77,19 @@ export function About() {
           <div className="relative group block w-full aspect-square">
             {/* Green border offset box */}
             <div
-              className="absolute top-[15px] left-[15px] w-full h-full border-2 border-[var(--green)] rounded transition-all duration-250 ease-custom group-hover:top-[10px] group-hover:left-[10px]"
+              className="absolute top-[15px] left-[15px] w-full h-full border-2 border-[var(--green)] rounded transition-[top,left] duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:top-[10px] group-hover:left-[10px]"
             />
             {/* Image with green tint overlay */}
             <div className="relative rounded overflow-hidden w-full h-full">
               {/* Green tint overlay */}
-              <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-40 transition-all duration-250 ease-custom group-hover:opacity-0" />
+              <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-40 transition-opacity duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:opacity-0" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/profile.jpeg"
                 alt="Headshot"
                 width={300}
                 height={300}
-                className="relative rounded w-full h-full object-cover filter grayscale contrast-[1] brightness-90 transition-all duration-250 ease-custom group-hover:grayscale-0 group-hover:brightness-100"
+                className="relative rounded w-full h-full object-cover filter grayscale contrast-[1] brightness-90 transition-[filter] duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:grayscale-0 group-hover:brightness-100"
               />
             </div>
           </div>
