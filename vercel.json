@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/lander",
+      "destination": "https://portfolio-kappa-kohl-74.vercel.app/lander"
+    },
+    {
+      "source": "/lander/:path*",
+      "destination": "https://portfolio-kappa-kohl-74.vercel.app/lander/:path*"
+    }
+  ]
+}
