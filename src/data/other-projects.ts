@@ -29,11 +29,18 @@ export const otherProjects: OtherProject[] = [
     github: 'https://github.com/GalMoussan/InfluencerBuddy',
   },
   {
-    title: 'Top LagoonAds Website',
+    title: 'Pocket Ask',
     description:
-      'Production marketing website for LagoonAds — a fast, responsive landing site built with modern tooling and a polished UI.',
-    tech: ['TypeScript', 'React', 'Vite', 'Tailwind CSS'],
-    github: 'https://github.com/GalMoussan/Top_LagoonAds_website',
+      'WhatsApp AI assistant that intercepts private messages and responds using OpenAI GPT-3.5. Features conversation context management, rate limiting, and customizable prompts for intelligent WhatsApp automation.',
+    tech: ['Node.js', 'TypeScript', 'OpenAI', 'SQLite', 'WhatsApp Web'],
+    github: 'https://github.com/GalMoussan/MUSITSAP',
+  },
+  {
+    title: 'MySassy',
+    description:
+      'A complete SaaS template generator with pre-built authentication (Google, Facebook, Twitter OAuth), Stripe subscription management, payment processing, and user dashboards. Eliminates months of boilerplate development for subscription-based businesses.',
+    tech: ['Next.js', 'TypeScript', 'Supabase', 'Stripe', 'TailwindCSS', 'Mailgun'],
+    github: 'https://github.com/GalMoussan/MySassy',
   },
   {
     title: 'LeadsFactory',
@@ -43,7 +50,7 @@ export const otherProjects: OtherProject[] = [
     github: 'https://github.com/GalMoussan/LeadsFactory',
   },
   {
-    title: 'TelStudy',
+    title: 'StudyBuddy',
     description:
       'A study enhancement app that helps users learn more effectively with structured sessions, progress tracking, and spaced repetition tools.',
     tech: ['TypeScript', 'React'],
@@ -57,9 +64,9 @@ export const otherProjects: OtherProject[] = [
     github: 'https://github.com/GalMoussan/invert-chrome-extension',
   },
   {
-    title: 'Family Net',
+    title: 'Social Net',
     description:
-      'A private social network mock app for family and close friends — share posts, photos, and updates in a safe, closed community space.',
+      'A private social network for family and close friends — share posts, photos, and updates in a safe, closed community space.',
     tech: ['TypeScript', 'React'],
     github: 'https://github.com/GalMoussan/Family-net',
   },
