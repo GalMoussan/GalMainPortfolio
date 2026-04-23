@@ -1,5 +1,6 @@
 import { StarBackground } from '@/components/StarBackground';
 import { Footer } from '@/components/layout/Footer';
+import { AINav } from './_components/AINav';
 
 export default function AIIntegrationLayout({
   children,
@@ -15,7 +16,7 @@ export default function AIIntegrationLayout({
       >
         Skip to Content
       </a>
-      {/* TODO: AINav component will go here in Phase 3 */}
+      <AINav />
       <div id="content">
         <main className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] xl:px-[150px] min-h-screen pt-[100px] pb-0">
           {children}
