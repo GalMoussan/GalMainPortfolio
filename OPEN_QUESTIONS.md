@@ -60,4 +60,51 @@ This file tracks anything blocked on Gal's input during the `/ai-integration` bu
 
 ## Questions Raised During Build
 
-_(Will be populated as build progresses)_
+### Final QA Testing Required (Phase 10)
+
+**Manual testing checklist** - see `src/app/ai-integration/README.md` for full list:
+- Mobile responsive testing (375px, 430px)
+- Desktop testing (1280px, 1440px, 1920px)
+- WhatsApp CTA verification (all 4 CTAs)
+- Email capture end-to-end (form → Resend → user confirmation)
+- Lighthouse audit (mobile + desktop, target ≥95 all metrics)
+- E2E test suite execution (`npm run test:e2e`)
+
+**Performance Budget Status:**
+- First Load JS: 159 kB (9kb over 150kb budget)
+- Acceptable exceedance due to:
+  * @vercel/analytics (+16kb) - conversion tracking
+  * react-hook-form + zod (+8kb) - form validation
+  * Framer Motion (~40kb) - UX polish
+
+**Deployment Prerequisites:**
+1. Set `RESEND_API_KEY` in Vercel env
+2. Set `NEXT_PUBLIC_WHATSAPP_NUMBER` in Vercel env (format: 972501234567, no + sign)
+3. Update `from` addresses in `src/app/api/early-access/route.ts` with verified domain
+4. Optional: Set `NEXT_PUBLIC_CAL_LINK` for v2 Cal.com integration
+
+---
+
+## Build Complete Summary
+
+**Branch:** `feat/T001-ai-integration-foundation`
+**Total Commits:** 11 (Phases 0–10)
+**Routes Added:** `/ai-integration`
+**API Routes Added:** `/api/early-access`
+
+**Files Modified (outside additions):**
+- `package.json` (+5 dependencies)
+- `package-lock.json`
+- `src/app/globals.css` (+1 CSS variable: `--fz-hero`)
+- `.env.local.example` (+3 env vars)
+- `src/app/layout.tsx` (simplified - chrome moved to route group)
+- Route group restructure: `(portfolio)/layout.tsx` created
+
+**Test Status:**
+- Unit: 25/25 passing
+- E2E: 12 scenarios created, require manual execution with dev server
+
+**Documentation:**
+- `src/app/ai-integration/README.md` - Architecture, vertical setup, deployment
+- `PERFORMANCE_AUDIT.md` - Build metrics, Lighthouse checklist, trade-offs
+- `OPEN_QUESTIONS.md` - This file
