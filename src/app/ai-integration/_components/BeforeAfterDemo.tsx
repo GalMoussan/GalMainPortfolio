@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import type { DemoScenario } from '../_lib/verticals/types';
 
@@ -98,7 +99,10 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
         {scenarios.map((scenario, i) => (
           <button
             key={scenario.id}
-            onClick={() => setActiveIndex(i)}
+            onClick={() => {
+              setActiveIndex(i);
+              track('scenario_tab_switch', { scenario: scenario.id });
+            }}
             className={`flex-1 py-3 px-4 font-mono text-xs transition-colors ${
               i === activeIndex
                 ? 'text-[var(--lightest-slate)] border-b-2 border-[var(--green)] bg-[var(--navy)]'

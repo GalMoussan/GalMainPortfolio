@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { track } from '@vercel/analytics';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { HexLogo } from '@/components/layout/HexLogo';
 
@@ -26,9 +27,19 @@ export function AINav() {
   }, []);
 
   const handleCTAClick = () => {
-    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal - provide real WhatsApp number
-    const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    const calLink = process.env.NEXT_PUBLIC_CAL_LINK;
+
+    if (calLink) {
+      // v2: Cal.com integration
+      window.open(calLink, '_blank');
+      track('cta_click', { source: 'nav', method: 'cal.com' });
+    } else {
+      // v1: WhatsApp fallback
+      const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal - provide real WhatsApp number
+      const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+      track('cta_click', { source: 'nav', method: 'whatsapp' });
+    }
   };
 
   return (

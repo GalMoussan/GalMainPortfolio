@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { baseFaqs } from '../_content/faqs';
 import type { FAQEntry } from '../_lib/verticals/types';
@@ -22,8 +23,13 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
     questions: allFaqs.filter((faq) => faq.category === category),
   }));
 
-  const toggleFAQ = (index: number) => {
+  const toggleFAQ = (index: number, question: string) => {
+    const isOpening = openIndex !== index;
     setOpenIndex(openIndex === index ? null : index);
+
+    if (isOpening) {
+      track('faq_open', { question });
+    }
   };
 
   let globalIndex = 0;
@@ -53,7 +59,7 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
                   >
                     {/* Question button */}
                     <button
-                      onClick={() => toggleFAQ(currentIndex)}
+                      onClick={() => toggleFAQ(currentIndex, faq.question)}
                       className="w-full text-left px-6 py-4 bg-[var(--light-navy)] hover:bg-[var(--lightest-navy)] transition-colors flex justify-between items-center gap-4"
                     >
                       <span className="text-[var(--lightest-slate)] font-medium">

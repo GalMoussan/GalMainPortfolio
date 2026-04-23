@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import type { VerticalConfig } from '../_lib/verticals/types';
 import { BeforeAfterDemo } from './BeforeAfterDemo';
@@ -26,9 +27,19 @@ export function Hero({ config }: HeroProps) {
   }, [config.hero.cyclingTexts.length, prefersReducedMotion]);
 
   const handlePrimaryCTA = () => {
-    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal
-    const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    const calLink = process.env.NEXT_PUBLIC_CAL_LINK;
+
+    if (calLink) {
+      // v2: Cal.com integration
+      window.open(calLink, '_blank');
+      track('cta_click', { source: 'hero', method: 'cal.com' });
+    } else {
+      // v1: WhatsApp fallback
+      const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal
+      const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+      track('cta_click', { source: 'hero', method: 'whatsapp' });
+    }
   };
 
   return (

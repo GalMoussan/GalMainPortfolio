@@ -1,5 +1,7 @@
+import { Analytics } from '@vercel/analytics/react';
 import { Footer } from '@/components/layout/Footer';
 import { AINav } from './_components/AINav';
+import { ScrollDepthTracker } from './_components/ScrollDepthTracker';
 
 export default function AIIntegrationLayout({
   children,
@@ -21,6 +23,8 @@ export default function AIIntegrationLayout({
         </main>
         <Footer />
       </div>
+      <ScrollDepthTracker />
+      <Analytics />
     </>
   );
 }
