@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export function AboutGal() {
   return (
     <section id="about-gal" className="max-w-[1000px] mx-auto py-[100px]">
@@ -12,12 +14,13 @@ export function AboutGal() {
             {/* Image with green tint overlay */}
             <div className="relative rounded overflow-hidden w-full aspect-square">
               <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-40 transition-opacity duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:opacity-0" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/images/profile.jpeg"
                 alt="Gal Moussan"
                 width={300}
                 height={300}
+                quality={85}
+                sizes="300px"
                 className="relative rounded w-full h-full object-cover filter grayscale contrast-[1] brightness-90 transition-[filter] duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:grayscale-0 group-hover:brightness-100"
               />
             </div>
