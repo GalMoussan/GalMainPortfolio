@@ -1,7 +1,9 @@
+import { Nav } from '@/components/layout/Nav';
+import { SocialSidebar } from '@/components/layout/SocialSidebar';
+import { EmailSidebar } from '@/components/layout/EmailSidebar';
 import { Footer } from '@/components/layout/Footer';
-import { AINav } from './_components/AINav';
 
-export default function AIIntegrationLayout({
+export default function PortfolioLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -14,9 +16,11 @@ export default function AIIntegrationLayout({
       >
         Skip to Content
       </a>
-      <AINav />
+      <Nav />
+      <SocialSidebar />
+      <EmailSidebar />
       <div id="content">
-        <main className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] xl:px-[150px] min-h-screen pt-[100px] pb-0">
+        <main className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] xl:px-[150px] min-h-screen pt-0 pb-0">
           {children}
         </main>
         <Footer />

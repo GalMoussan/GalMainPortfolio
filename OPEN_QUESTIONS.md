@@ -31,14 +31,21 @@ This file tracks anything blocked on Gal's input during the `/ai-integration` bu
 
 ## Architectural Exception (Phase 3)
 
-**src/app/layout.tsx modified to prevent double-rendering:**
+**Route group restructure to isolate layouts:**
 - Original spec forbade modifying existing files outside the permitted list
 - **Exception required:** Next.js nested layouts wrap root layouts, they don't replace them
 - Issue: AI page was rendering portfolio Nav, Footer, Sidebars PLUS its own chrome
-- Fix: Added middleware (`src/middleware.ts`) to set `x-pathname` header, modified root layout with narrowly-scoped conditional to skip portfolio chrome when `pathname.startsWith('/ai-integration')`
-- Files modified: `src/app/layout.tsx` (one conditional block), `src/middleware.ts` (new)
-- Portfolio routes unaffected - verified both `/` and `/ai-integration` render correctly
-- This was the cleanest approach vs. restructuring entire repo with route groups
+- **Final fix (Phase 3.1):** Restructured with route groups instead of middleware approach
+  - Created `(portfolio)` route group containing existing routes (/, /archive, /tools/*)
+  - Moved portfolio chrome (Nav, Sidebars, Footer) to `(portfolio)/layout.tsx`
+  - Root layout simplified to just fonts + StarBackground (shared by all routes)
+  - AI integration at `/ai-integration` outside route group with its own layout
+- **Result:** Portfolio routes restored to static (○) prerendering, AI page remains dynamic (ƒ)
+- Files modified:
+  - `src/app/layout.tsx` (simplified - no longer has portfolio chrome)
+  - `src/app/(portfolio)/layout.tsx` (new - contains portfolio chrome)
+  - Moved `page.tsx`, `archive/`, `tools/` into `(portfolio)/` group
+- Verified both `/` and `/ai-integration` render correctly with no double-rendering
 
 ---
 
