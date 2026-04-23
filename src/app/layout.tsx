@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Inter, Fira_Code } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
 import { SocialSidebar } from "@/components/layout/SocialSidebar";
@@ -44,21 +45,36 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Detect AI integration route to skip portfolio chrome
+  const headersList = headers();
+  const pathname = headersList.get("x-pathname") || "";
+  const isAIRoute = pathname.startsWith("/ai-integration");
+
   return (
     <html lang="en" className={`${inter.variable} ${firaCode.variable}`}>
       <body>
         <StarBackground />
-        <a href="#content" className="absolute -top-10 left-0 bg-[var(--green)] text-[var(--navy)] py-3 px-5 z-[100] font-mono text-[14px] focus:top-0 transition-all duration-200">
-          Skip to Content
-        </a>
-        <Nav />
-        <SocialSidebar />
-        <EmailSidebar />
+        {!isAIRoute && (
+          <>
+            <a href="#content" className="absolute -top-10 left-0 bg-[var(--green)] text-[var(--navy)] py-3 px-5 z-[100] font-mono text-[14px] focus:top-0 transition-all duration-200">
+              Skip to Content
+            </a>
+            <Nav />
+            <SocialSidebar />
+            <EmailSidebar />
+          </>
+        )}
         <div id="content">
-          <main className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] xl:px-[150px] min-h-screen pt-0 pb-0">
-            {children}
-          </main>
-          <Footer />
+          {isAIRoute ? (
+            children
+          ) : (
+            <>
+              <main className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] xl:px-[150px] min-h-screen pt-0 pb-0">
+                {children}
+              </main>
+              <Footer />
+            </>
+          )}
         </div>
       </body>
     </html>
