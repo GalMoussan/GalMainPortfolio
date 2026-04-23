@@ -53,9 +53,32 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
     }
   };
 
-  // Handle drag
-  const handleDrag = () => {
+  // Handle pointer-based dragging
+  const handlePointerMove = (e: PointerEvent) => {
+    if (!containerRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const relativeX = e.clientX - containerRect.left;
+    const percentage = Math.max(0, Math.min(100, (relativeX / containerRect.width) * 100));
+
+    sliderPosition.set(percentage);
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
     setHasInteracted(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+
+    const onMove = (event: PointerEvent) => handlePointerMove(event);
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+
+    // Set initial position
+    handlePointerMove(e.nativeEvent);
   };
 
   return (
@@ -119,15 +142,11 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
 
         {/* Draggable handle */}
         <motion.div
-          drag="x"
-          dragConstraints={containerRef}
-          dragElastic={0}
-          dragMomentum={false}
-          onDrag={handleDrag}
+          onPointerDown={handlePointerDown}
           style={{
             left: useTransform(sliderPosition, (pos) => `${pos}%`),
           }}
-          className="absolute top-0 bottom-0 z-20 cursor-ew-resize"
+          className="absolute top-0 bottom-0 z-20 cursor-ew-resize touch-none"
           tabIndex={0}
           onKeyDown={handleKeyDown}
           role="slider"
@@ -135,12 +154,6 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
           aria-valuemax={100}
           aria-valuenow={sliderPosition.get()}
           aria-label="Adjust comparison slider"
-          onDragEnd={(_, info) => {
-            if (!containerRef.current) return;
-            const containerWidth = containerRef.current.offsetWidth;
-            const newPosition = ((sliderPosition.get() * containerWidth) / 100 + info.offset.x) / containerWidth * 100;
-            sliderPosition.set(Math.max(0, Math.min(100, newPosition)));
-          }}
         >
           {/* Handle bar */}
           <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-1 bg-[var(--green)]" />
