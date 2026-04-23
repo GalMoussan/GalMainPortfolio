@@ -1,6 +1,7 @@
 'use client';
 
 import type { VerticalConfig } from '../_lib/verticals/types';
+import { BeforeAfterDemo } from './BeforeAfterDemo';
 
 type HeroProps = {
   config: VerticalConfig;
@@ -71,17 +72,7 @@ export function Hero({ config }: HeroProps) {
 
         {/* Demo column - right on desktop, bottom on mobile */}
         <div className="md:col-span-5">
-          {/* Placeholder for BeforeAfterDemo - full component in Phase 4 */}
-          <div className="bg-[var(--light-navy)] border border-[var(--lightest-navy)] rounded p-8 h-[400px] flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-[var(--slate)] font-mono text-sm mb-2">
-                Interactive Demo
-              </p>
-              <p className="text-[var(--dark-slate)] text-xs">
-                (Before/After slider - Phase 4)
-              </p>
-            </div>
-          </div>
+          <BeforeAfterDemo scenarios={config.demoScenarios} />
         </div>
       </div>
     </section>
