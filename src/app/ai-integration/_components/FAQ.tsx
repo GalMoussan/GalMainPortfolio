@@ -77,7 +77,7 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
                           initial={prefersReducedMotion ? {} : { height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={prefersReducedMotion ? {} : { height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
                           <div className="px-6 py-4 bg-[var(--navy)] border-t border-[var(--lightest-navy)]">
