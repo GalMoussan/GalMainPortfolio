@@ -37,8 +37,67 @@ export default function AIIntegrationPage({ params }: PageProps) {
   const slug = params.vertical?.[0]?.replace(/^for-/, '') ?? 'default';
   const config = getVerticalConfig(slug);
 
+  // JSON-LD structured data
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: config.seoMeta.title,
+    description: config.seoMeta.description,
+    provider: {
+      '@type': 'Person',
+      name: 'Gal Moussan',
+      jobTitle: 'AI Integration Engineer',
+      url: 'https://galmoussan.com',
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'Israel',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'AI Integration Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Starter Agent',
+            description: config.serviceExamples.starter,
+          },
+          price: '1000',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Business System',
+            description: config.serviceExamples.business,
+          },
+          price: '3000',
+          priceCurrency: 'USD',
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Full Autonomous Operation',
+            description: config.serviceExamples.full,
+          },
+          price: '6000',
+          priceCurrency: 'USD',
+        },
+      ],
+    },
+  };
+
   return (
     <>
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Section 1 - Hero */}
       <Hero config={config} />
 
