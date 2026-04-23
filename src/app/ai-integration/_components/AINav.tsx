@@ -34,8 +34,13 @@ export function AINav() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[var(--navy)] backdrop-blur-md shadow-md' : 'bg-transparent'
-      } ${scrollDirection === 'down' ? '-translate-y-full' : 'translate-y-0'}`}
+        scrollDirection === 'down' ? '-translate-y-full' : 'translate-y-0'
+      }`}
+      style={{
+        backgroundColor: scrolled ? 'rgba(10, 25, 47, 0.95)' : 'rgba(10, 25, 47, 0.3)',
+        backdropFilter: scrolled ? 'blur(10px)' : 'blur(5px)',
+        boxShadow: scrolled ? '0 10px 30px -10px rgba(0, 0, 0, 0.7)' : 'none',
+      }}
     >
       <nav className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] h-[var(--nav-height)] flex items-center justify-between">
         {/* Logo - links back to portfolio homepage */}

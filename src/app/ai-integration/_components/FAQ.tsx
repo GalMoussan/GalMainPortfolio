@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { baseFaqs } from '../_content/faqs';
 import type { FAQEntry } from '../_lib/verticals/types';
 
@@ -11,6 +13,7 @@ type FAQProps = {
 export function FAQ({ additionalFaqs = [] }: FAQProps) {
   const allFaqs = [...baseFaqs, ...additionalFaqs];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   // Group FAQs by category
   const categories = Array.from(new Set(allFaqs.map((faq) => faq.category)));
@@ -61,12 +64,22 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
                       </span>
                     </button>
 
-                    {/* Answer */}
-                    {isOpen && (
-                      <div className="px-6 py-4 bg-[var(--navy)] border-t border-[var(--lightest-navy)]">
-                        <p className="text-[var(--slate)]">{faq.answer}</p>
-                      </div>
-                    )}
+                    {/* Answer with accordion animation */}
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={prefersReducedMotion ? {} : { height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={prefersReducedMotion ? {} : { height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 py-4 bg-[var(--navy)] border-t border-[var(--lightest-navy)]">
+                            <p className="text-[var(--slate)]">{faq.answer}</p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 );
               })}

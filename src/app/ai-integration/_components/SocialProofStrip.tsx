@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect, useRef } from 'react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import type { ToolSlug } from '../_lib/verticals/types';
 
 type SocialProofStripProps = {
@@ -12,6 +14,69 @@ const stats = [
   { value: '5+', label: 'Years full-stack engineering' },
   { value: '24/7', label: 'Systems running, not sleeping' },
 ];
+
+function AnimatedStat({ value, label }: { value: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Extract numeric value and suffix
+  const match = value.match(/^(\d+)(.*)$/);
+  const targetNumber = match ? parseInt(match[1]) : 0;
+  const suffix = match ? match[2] : value;
+  const isNumeric = match !== null;
+
+  useEffect(() => {
+    if (!ref.current || !isNumeric || hasAnimated) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasAnimated(true);
+
+          if (prefersReducedMotion) {
+            setCount(targetNumber);
+            return;
+          }
+
+          // Animate count-up
+          const duration = 1500;
+          const steps = 30;
+          const increment = targetNumber / steps;
+          const interval = duration / steps;
+
+          let current = 0;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= targetNumber) {
+              setCount(targetNumber);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, interval);
+
+          return () => clearInterval(timer);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [isNumeric, hasAnimated, targetNumber, prefersReducedMotion]);
+
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-3xl font-bold text-[var(--green)] font-mono">
+        {isNumeric ? `${count}${suffix}` : value}
+      </div>
+      <div className="text-xs text-[var(--slate)] mt-1">{label}</div>
+    </div>
+  );
+}
 
 export function SocialProofStrip({ tools }: SocialProofStripProps) {
   // For Phase 3, just display tool names. Logo SVGs will be added as inline elements later
@@ -55,14 +120,7 @@ export function SocialProofStrip({ tools }: SocialProofStripProps) {
           <div className="lg:col-span-5">
             <div className="grid grid-cols-2 gap-6">
               {stats.map((stat, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-3xl font-bold text-[var(--green)] font-mono">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-[var(--slate)] mt-1">
-                    {stat.label}
-                  </div>
-                </div>
+                <AnimatedStat key={i} value={stat.value} label={stat.label} />
               ))}
             </div>
           </div>

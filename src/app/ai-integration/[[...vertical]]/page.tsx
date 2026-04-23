@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getVerticalConfig } from '../_lib/verticals/_registry';
+import { ScrollRevealSection } from '@/components/ui/ScrollRevealSection';
 import { Hero } from '../_components/Hero';
 import { BeforeAfterDemo } from '../_components/BeforeAfterDemo';
 import { SocialProofStrip } from '../_components/SocialProofStrip';
@@ -42,37 +43,58 @@ export default function AIIntegrationPage({ params }: PageProps) {
       <Hero config={config} />
 
       {/* Section 2 - Social Proof Strip */}
-      <SocialProofStrip tools={config.tools} />
+      <ScrollRevealSection>
+        <SocialProofStrip tools={config.tools} />
+      </ScrollRevealSection>
 
       {/* Section 3 - Comparison Diff */}
-      <ComparisonDiff />
+      <ScrollRevealSection>
+        <ComparisonDiff />
+      </ScrollRevealSection>
 
       {/* Section 4 - Expanded Demo (optional, uses same BeforeAfterDemo) */}
-      <section id="demo-detail" className="max-w-[1200px] mx-auto py-[100px]">
+      <ScrollRevealSection
+        id="demo-detail"
+        className="max-w-[1200px] mx-auto py-[100px]"
+      >
         <h2 className="numbered-heading text-center mb-12">See it in action.</h2>
         <BeforeAfterDemo scenarios={config.demoScenarios} />
-      </section>
+      </ScrollRevealSection>
 
       {/* Section 5 - Services */}
-      <Services config={config} />
+      <ScrollRevealSection>
+        <Services config={config} />
+      </ScrollRevealSection>
 
       {/* Section 6 - Process */}
-      <Process />
+      <ScrollRevealSection>
+        <Process />
+      </ScrollRevealSection>
 
       {/* Section 7 - Case Studies */}
-      <CaseStudies slugs={config.caseStudySlugs} />
+      <ScrollRevealSection>
+        <CaseStudies slugs={config.caseStudySlugs} />
+      </ScrollRevealSection>
 
       {/* Section 8 - Coming Soon */}
-      <ComingSoon />
+      <ScrollRevealSection>
+        <ComingSoon />
+      </ScrollRevealSection>
 
       {/* Section 9 - About Gal */}
-      <AboutGal />
+      <ScrollRevealSection>
+        <AboutGal />
+      </ScrollRevealSection>
 
       {/* Section 10 - FAQ */}
-      <FAQ additionalFaqs={config.faqAdditional} />
+      <ScrollRevealSection>
+        <FAQ additionalFaqs={config.faqAdditional} />
+      </ScrollRevealSection>
 
       {/* Section 11 - Final CTA */}
-      <FinalCTA />
+      <ScrollRevealSection>
+        <FinalCTA />
+      </ScrollRevealSection>
 
       {/* Section 12 - Footer (already in layout) */}
     </>

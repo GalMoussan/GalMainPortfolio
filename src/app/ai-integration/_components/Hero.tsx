@@ -1,5 +1,8 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import type { VerticalConfig } from '../_lib/verticals/types';
 import { BeforeAfterDemo } from './BeforeAfterDemo';
 
@@ -8,6 +11,20 @@ type HeroProps = {
 };
 
 export function Hero({ config }: HeroProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [cyclingIndex, setCyclingIndex] = useState(0);
+
+  // Cycle through texts every 2.5 seconds
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const interval = setInterval(() => {
+      setCyclingIndex((prev) => (prev + 1) % config.hero.cyclingTexts.length);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [config.hero.cyclingTexts.length, prefersReducedMotion]);
+
   const handlePrimaryCTA = () => {
     const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal
     const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
@@ -43,10 +60,21 @@ export function Hero({ config }: HeroProps) {
             {config.hero.subheadline}
           </p>
 
-          {/* Cycling text - static for Phase 3, animation in Phase 5 */}
-          <p className="font-mono text-[var(--green)] text-sm mb-6">
-            {config.hero.cyclingTexts[0]}
-          </p>
+          {/* Cycling text with fade animation */}
+          <div className="h-[20px] mb-6 relative">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={cyclingIndex}
+                initial={prefersReducedMotion ? {} : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={prefersReducedMotion ? {} : { opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="font-mono text-[var(--green)] text-sm absolute"
+              >
+                {config.hero.cyclingTexts[cyclingIndex]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
 
           {/* Trust micro-badges */}
           <p className="text-sm text-[var(--dark-slate)] mb-8">
