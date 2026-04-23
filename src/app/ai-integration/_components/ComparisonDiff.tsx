@@ -62,7 +62,7 @@ export function ComparisonDiff() {
               {/* Typical (minus) */}
               <div className="flex gap-2">
                 <span className="text-red-400 font-mono text-sm">-</span>
-                <span className="text-[var(--dark-slate)] text-sm line-through opacity-70">
+                <span className="text-[var(--slate)] text-sm line-through opacity-70">
                   {row.typical}
                 </span>
               </div>

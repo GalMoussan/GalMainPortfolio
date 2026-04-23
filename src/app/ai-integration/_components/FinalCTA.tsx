@@ -46,7 +46,7 @@ export function FinalCTA() {
           Message me on WhatsApp →
         </button>
 
-        <p className="text-[var(--dark-slate)] text-sm mt-4">
+        <p className="text-[var(--slate)] text-sm mt-4">
           Usually replies within a few hours.
         </p>
       </div>

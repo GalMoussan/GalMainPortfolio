@@ -88,7 +88,7 @@ export function Hero({ config }: HeroProps) {
           </div>
 
           {/* Trust micro-badges */}
-          <p className="text-sm text-[var(--dark-slate)] mb-8">
+          <p className="text-sm text-[var(--slate)] mb-8">
             Free 30-min diagnostic · Fixed prices · Built in 2–4 weeks · You own it forever
           </p>
 

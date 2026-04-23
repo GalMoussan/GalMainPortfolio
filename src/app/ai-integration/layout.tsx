@@ -24,7 +24,8 @@ export default function AIIntegrationLayout({
         <Footer />
       </div>
       <ScrollDepthTracker />
-      <Analytics />
+      {/* Only load Analytics on Vercel (avoids 404 in local/preview) */}
+      {process.env.NEXT_PUBLIC_VERCEL_ENV && <Analytics />}
     </>
   );
 }

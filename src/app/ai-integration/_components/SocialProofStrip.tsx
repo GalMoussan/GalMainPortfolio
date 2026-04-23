@@ -101,7 +101,7 @@ export function SocialProofStrip({ tools }: SocialProofStripProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left 60% - Tool logos marquee */}
           <div className="lg:col-span-7">
-            <p className="text-[var(--dark-slate)] text-xs font-mono mb-4 uppercase tracking-wide">
+            <p className="text-[var(--slate)] text-xs font-mono mb-4 uppercase tracking-wide">
               Technologies I work with
             </p>
             <div className="flex flex-wrap gap-6 items-center">

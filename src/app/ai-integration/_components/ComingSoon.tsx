@@ -99,7 +99,7 @@ export function ComingSoon() {
           )}
         </form>
 
-        <p className="text-[var(--dark-slate)] text-xs mt-3">
+        <p className="text-[var(--slate)] text-xs mt-3">
           I&apos;ll also notify you when I publish new case studies.
         </p>
       </div>

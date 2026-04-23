@@ -48,7 +48,7 @@ export function AboutGal() {
           </div>
 
           <div className="pt-4 border-t border-[var(--lightest-navy)]">
-            <p className="text-[var(--dark-slate)] text-sm">
+            <p className="text-[var(--slate)] text-sm">
               Tel Aviv · Available in Hebrew &amp; English · Works across time zones
             </p>
           </div>

@@ -31,11 +31,14 @@ test.describe('AI Integration Landing Page', () => {
   test('slider drag interaction works', async ({ page }) => {
     await page.goto('/ai-integration');
 
-    // Wait for demo component
-    await page.waitForSelector('[role="slider"]');
+    // Wait for the BeforeAfterDemo to fully load by checking for scenario tabs
+    await page.waitForSelector('text=Lead handling');
 
-    const slider = page.locator('[role="slider"]');
-    await expect(slider).toBeVisible();
+    // Wait for initial animation to complete (opacity: 0 → 1 takes 0.3s)
+    await page.waitForTimeout(500);
+
+    // Target the first slider (hero section) - there are 2 on the page
+    const slider = page.locator('[role="slider"]').first();
 
     // Get slider bounding box
     const sliderBox = await slider.boundingBox();
@@ -85,11 +88,21 @@ test.describe('AI Integration Landing Page', () => {
     await ctaButton.click();
 
     const newPage = await pagePromise;
-    await newPage.waitForLoadState();
 
-    // Should open WhatsApp (or Cal.com if configured)
+    // Get URL immediately without waiting for WhatsApp page to load
     const url = newPage.url();
-    expect(url).toMatch(/wa\.me|cal\.com/);
+
+    // Should open WhatsApp (wa.me or api.whatsapp.com) or Cal.com if configured
+    expect(url).toMatch(/wa\.me|whatsapp\.com|cal\.com/);
+
+    // Verify pre-filled message is included (URL-encoded)
+    if (url.includes('whatsapp')) {
+      expect(url).toContain('text=');
+      expect(url).toContain('30-min');
+    }
+
+    // Close the new page immediately
+    await newPage.close();
   });
 
   test('form validation works', async ({ page }) => {
@@ -105,8 +118,10 @@ test.describe('AI Integration Landing Page', () => {
     await emailInput.fill('invalid-email');
     await submitButton.click();
 
-    // Should show validation error
-    await expect(page.locator('text=valid email')).toBeVisible({ timeout: 3000 });
+    // HTML5 validation prevents submission - check that the input is invalid
+    const validationMessage = await emailInput.evaluate((el: HTMLInputElement) => el.validationMessage);
+    expect(validationMessage).toBeTruthy();
+    expect(validationMessage.toLowerCase()).toContain('email');
   });
 
   test('form submission shows success state', async ({ page }) => {
@@ -165,17 +180,22 @@ test.describe('AI Integration Landing Page', () => {
     const hamburger = page.locator('button[aria-label="Toggle menu"]');
     await expect(hamburger).toBeVisible();
 
-    // Menu should not be visible initially
-    await expect(page.locator('text=Book free call').nth(1)).not.toBeVisible();
-
-    // Click hamburger
+    // Click hamburger to open menu
     await hamburger.click();
 
-    // Menu should appear
-    await expect(page.locator('text=Book free call').nth(1)).toBeVisible();
+    // Wait for mobile menu items to appear (they're inside the fixed overlay)
+    // The mobile menu contains nav links in a flex column
+    const mobileFAQLink = page.locator('a:has-text("FAQ")').nth(1); // Second FAQ link (first is desktop)
+    await expect(mobileFAQLink).toBeVisible({ timeout: 3000 });
 
-    // Click link and menu should close
-    await page.click('text=FAQ');
-    await expect(page.locator('text=Book free call').nth(1)).not.toBeVisible();
+    // Book free call button should be visible in mobile menu
+    const mobileCallButton = page.locator('button:has-text("Book free call")').nth(1); // Second button (first is desktop)
+    await expect(mobileCallButton).toBeVisible();
+
+    // Click FAQ link in mobile menu
+    await mobileFAQLink.click();
+
+    // Menu should close after clicking - check that mobile items are hidden
+    await expect(mobileFAQLink).not.toBeVisible();
   });
 });

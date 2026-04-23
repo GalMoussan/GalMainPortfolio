@@ -199,12 +199,12 @@ function BeforeSide({ scenario }: { scenario: DemoScenario }) {
 
       <div className="h-full flex flex-col justify-between">
         <div>
-          <h4 className="text-[var(--light-slate)] font-semibold mb-4 text-sm">
+          <div className="text-[var(--light-slate)] font-semibold mb-4 text-sm">
             {scenario.before.title}
-          </h4>
+          </div>
           <ul className="space-y-3">
             {scenario.before.bullets.map((bullet, i) => (
-              <li key={i} className="text-xs text-[var(--dark-slate)] flex items-start gap-2">
+              <li key={i} className="text-xs text-[var(--slate)] flex items-start gap-2">
                 <span className="text-red-400 mt-0.5">✗</span>
                 <span>{bullet}</span>
               </li>
@@ -214,7 +214,7 @@ function BeforeSide({ scenario }: { scenario: DemoScenario }) {
 
         {scenario.before.stat && (
           <div className="mt-4 pt-4 border-t border-[var(--lightest-navy)]">
-            <p className="text-xs text-[var(--dark-slate)] mb-1">
+            <p className="text-xs text-[var(--slate)] mb-1">
               {scenario.before.stat.label}
             </p>
             <p className="text-2xl font-bold text-[var(--slate)] font-mono">
@@ -280,9 +280,9 @@ function AfterSide({
 
       <div className="h-full flex flex-col justify-between">
         <div>
-          <h4 className="text-[var(--green)] font-semibold mb-4 text-sm">
+          <div className="text-[var(--green)] font-semibold mb-4 text-sm">
             {scenario.after.title}
-          </h4>
+          </div>
 
           {/* Workflow diagram */}
           <WorkflowDiagram

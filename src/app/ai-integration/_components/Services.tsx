@@ -81,7 +81,7 @@ export function Services({ config }: ServicesProps) {
               <div className="text-4xl font-bold text-[var(--green)] font-mono">
                 ${service.priceUSD.toLocaleString()}{service.suffix || ''}
               </div>
-              <div className="text-sm text-[var(--dark-slate)] font-mono mt-1">
+              <div className="text-sm text-[var(--slate)] font-mono mt-1">
                 ₪{service.priceILS.toLocaleString()} ILS
               </div>
             </div>
@@ -108,7 +108,7 @@ export function Services({ config }: ServicesProps) {
       </div>
 
       {/* Footer disclaimer */}
-      <p className="text-[var(--dark-slate)] text-sm text-center max-w-[800px] mx-auto">
+      <p className="text-[var(--slate)] text-sm text-center max-w-[800px] mx-auto">
         All packages include hosting guidance. Ongoing hosting: $30–200/month (₪100–700 ILS) paid directly to your cloud provider, not to me.
       </p>
     </section>
