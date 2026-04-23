@@ -108,7 +108,7 @@ export function SocialProofStrip({ tools }: SocialProofStripProps) {
               {tools.map((tool) => (
                 <span
                   key={tool}
-                  className="text-[var(--slate)] opacity-80 hover:opacity-100 hover:text-[var(--green)] transition-all font-mono text-sm"
+                  className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors font-mono text-sm"
                 >
                   {toolNames[tool]}
                 </span>
