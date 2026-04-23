@@ -65,7 +65,8 @@ export function AINav() {
             <a
               key={link.name}
               href={link.href}
-              className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors font-mono text-sm"
+              className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors font-mono text-sm inline-flex items-center px-2"
+              style={{ minHeight: '44px' }}
             >
               {link.name}
             </a>

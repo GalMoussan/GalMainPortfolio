@@ -60,7 +60,8 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
                     {/* Question button */}
                     <button
                       onClick={() => toggleFAQ(currentIndex, faq.question)}
-                      className="w-full text-left px-6 py-4 bg-[var(--light-navy)] hover:bg-[var(--lightest-navy)] transition-colors flex justify-between items-center gap-4"
+                      className="w-full text-left px-6 py-6 bg-[var(--light-navy)] hover:bg-[var(--lightest-navy)] transition-colors flex justify-between items-center gap-4"
+                      style={{ minHeight: '44px' }}
                     >
                       <span className="text-[var(--lightest-slate)] font-medium">
                         {faq.question}
