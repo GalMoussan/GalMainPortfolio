@@ -32,6 +32,7 @@
   --fz-xl: 20px;
   --fz-xxl: 22px;
   --fz-heading: 32px;
+  --fz-hero: clamp(40px, 6vw, 72px);
 
   /* Layout */
   --border-radius: 4px;

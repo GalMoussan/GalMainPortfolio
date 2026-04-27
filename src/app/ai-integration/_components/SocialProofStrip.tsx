@@ -1,0 +1,131 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import type { ToolSlug } from '../_lib/verticals/types';
+
+type SocialProofStripProps = {
+  tools: ToolSlug[];
+};
+
+const stats = [
+  { value: '12+', label: 'AI tools in my stack' },
+  { value: '4+', label: 'Agent frameworks shipped' },
+  { value: '5+', label: 'Years full-stack engineering' },
+  { value: '24/7', label: 'Systems running, not sleeping' },
+];
+
+function AnimatedStat({ value, label }: { value: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Extract numeric value and suffix
+  const match = value.match(/^(\d+)(.*)$/);
+  const targetNumber = match ? parseInt(match[1]) : 0;
+  const suffix = match ? match[2] : value;
+  const isNumeric = match !== null;
+
+  useEffect(() => {
+    if (!ref.current || !isNumeric || hasAnimated) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasAnimated(true);
+
+          if (prefersReducedMotion) {
+            setCount(targetNumber);
+            return;
+          }
+
+          // Animate count-up
+          const duration = 1500;
+          const steps = 30;
+          const increment = targetNumber / steps;
+          const interval = duration / steps;
+
+          let current = 0;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= targetNumber) {
+              setCount(targetNumber);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, interval);
+
+          return () => clearInterval(timer);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [isNumeric, hasAnimated, targetNumber, prefersReducedMotion]);
+
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-3xl font-bold text-[var(--green)] font-mono">
+        {isNumeric ? `${count}${suffix}` : value}
+      </div>
+      <div className="text-xs text-[var(--slate)] mt-1">{label}</div>
+    </div>
+  );
+}
+
+export function SocialProofStrip({ tools }: SocialProofStripProps) {
+  // For Phase 3, just display tool names. Logo SVGs will be added as inline elements later
+  const toolNames: Record<ToolSlug, string> = {
+    claude: 'Claude',
+    openai: 'OpenAI',
+    n8n: 'n8n',
+    make: 'Make',
+    zapier: 'Zapier',
+    airtable: 'Airtable',
+    monday: 'Monday',
+    hubspot: 'HubSpot',
+    'google-workspace': 'Google',
+    slack: 'Slack',
+    notion: 'Notion',
+    supabase: 'Supabase',
+  };
+
+  return (
+    <section id="proof" className="bg-[var(--light-navy)] py-12">
+      <div className="max-w-[1400px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Left 60% - Tool logos marquee */}
+          <div className="lg:col-span-7">
+            <p className="text-[var(--slate)] text-xs font-mono mb-4 uppercase tracking-wide">
+              Technologies I work with
+            </p>
+            <div className="flex flex-wrap gap-6 items-center">
+              {tools.map((tool) => (
+                <span
+                  key={tool}
+                  className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors font-mono text-sm"
+                >
+                  {toolNames[tool]}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right 40% - Stats */}
+          <div className="lg:col-span-5">
+            <div className="grid grid-cols-2 gap-6">
+              {stats.map((stat, i) => (
+                <AnimatedStat key={i} value={stat.value} label={stat.label} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
