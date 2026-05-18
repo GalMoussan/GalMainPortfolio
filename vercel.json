@@ -9,6 +9,10 @@
       "destination": "https://portfolio-kappa-kohl-74.vercel.app/lander/:path*"
     },
     {
+      "source": "/deck-of-tarot",
+      "destination": "https://deck-of-tarot.vercel.app/"
+    },
+    {
       "source": "/deck-of-tarot/:path*",
       "destination": "https://deck-of-tarot.vercel.app/:path*"
     }
