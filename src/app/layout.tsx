@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import { StarBackground } from "@/components/StarBackground";
+import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body>
         <StarBackground />
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

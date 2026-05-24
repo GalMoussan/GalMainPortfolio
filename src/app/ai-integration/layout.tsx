@@ -1,7 +1,7 @@
-import { Analytics } from '@vercel/analytics/react';
 import { Footer } from '@/components/layout/Footer';
 import { AINav } from './_components/AINav';
-import { ScrollDepthTracker } from './_components/ScrollDepthTracker';
+import { ConditionalAnalytics } from '@/components/ConditionalAnalytics';
+import { ConditionalScrollTracker } from '@/components/ConditionalScrollTracker';
 
 export default function AIIntegrationLayout({
   children,
@@ -23,9 +23,9 @@ export default function AIIntegrationLayout({
         </main>
         <Footer />
       </div>
-      <ScrollDepthTracker />
-      {/* Only load Analytics on Vercel (avoids 404 in local/preview) */}
-      {process.env.NEXT_PUBLIC_VERCEL_ENV && <Analytics />}
+      <ConditionalScrollTracker />
+      {/* Only load Analytics if user has given consent */}
+      <ConditionalAnalytics />
     </>
   );
 }
