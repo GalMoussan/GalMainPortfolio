@@ -19,11 +19,10 @@ export function About() {
 
   return (
     <section id="about" className="relative z-[2] max-w-[900px] mx-auto py-[100px]">
-      <SectionHeading subtitle="About Me">About</SectionHeading>
-
       <div className="grid grid-cols-1 gap-[30px] md:grid-cols-[3fr_2fr] md:gap-[50px] md:items-start">
         {/* Text Column */}
-        <div>
+        <div className="text-scrim">
+          <SectionHeading subtitle="About Me">About</SectionHeading>
           <div className="text-[var(--slate)] text-[16px] md:text-[20px] space-y-4">
             <p>
               Hello! My name is Gal and I&apos;m a fullstack developer and tech lead based in Tel Aviv.

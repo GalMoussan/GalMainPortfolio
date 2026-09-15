@@ -6,7 +6,9 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 export function FeaturedProjects() {
   return (
     <section id="projects" className="relative z-[2] max-w-[1000px] mx-auto py-[100px]">
-      <SectionHeading subtitle="Some Things I've Built">Work</SectionHeading>
+      <div className="text-scrim mb-10 max-w-xl">
+        <SectionHeading subtitle="Some Things I've Built">Work</SectionHeading>
+      </div>
 
       <ul className="list-none p-0 m-0">
         {featuredProjects.map((project, i) => {

@@ -40,7 +40,7 @@ export function ScrollLinkedFigure() {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="relative mx-auto w-full max-w-[250px] md:max-w-[300px] md:sticky md:top-[120px] md:self-start">
+    <div className="relative mx-auto w-full max-w-[250px] md:max-w-[300px] md:sticky md:top-[120px] md:self-start rounded-[24px] bg-[var(--light-navy)] p-2.5 border border-[rgba(215,227,238,0.22)] shadow-[0_16px_40px_rgba(6,8,12,0.45)]">
       <div
         ref={frameRef}
         className="relative group block w-full aspect-square origin-center will-change-transform"

@@ -70,7 +70,7 @@ export function ScrollScrubFigure() {
         <filter id="gal-knock-white" colorInterpolationFilters="sRGB">
           <feColorMatrix
             type="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1.15 -1.15 -1.15 3.2 0"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1.35 -1.35 -1.35 3.55 0"
           />
         </filter>
       </svg>

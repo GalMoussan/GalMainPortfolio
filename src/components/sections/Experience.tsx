@@ -20,6 +20,7 @@ export function Experience() {
 
   return (
     <section id="jobs" className="relative z-[2] max-w-[700px] mx-auto py-[100px]">
+      <div className="text-scrim">
       <SectionHeading subtitle="Where I've Worked">Experience</SectionHeading>
 
       <div className="flex flex-col min-h-[340px] md:flex-row">
@@ -90,6 +91,7 @@ export function Experience() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

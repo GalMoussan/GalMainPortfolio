@@ -17,12 +17,14 @@ export function NoteworthyProjects() {
 
   return (
     <section className="relative z-[2] max-w-[1000px] mx-auto py-[100px] text-center">
-      <h2 className="section-heading-title justify-center text-center">
-        Other Noteworthy Projects
-      </h2>
-      <a href="/archive" className="outline-button inline-block text-[14px] mt-[10px] mb-[50px] py-2.5 px-5">
-        view the archive
-      </a>
+      <div className="text-scrim inline-block mb-[50px]">
+        <h2 className="section-heading-title justify-center text-center">
+          Other Noteworthy Projects
+        </h2>
+        <a href="/archive" className="outline-button inline-block text-[14px] mt-[10px] py-2.5 px-5">
+          view the archive
+        </a>
+      </div>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[15px] list-none p-0 m-0">
         {projects.map((project) => (
