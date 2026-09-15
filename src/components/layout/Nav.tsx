@@ -22,7 +22,7 @@ export function Nav() {
       className={`fixed top-0 z-50 w-full px-[16px] sm:px-[25px] md:px-[50px] transition-all duration-300 ease-custom ${
         scrolledToTop
           ? 'py-3 md:py-4 bg-transparent'
-          : 'py-2 md:py-3 bg-[rgba(10,25,47,0.55)] backdrop-blur-md'
+          : 'py-2 md:py-3 bg-[rgba(16,21,28,0.62)] backdrop-blur-md'
       }`}
     >
       <nav

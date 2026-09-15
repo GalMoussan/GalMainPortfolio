@@ -66,20 +66,26 @@ export function ScrollScrubFigure() {
 
   return (
     <div className="scroll-figure" aria-hidden="true">
-      <div className="scroll-figure-blend">
-        <video
-          ref={videoRef}
-          className="scroll-figure-video"
-          muted
-          playsInline
-          preload="auto"
-          poster="/gal-spin-poster.jpg"
-          src="/gal-spin.mp4"
-          controls={false}
-          disablePictureInPicture
-        />
-      </div>
-      <div className="scroll-figure-scrim" />
+      <svg width="0" height="0" className="absolute overflow-hidden" aria-hidden="true">
+        <filter id="gal-knock-white" colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1.15 -1.15 -1.15 3.2 0"
+          />
+        </filter>
+      </svg>
+      <div className="scroll-figure-glow" />
+      <video
+        ref={videoRef}
+        className="scroll-figure-video"
+        muted
+        playsInline
+        preload="auto"
+        poster="/gal-spin-poster.jpg"
+        src="/gal-spin.mp4"
+        controls={false}
+        disablePictureInPicture
+      />
     </div>
   );
 }

@@ -139,7 +139,7 @@ export function StarBackground() {
 
         ctx!.beginPath();
         ctx!.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(174, 230, 255,${s.opacity.toFixed(3)})`;
+        ctx!.fillStyle = `rgba(210, 228, 242,${s.opacity.toFixed(3)})`;
         ctx!.fill();
       }
 
@@ -159,7 +159,7 @@ export function StarBackground() {
 
         ctx!.beginPath();
         ctx!.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(174, 230, 255,${b.opacity.toFixed(3)})`;
+        ctx!.fillStyle = `rgba(94, 231, 255,${b.opacity.toFixed(3)})`;
         ctx!.fill();
       }
 
@@ -190,7 +190,7 @@ export function StarBackground() {
       for (const s of stars) {
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(174, 230, 255,${s.baseOpacity.toFixed(3)})`;
+        ctx.fillStyle = `rgba(210, 228, 242,${s.baseOpacity.toFixed(3)})`;
         ctx.fill();
       }
       return () => window.removeEventListener('resize', resize);

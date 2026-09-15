@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   other: {
-    "theme-color": "#0a192f",
+    "theme-color": "#10151c",
   },
 };
 
