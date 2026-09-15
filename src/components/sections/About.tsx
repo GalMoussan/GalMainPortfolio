@@ -1,3 +1,5 @@
+import { ScrollLinkedFigure } from '@/components/ui/ScrollLinkedFigure';
+
 export function About() {
   const skills = [
     'JavaScript (ES6+)',
@@ -15,10 +17,10 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="max-w-[900px] mx-auto py-[100px]">
+    <section id="about" className="relative z-[1] max-w-[900px] mx-auto py-[100px]">
       <h2 className="numbered-heading">About Me</h2>
 
-      <div className="grid grid-cols-1 gap-[30px] md:grid-cols-[3fr_2fr] md:gap-[50px]">
+      <div className="grid grid-cols-1 gap-[30px] md:grid-cols-[3fr_2fr] md:gap-[50px] md:items-start">
         {/* Text Column */}
         <div>
           <div className="text-[var(--slate)] text-[16px] md:text-[20px] space-y-4">
@@ -72,28 +74,7 @@ export function About() {
           </ul>
         </div>
 
-        {/* Photo Column */}
-        <div className="relative mx-auto max-w-[250px] w-full md:max-w-[300px]">
-          <div className="relative group block w-full aspect-square">
-            {/* Green border offset box */}
-            <div
-              className="absolute top-[15px] left-[15px] w-full h-full border-2 border-[var(--green)] rounded transition-[top,left] duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:top-[10px] group-hover:left-[10px]"
-            />
-            {/* Image with green tint overlay */}
-            <div className="relative rounded overflow-hidden w-full h-full">
-              {/* Green tint overlay */}
-              <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-40 transition-opacity duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:opacity-0" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/profile.jpeg"
-                alt="Headshot"
-                width={300}
-                height={300}
-                className="relative rounded w-full h-full object-cover filter grayscale contrast-[1] brightness-90 transition-[filter] duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:grayscale-0 group-hover:brightness-100"
-              />
-            </div>
-          </div>
-        </div>
+        <ScrollLinkedFigure />
       </div>
     </section>
   );

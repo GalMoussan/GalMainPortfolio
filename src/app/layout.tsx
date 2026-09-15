@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
+import localFont from "next/font/local";
 import { StarBackground } from "@/components/StarBackground";
 import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist",
+  weight: "100 900",
   display: "swap",
 });
 
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  variable: "--font-mono",
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
   display: "swap",
 });
 
@@ -42,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${firaCode.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <StarBackground />
         {children}

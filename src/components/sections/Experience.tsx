@@ -18,7 +18,7 @@ export function Experience() {
   }, []);
 
   return (
-    <section id="jobs" className="max-w-[700px] mx-auto py-[100px]">
+    <section id="jobs" className="relative z-[1] max-w-[700px] mx-auto py-[100px]">
       <h2 className="numbered-heading">Where I&apos;ve Worked</h2>
 
       <div className="flex flex-col min-h-[340px] md:flex-row">
@@ -32,7 +32,7 @@ export function Experience() {
               aria-controls={`panel-${i}`}
               id={`tab-${i}`}
               onClick={() => setActiveTab(i)}
-              className={`flex items-center w-full md:w-[var(--tab-width)] h-[var(--tab-height)] px-5 py-0 border-b-2 md:border-b-0 md:border-l-2 bg-transparent font-mono text-[13px] text-left whitespace-nowrap cursor-pointer transition-all duration-250 ease-custom ${
+              className={`flex items-center w-full md:w-[var(--tab-width)] min-h-[44px] h-[var(--tab-height)] px-5 py-0 border-b-2 md:border-b-0 md:border-l-2 bg-transparent font-mono text-[13px] text-left whitespace-nowrap cursor-pointer transition-all duration-250 ease-custom ${
                 activeTab === i
                   ? 'text-[var(--green)] border-b-[var(--green)] md:border-l-[var(--green)] bg-[var(--green-tint)]'
                   : 'text-[var(--slate)] border-b-[var(--lightest-navy)] md:border-l-[var(--lightest-navy)] hover:text-[var(--green)] hover:bg-[var(--lightest-navy)]'
@@ -64,7 +64,7 @@ export function Experience() {
               hidden={activeTab !== i}
               className="w-full"
             >
-              <h3 className="text-[22px] font-medium text-[var(--lightest-slate)] mb-[2px]">
+              <h3 className="text-[22px] font-semibold tracking-[-0.02em] text-[var(--lightest-slate)] mb-[2px]">
                 {job.title}{' '}
                 <span className="text-[var(--green)]">
                   @{' '}

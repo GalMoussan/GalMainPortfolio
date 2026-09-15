@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { otherProjects } from '@/data/other-projects';
 import { IconGitHub, IconExternalLink, IconFolder } from '@/components/ui/Icons';
 
@@ -9,12 +9,18 @@ export function NoteworthyProjects() {
   const GRID_LIMIT = 6;
   const projects = showMore ? otherProjects : otherProjects.slice(0, GRID_LIMIT);
 
+  const handlePointer = (event: MouseEvent<HTMLLIElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty('--spot-x', `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty('--spot-y', `${event.clientY - rect.top}px`);
+  };
+
   return (
-    <section className="max-w-[1000px] mx-auto py-[100px] text-center">
-      <h2 className="text-[32px] font-semibold text-[var(--lightest-slate)]">
+    <section className="relative z-[1] max-w-[1000px] mx-auto py-[100px] text-center">
+      <h2 className="font-sans text-[clamp(28px,4vw,36px)] font-semibold tracking-[-0.03em] text-[var(--lightest-slate)] m-0">
         Other Noteworthy Projects
       </h2>
-      <a href="/archive" className="inline-block font-mono text-[14px] text-[var(--green)] mt-[10px] mb-[50px] hover:underline">
+      <a href="/archive" className="outline-button inline-block text-[14px] mt-[10px] mb-[50px] py-2.5 px-5">
         view the archive
       </a>
 
@@ -22,7 +28,8 @@ export function NoteworthyProjects() {
         {projects.map((project) => (
           <li
             key={project.title}
-            className="noteworthy-card bg-[var(--light-navy)] rounded p-5 md:p-8 cursor-default"
+            className="noteworthy-card p-5 md:p-8 cursor-default text-left"
+            onMouseMove={handlePointer}
           >
             <div className="flex flex-col justify-between h-full">
               {/* Top */}
@@ -54,7 +61,7 @@ export function NoteworthyProjects() {
                     )}
                   </div>
                 </div>
-                <h3 className="text-[22px] font-semibold text-[var(--lightest-slate)] mb-[10px] text-left">
+                <h3 className="text-[22px] font-semibold tracking-[-0.02em] text-[var(--lightest-slate)] mb-[10px] text-left">
                   <a
                     href={project.external || project.github || '#'}
                     target="_blank"

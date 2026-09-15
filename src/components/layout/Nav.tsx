@@ -1,56 +1,46 @@
 'use client';
 
 import { HexLogo } from './HexLogo';
-import { HamburgerMenu } from './HamburgerMenu';
+import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 const navLinks = [
-  { name: 'About', url: '#about' },
-  { name: 'Experience', url: '#jobs' },
-  { name: 'Work', url: '#projects' },
-  { name: 'Contact', url: '#contact' },
-];
+  { name: 'About', url: '#about', id: 'about' },
+  { name: 'Experience', url: '#jobs', id: 'jobs' },
+  { name: 'Work', url: '#projects', id: 'projects' },
+  { name: 'Contact', url: '#contact', id: 'contact' },
+] as const;
+
+const SECTION_IDS = navLinks.map((link) => link.id);
 
 export function Nav() {
-  const { scrollDirection, scrolledToTop } = useScrollDirection();
+  const { scrolledToTop } = useScrollDirection();
+  const activeId = useActiveSection(SECTION_IDS);
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full px-[25px] md:px-[50px] flex items-center justify-between backdrop-blur-[10px] transition-all duration-300 ease-custom ${
+      className={`fixed top-0 z-50 w-full px-[16px] sm:px-[25px] md:px-[50px] transition-all duration-300 ease-custom ${
         scrolledToTop
-          ? 'h-[var(--nav-height)] bg-transparent shadow-none'
-          : scrollDirection === 'down'
-            ? 'h-[var(--nav-scroll-height)] bg-[rgba(10,25,47,0.85)] shadow-[0_10px_30px_-10px_var(--navy-shadow)] -translate-y-full'
-            : 'h-[var(--nav-scroll-height)] bg-[rgba(10,25,47,0.85)] shadow-[0_10px_30px_-10px_var(--navy-shadow)] translate-y-0'
+          ? 'py-3 md:py-4 bg-transparent'
+          : 'py-2 md:py-3 bg-[rgba(10,25,47,0.28)] backdrop-blur-md'
       }`}
     >
-      <nav className="flex items-center justify-between w-full max-w-[1600px] mx-auto">
-        <a href="/" aria-label="home" className="text-[var(--green)]">
-          <HexLogo size={42} />
-        </a>
+      <nav
+        aria-label="Primary"
+        className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 md:gap-4 w-full max-w-[1600px] mx-auto"
+      >
+        <div className="flex items-center justify-between md:justify-start md:flex-none">
+          <a
+            href="/"
+            aria-label="home"
+            className="text-[var(--green)] inline-flex drop-shadow-[0_0_12px_rgba(110,216,255,0.35)] focus-visible:rounded-full"
+          >
+            <HexLogo size={50} />
+          </a>
 
-        <div className="flex items-center">
-          <ol className="hidden md:flex items-center gap-[5px] list-none p-0 m-0" style={{ counterReset: 'item' }}>
-            {navLinks.map((link) => (
-              <li
-                key={link.name}
-                className="font-mono text-[13px] [counter-increment:item_1]"
-              >
-                <a
-                  href={link.url}
-                  className="p-[10px] text-[var(--lightest-slate)] hover:text-[var(--green)] transition-colors"
-                >
-                  <span className="text-[var(--green)] text-[12px] mr-[5px]">
-                    {`0${navLinks.indexOf(link) + 1}.`}
-                  </span>
-                  {link.name}
-                </a>
-              </li>
-            ))}
-          </ol>
           <a
             href="/resume.pdf"
-            className="outline-button ml-[15px] py-3 px-4 hidden md:inline-block"
+            className="outline-button py-2.5 px-5 md:hidden"
             target="_blank"
             rel="noreferrer"
           >
@@ -58,7 +48,31 @@ export function Nav() {
           </a>
         </div>
 
-        <HamburgerMenu />
+        <ul className="nav-capsule order-last md:order-none md:absolute md:left-1/2 md:-translate-x-1/2">
+          {navLinks.map((link) => {
+            const isActive = activeId === link.id;
+            return (
+              <li key={link.name}>
+                <a
+                  href={link.url}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`nav-capsule-link${isActive ? ' is-active' : ''}`}
+                >
+                  {link.name}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <a
+          href="/resume.pdf"
+          className="outline-button hidden md:inline-flex items-center py-2.5 px-5 flex-none"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Resume
+        </a>
       </nav>
     </header>
   );

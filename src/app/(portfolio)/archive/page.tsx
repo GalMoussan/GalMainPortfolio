@@ -40,7 +40,7 @@ export default function ArchivePage() {
         >
           &larr; Back
         </a>
-        <h1 className="text-[clamp(40px,5vw,60px)] font-semibold text-[var(--lightest-slate)]">
+        <h1 className="font-sans text-[clamp(40px,5vw,60px)] font-semibold tracking-[-0.035em] text-[var(--lightest-slate)]">
           Archive
         </h1>
         <p className="font-mono text-[var(--green)] text-[16px]">

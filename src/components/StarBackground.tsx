@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const STAR_COUNT = 150;
 const CURSOR_RADIUS = 110;
@@ -37,7 +38,7 @@ function makeStar(w: number, h: number): Star {
     originX: 0,
     originY: 0,
     radius: 0.5 + Math.random() * 1.2,
-    baseOpacity: 0.08 + Math.random() * 0.07,
+    baseOpacity: 0.12 + Math.random() * 0.1,
     opacity: 0,
     twinkleSpeed: 0.003 + Math.random() * 0.008,
     twinkleOffset: Math.random() * Math.PI * 2,
@@ -48,6 +49,7 @@ function makeStar(w: number, h: number): Star {
 
 export function StarBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -137,7 +139,7 @@ export function StarBackground() {
 
         ctx!.beginPath();
         ctx!.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(255,255,255,${s.opacity.toFixed(3)})`;
+        ctx!.fillStyle = `rgba(174, 230, 255,${s.opacity.toFixed(3)})`;
         ctx!.fill();
       }
 
@@ -157,7 +159,7 @@ export function StarBackground() {
 
         ctx!.beginPath();
         ctx!.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(255,255,255,${b.opacity.toFixed(3)})`;
+        ctx!.fillStyle = `rgba(174, 230, 255,${b.opacity.toFixed(3)})`;
         ctx!.fill();
       }
 
@@ -181,9 +183,20 @@ export function StarBackground() {
     resize();
     canvas.width = w;
     canvas.height = h;
-    rafId = requestAnimationFrame(draw);
 
     window.addEventListener('resize', resize);
+
+    if (prefersReducedMotion) {
+      for (const s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(174, 230, 255,${s.baseOpacity.toFixed(3)})`;
+        ctx.fill();
+      }
+      return () => window.removeEventListener('resize', resize);
+    }
+
+    rafId = requestAnimationFrame(draw);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseleave', onMouseLeave);
     window.addEventListener('click', onClick);
@@ -195,7 +208,7 @@ export function StarBackground() {
       window.removeEventListener('mouseleave', onMouseLeave);
       window.removeEventListener('click', onClick);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <canvas

@@ -1,10 +1,10 @@
 export function Contact() {
   return (
-    <section id="contact" className="max-w-[600px] mx-auto text-center py-[100px] px-0">
-      <p className="font-mono text-[var(--green)] text-[16px] mb-5">
+    <section id="contact" className="relative z-[1] max-w-[600px] mx-auto text-center py-[100px] px-0">
+      <p className="font-sans text-[var(--green)] text-[16px] mb-5 font-medium tracking-[0.08em]">
         What&apos;s Next?
       </p>
-      <h2 className="text-[clamp(40px,5vw,60px)] font-semibold text-[var(--lightest-slate)]">
+      <h2 className="font-sans text-[clamp(40px,5vw,60px)] font-semibold tracking-[-0.035em] text-[var(--lightest-slate)]">
         Get In Touch
       </h2>
       <p className="mt-0 mb-[50px] max-w-[500px] mx-auto text-[var(--slate)] text-[20px]">
@@ -13,7 +13,7 @@ export function Contact() {
       </p>
       <a
         href="mailto:galmoussan@gmail.com"
-        className="outline-button inline-block py-5 px-7 leading-[1]"
+        className="outline-button inline-block py-5 px-8 leading-[1]"
       >
         Say Hello
       </a>

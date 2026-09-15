@@ -3,7 +3,7 @@ interface HexLogoProps {
   className?: string;
 }
 
-export function HexLogo({ size = 42, className }: HexLogoProps) {
+export function HexLogo({ size = 50, className }: HexLogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,19 +19,19 @@ export function HexLogo({ size = 42, className }: HexLogoProps) {
         <g transform="translate(11, 5)">
           <polygon
             stroke="currentColor"
-            strokeWidth="5"
+            strokeWidth="6.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             points="39 0 0 22 0 67 39 90 78 68 78 23"
           />
           <text
             x="39"
-            y="62"
+            y="63"
             fill="currentColor"
-            fontSize="50"
-            fontFamily="var(--font-mono)"
+            fontSize="52"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
-            fontWeight="400"
+            fontWeight="600"
           >
             G
           </text>

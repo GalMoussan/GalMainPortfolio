@@ -4,7 +4,7 @@ import { IconGitHub, IconExternalLink } from '@/components/ui/Icons';
 
 export function FeaturedProjects() {
   return (
-    <section id="projects" className="max-w-[1000px] mx-auto py-[100px]">
+    <section id="projects" className="relative z-[1] max-w-[1000px] mx-auto py-[100px]">
       <h2 className="numbered-heading">Some Things I&apos;ve Built</h2>
 
       <ul className="list-none p-0 m-0">
@@ -26,14 +26,14 @@ export function FeaturedProjects() {
                   href={project.external || project.github || '#'}
                   target="_blank"
                   rel="noreferrer"
-                  className="project-img-link relative block w-full h-full rounded bg-[var(--green)] group"
+                  className="project-img-link relative block w-full h-full rounded-[20px] bg-[var(--green)] group"
                 >
-                  <div className="absolute inset-0 bg-[var(--navy)] opacity-60 z-10 rounded transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
+                  <div className="absolute inset-0 bg-[var(--navy)] opacity-60 z-10 rounded-[20px] transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="project-img w-full h-[350px] object-cover rounded bg-[var(--light-navy)]"
+                    className="project-img w-full h-[350px] object-cover rounded-[20px] bg-[var(--light-navy)]"
                   />
                 </a>
               </div>
@@ -47,12 +47,12 @@ export function FeaturedProjects() {
                 <p className="font-mono text-[var(--green)] text-[13px] mb-[10px]">
                   Featured Project
                 </p>
-                <h3 className="text-[28px] font-semibold text-[var(--lightest-slate)] mb-5">
+                <h3 className="text-[28px] font-semibold tracking-[-0.03em] text-[var(--lightest-slate)] mb-5">
                   <a href={project.external || project.github || '#'} target="_blank" rel="noreferrer" className="hover:text-[var(--green)] transition-colors">
                     {project.title}
                   </a>
                 </h3>
-                <div className="relative p-[25px] rounded bg-[var(--light-navy)] text-[var(--light-slate)] text-[18px] shadow-navy">
+                <div className="relative p-[25px] rounded-[20px] bg-[var(--light-navy)] text-[var(--light-slate)] text-[18px] shadow-navy border border-[rgba(110,216,255,0.12)]">
                   <p>{project.description}</p>
                 </div>
                 <ul
@@ -94,7 +94,7 @@ export function FeaturedProjects() {
                   {project.title === 'CinemaQuery' && (
                     <Link
                       href="/tools/cinema-query"
-                      className="border-2 border-[var(--green)] text-[var(--green)] rounded px-4 py-2 font-mono text-[13px] hover:bg-[rgba(0,255,136,0.1)] transition-colors duration-300"
+                      className="border border-[var(--green)] text-[var(--green)] rounded-full px-4 py-2 font-sans text-[13px] font-medium hover:bg-[var(--green-tint)] hover:shadow-[0_0_18px_var(--cyan-bloom)] transition-all duration-300"
                       aria-label="View CinemaQuery Tool"
                     >
                       View Tool →
@@ -103,7 +103,7 @@ export function FeaturedProjects() {
                   {project.title === 'Snake' && (
                     <Link
                       href="/tools/snake"
-                      className="inline-flex items-center px-4 py-2 border-2 border-[var(--green)] text-[var(--green)] rounded font-mono text-[13px] hover:bg-[rgba(0,255,136,0.1)] transition-colors duration-300"
+                      className="inline-flex items-center px-4 py-2 border border-[var(--green)] text-[var(--green)] rounded-full font-sans text-[13px] font-medium hover:bg-[var(--green-tint)] hover:shadow-[0_0_18px_var(--cyan-bloom)] transition-all duration-300"
                       aria-label="View Snake Game Tool"
                     >
                       View Tool →

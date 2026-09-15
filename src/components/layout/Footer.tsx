@@ -14,7 +14,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col items-center justify-center py-[15px] px-0 text-center min-h-[70px]">
+    <footer className="relative z-[1] flex flex-col items-center justify-center py-[15px] px-0 text-center min-h-[70px]">
       <div className="flex items-center gap-[20px] mb-[10px] md:hidden">
         {socialLinks.map((link) => {
           const Icon = iconMap[link.name];
