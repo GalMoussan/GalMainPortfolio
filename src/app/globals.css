@@ -54,6 +54,14 @@
     overflow-x: hidden;
   }
 
+  #about,
+  #jobs,
+  #projects,
+  #contact,
+  #hero {
+    scroll-margin-top: 108px;
+  }
+
   body {
     margin: 0;
     padding: 0;
@@ -200,8 +208,8 @@
 
   .outline-button {
     color: var(--green);
-    background-color: transparent;
-    border: 1px solid var(--green);
+    background-color: rgba(110, 216, 255, 0.08);
+    border: 1px solid rgba(110, 216, 255, 0.7);
     border-radius: 999px;
     font-size: var(--fz-sm);
     font-family: var(--font-sans);
@@ -322,8 +330,8 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgba(10, 25, 47, 0.58) 0%, rgba(10, 25, 47, 0.78) 48%, rgba(10, 25, 47, 0.94) 78%, var(--navy) 100%),
-      radial-gradient(1200px 500px at 50% -10%, rgba(110, 216, 255, 0.16), transparent 60%);
+      linear-gradient(180deg, rgba(10, 25, 47, 0.7) 0%, rgba(10, 25, 47, 0.86) 42%, rgba(10, 25, 47, 0.95) 74%, var(--navy) 100%),
+      radial-gradient(1200px 500px at 50% -10%, rgba(110, 216, 255, 0.14), transparent 60%);
   }
 
   @keyframes still-drift {
@@ -469,12 +477,20 @@
   /* Responsive nav height for mobile */
   @media (max-width: 768px) {
     :root {
-      --nav-height: 118px;
-      --nav-scroll-height: 104px;
+      --nav-height: 140px;
+      --nav-scroll-height: 128px;
     }
 
     html {
-      scroll-padding-top: 128px;
+      scroll-padding-top: 152px;
+    }
+
+    #about,
+    #jobs,
+    #projects,
+    #contact,
+    #hero {
+      scroll-margin-top: 152px;
     }
   }
 }
