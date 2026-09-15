@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { featuredProjects } from '@/data/featured-projects';
 import { IconGitHub, IconExternalLink } from '@/components/ui/Icons';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 
 export function FeaturedProjects() {
   return (
-    <section id="projects" className="relative z-[1] max-w-[1000px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">Some Things I&apos;ve Built</h2>
+    <section id="projects" className="relative z-[2] max-w-[1000px] mr-auto md:mr-[min(42vw,480px)] py-[100px]">
+      <SectionHeading subtitle="Some Things I've Built">Work</SectionHeading>
 
       <ul className="list-none p-0 m-0">
         {featuredProjects.map((project, i) => {

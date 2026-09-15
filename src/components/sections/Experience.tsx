@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { jobs } from '@/data/jobs';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 
 export function Experience() {
   const [activeTab, setActiveTab] = useState(0);
@@ -18,8 +19,8 @@ export function Experience() {
   }, []);
 
   return (
-    <section id="jobs" className="relative z-[1] max-w-[700px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">Where I&apos;ve Worked</h2>
+    <section id="jobs" className="relative z-[2] max-w-[700px] mr-auto py-[100px]">
+      <SectionHeading subtitle="Where I've Worked">Experience</SectionHeading>
 
       <div className="flex flex-col min-h-[340px] md:flex-row">
         {/* Tab List */}

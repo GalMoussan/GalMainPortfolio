@@ -1,3 +1,4 @@
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ScrollLinkedFigure } from '@/components/ui/ScrollLinkedFigure';
 
 export function About() {
@@ -17,10 +18,10 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="relative z-[1] max-w-[900px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">About Me</h2>
+    <section id="about" className="relative z-[2] max-w-[640px] mr-auto py-[100px]">
+      <SectionHeading subtitle="About Me">About</SectionHeading>
 
-      <div className="grid grid-cols-1 gap-[30px] md:grid-cols-[3fr_2fr] md:gap-[50px] md:items-start">
+      <div className="grid grid-cols-1 gap-[30px]">
         {/* Text Column */}
         <div>
           <div className="text-[var(--slate)] text-[16px] md:text-[20px] space-y-4">
@@ -74,7 +75,9 @@ export function About() {
           </ul>
         </div>
 
-        <ScrollLinkedFigure />
+        <div className="md:hidden">
+          <ScrollLinkedFigure />
+        </div>
       </div>
     </section>
   );

@@ -16,8 +16,8 @@ export function NoteworthyProjects() {
   };
 
   return (
-    <section className="relative z-[1] max-w-[1000px] mx-auto py-[100px] text-center">
-      <h2 className="font-sans text-[clamp(28px,4vw,36px)] font-semibold tracking-[-0.03em] text-[var(--lightest-slate)] m-0">
+    <section className="relative z-[2] max-w-[1000px] mx-auto py-[100px] text-center">
+      <h2 className="section-heading-title justify-center text-center">
         Other Noteworthy Projects
       </h2>
       <a href="/archive" className="outline-button inline-block text-[14px] mt-[10px] mb-[50px] py-2.5 px-5">

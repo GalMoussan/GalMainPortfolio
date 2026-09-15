@@ -19,11 +19,7 @@ function canPlayCinematicVideo() {
   return true;
 }
 
-interface HeroAtmosphereProps {
-  anchorRef: { current: HTMLElement | null };
-}
-
-export function HeroAtmosphere({ anchorRef }: HeroAtmosphereProps) {
+export function HeroAtmosphere() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [enableVideo, setEnableVideo] = useState(false);
@@ -34,59 +30,35 @@ export function HeroAtmosphere({ anchorRef }: HeroAtmosphereProps) {
   }, []);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setEnableVideo(false);
-    }
+    if (prefersReducedMotion) setEnableVideo(false);
   }, [prefersReducedMotion]);
 
   useEffect(() => {
     const video = videoRef.current;
-    const anchor = anchorRef.current;
-    if (!enableVideo || !video || !anchor) return;
+    if (!enableVideo || !video) return;
 
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
+    const play = video.play();
+    if (play) play.catch(() => undefined);
 
-    const syncPlayback = (visible: boolean) => {
-      if (visible) {
-        const play = video.play();
-        if (play) play.catch(() => undefined);
-      } else {
-        video.pause();
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => syncPlayback(entry.isIntersecting && entry.intersectionRatio > 0.02),
-      { threshold: [0, 0.02, 0.1, 0.25] }
-    );
-
-    observer.observe(anchor);
     return () => {
-      observer.disconnect();
       video.pause();
     };
-  }, [anchorRef, enableVideo]);
+  }, [enableVideo]);
 
   useEffect(() => {
     if (prefersReducedMotion || !enableVideo) return;
 
     const onScroll = () => {
-      const anchor = anchorRef.current;
-      if (!anchor) return;
-      const rect = anchor.getBoundingClientRect();
-      if (rect.bottom <= 0) {
-        setParallax(0);
-        return;
-      }
-      setParallax(Math.min(120, Math.max(0, window.scrollY * 0.22)));
+      setParallax(Math.min(80, Math.max(0, window.scrollY * 0.12)));
     };
 
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [anchorRef, enableVideo, prefersReducedMotion]);
+  }, [enableVideo, prefersReducedMotion]);
 
   return (
     <div className="hero-atmosphere" aria-hidden="true">
@@ -97,12 +69,12 @@ export function HeroAtmosphere({ anchorRef }: HeroAtmosphereProps) {
           muted
           playsInline
           loop
-          preload="metadata"
+          autoPlay
+          preload="auto"
           poster="/videos/hero-poster.jpg"
+          src="/videos/hero-loop.mp4"
           style={{ transform: `translate3d(0, ${parallax}px, 0) scale(1.08)` }}
-        >
-          <source src="/videos/hero-loop.mp4" type="video/mp4" />
-        </video>
+        />
       ) : (
         <div
           className={`hero-atmosphere-still${prefersReducedMotion ? '' : ' hero-atmosphere-still-drift'}`}
