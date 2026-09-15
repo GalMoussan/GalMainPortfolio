@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 export function ScrollScrubFigure() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -16,43 +17,69 @@ export function ScrollScrubFigure() {
     video.playsInline = true;
     video.pause();
 
-    if (prefersReducedMotion) {
-      video.currentTime = 0;
-      return;
-    }
-
-    const scrub = () => {
-      const duration = video.duration;
-      if (!Number.isFinite(duration) || duration <= 0) return;
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, window.scrollY / max));
-      video.currentTime = progress * duration;
+    const freezeMid = () => {
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        video.currentTime = video.duration * 0.5;
+      }
     };
 
-    const onLoaded = () => scrub();
-    video.addEventListener('loadedmetadata', onLoaded);
-    window.addEventListener('scroll', scrub, { passive: true });
-    window.addEventListener('resize', scrub);
-    scrub();
+    if (prefersReducedMotion) {
+      const onMeta = () => freezeMid();
+      video.addEventListener('loadedmetadata', onMeta);
+      freezeMid();
+      return () => video.removeEventListener('loadedmetadata', onMeta);
+    }
+
+    const apply = () => {
+      const duration = video.duration;
+      if (!Number.isFinite(duration) || duration <= 0) return;
+      const root = document.scrollingElement || document.documentElement;
+      const max = Math.max(1, root.scrollHeight - window.innerHeight);
+      const y = window.scrollY || root.scrollTop || 0;
+      const progress = Math.min(1, Math.max(0, y / max));
+      const nextTime = progress * (duration - 0.04);
+      if (Math.abs(video.currentTime - nextTime) > 0.01) {
+        video.currentTime = nextTime;
+      }
+    };
+
+    const onScroll = () => {
+      if (frameRef.current != null) return;
+      frameRef.current = window.requestAnimationFrame(() => {
+        frameRef.current = null;
+        apply();
+      });
+    };
+
+    video.addEventListener('loadedmetadata', apply);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    apply();
 
     return () => {
-      video.removeEventListener('loadedmetadata', onLoaded);
-      window.removeEventListener('scroll', scrub);
-      window.removeEventListener('resize', scrub);
+      video.removeEventListener('loadedmetadata', apply);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frameRef.current != null) window.cancelAnimationFrame(frameRef.current);
     };
   }, [prefersReducedMotion]);
 
   return (
     <div className="scroll-figure" aria-hidden="true">
-      <video
-        ref={videoRef}
-        className="scroll-figure-video"
-        muted
-        playsInline
-        preload="auto"
-        poster="/videos/figure-poster.jpg"
-        src="/videos/figure-turn.mp4"
-      />
+      <div className="scroll-figure-blend">
+        <video
+          ref={videoRef}
+          className="scroll-figure-video"
+          muted
+          playsInline
+          preload="auto"
+          poster="/gal-spin-poster.jpg"
+          src="/gal-spin.mp4"
+          controls={false}
+          disablePictureInPicture
+        />
+      </div>
+      <div className="scroll-figure-scrim" />
     </div>
   );
 }

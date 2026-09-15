@@ -19,7 +19,7 @@ export function Experience() {
   }, []);
 
   return (
-    <section id="jobs" className="relative z-[2] max-w-[700px] mr-auto py-[100px]">
+    <section id="jobs" className="relative z-[2] max-w-[700px] mx-auto py-[100px]">
       <SectionHeading subtitle="Where I've Worked">Experience</SectionHeading>
 
       <div className="flex flex-col min-h-[340px] md:flex-row">

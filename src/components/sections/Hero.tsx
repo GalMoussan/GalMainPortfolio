@@ -8,7 +8,7 @@ export function Hero() {
       <HeroAtmosphere />
       <section
         id="hero"
-        className="hero-copy relative z-[2] flex flex-col justify-end min-h-[100svh] w-full max-w-[640px] mr-auto py-0 pt-[120px] pb-[72px] md:pb-[96px]"
+        className="hero-copy relative z-[2] flex flex-col justify-end min-h-[100svh] max-w-[1000px] mx-auto py-0 pt-[120px] pb-[72px] md:pb-[96px]"
       >
         <p className="mb-5 ml-[2px] font-sans text-[var(--green)] text-[16px] font-medium tracking-[0.08em]">
           Hi, my name is

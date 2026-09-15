@@ -5,7 +5,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 
 export function FeaturedProjects() {
   return (
-    <section id="projects" className="relative z-[2] max-w-[1000px] mr-auto md:mr-[min(42vw,480px)] py-[100px]">
+    <section id="projects" className="relative z-[2] max-w-[1000px] mx-auto py-[100px]">
       <SectionHeading subtitle="Some Things I've Built">Work</SectionHeading>
 
       <ul className="list-none p-0 m-0">
