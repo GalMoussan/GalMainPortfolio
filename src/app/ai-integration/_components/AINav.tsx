@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { track } from '@vercel/analytics';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
-import { HexLogo } from '@/components/layout/HexLogo';
+import { Logo } from '@/components/layout/Logo';
 
 const navLinks = [
   { name: 'What I build', href: '#what-i-build' },
@@ -55,9 +54,7 @@ export function AINav() {
     >
       <nav className="max-w-[1600px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px] h-[var(--nav-height)] flex items-center justify-between">
         {/* Logo - links back to portfolio homepage */}
-        <Link href="/" aria-label="Back to homepage">
-          <HexLogo />
-        </Link>
+        <Logo />
 
         {/* Desktop nav links */}
         <div className="hidden md:flex items-center gap-8">

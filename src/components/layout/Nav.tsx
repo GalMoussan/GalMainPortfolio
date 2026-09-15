@@ -1,6 +1,6 @@
 'use client';
 
-import { HexLogo } from './HexLogo';
+import { Logo } from './Logo';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 
@@ -30,13 +30,7 @@ export function Nav() {
         className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 md:gap-4 w-full max-w-[1600px] mx-auto"
       >
         <div className="flex items-center justify-between md:justify-start md:flex-none">
-          <a
-            href="/"
-            aria-label="home"
-            className="text-[var(--green)] inline-flex drop-shadow-[0_0_12px_rgba(110,216,255,0.35)] focus-visible:rounded-full"
-          >
-            <HexLogo size={50} />
-          </a>
+          <Logo />
 
           <a
             href="/resume.pdf"
