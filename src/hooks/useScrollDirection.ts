@@ -10,7 +10,7 @@ export function useScrollDirection() {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    const SCROLL_THRESHOLD = 50;
+    const SCROLL_THRESHOLD = 80;
 
     const updateScrollDirection = () => {
       const scrollY = window.scrollY;
@@ -22,6 +22,10 @@ export function useScrollDirection() {
       lastScrollY = scrollY > 0 ? scrollY : 0;
     };
 
+    if (window.location.pathname === '/' && !window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+    updateScrollDirection();
     window.addEventListener('scroll', updateScrollDirection, { passive: true });
     return () => window.removeEventListener('scroll', updateScrollDirection);
   }, []);

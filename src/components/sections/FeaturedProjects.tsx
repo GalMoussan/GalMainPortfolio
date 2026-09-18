@@ -29,7 +29,7 @@ export function FeaturedProjects() {
                   href={project.external || project.github || '#'}
                   target="_blank"
                   rel="noreferrer"
-                  className="project-img-link relative block w-full h-full rounded-[20px] bg-[var(--green)] group"
+                  className="project-img-link relative block w-full h-full rounded-[20px] bg-[var(--light-navy)] group"
                 >
                   <div className="absolute inset-0 bg-[var(--navy)] opacity-60 z-10 rounded-[20px] transition-opacity duration-500 ease-in-out group-hover:opacity-0" />
                   {/* eslint-disable-next-line @next/next/no-img-element */}

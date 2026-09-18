@@ -21,9 +21,10 @@ function canPlayCinematicVideo() {
 
 export function HeroAtmosphere() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const layerRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [enableVideo, setEnableVideo] = useState(false);
-  const [parallax, setParallax] = useState(0);
 
   useEffect(() => {
     setEnableVideo(canPlayCinematicVideo());
@@ -50,31 +51,46 @@ export function HeroAtmosphere() {
 
   useEffect(() => {
     if (prefersReducedMotion || !enableVideo) return;
+    const layer = layerRef.current;
+    if (!layer) return;
 
-    const onScroll = () => {
-      setParallax(Math.min(80, Math.max(0, window.scrollY * 0.12)));
+    const apply = () => {
+      const y = Math.min(80, Math.max(0, window.scrollY * 0.12));
+      layer.style.transform = `translate3d(0, ${y}px, 0) scale(1.08)`;
     };
 
-    onScroll();
+    const onScroll = () => {
+      if (frameRef.current != null) return;
+      frameRef.current = window.requestAnimationFrame(() => {
+        frameRef.current = null;
+        apply();
+      });
+    };
+
+    apply();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frameRef.current != null) window.cancelAnimationFrame(frameRef.current);
+    };
   }, [enableVideo, prefersReducedMotion]);
 
   return (
     <div className="hero-atmosphere" aria-hidden="true">
       {enableVideo ? (
-        <video
-          ref={videoRef}
-          className="hero-atmosphere-video"
-          muted
-          playsInline
-          loop
-          autoPlay
-          preload="auto"
-          poster="/videos/hero-poster.jpg"
-          src="/videos/hero-loop.mp4"
-          style={{ transform: `translate3d(0, ${parallax}px, 0) scale(1.08)` }}
-        />
+        <div ref={layerRef} className="hero-atmosphere-layer">
+          <video
+            ref={videoRef}
+            className="hero-atmosphere-video"
+            muted
+            playsInline
+            loop
+            autoPlay
+            preload="auto"
+            poster="/videos/hero-poster.jpg"
+            src="/videos/hero-loop.mp4"
+          />
+        </div>
       ) : (
         <div
           className={`hero-atmosphere-still${prefersReducedMotion ? '' : ' hero-atmosphere-still-drift'}`}

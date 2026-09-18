@@ -28,9 +28,12 @@ export function useActiveSection(ids: readonly string[]) {
     const spyOffset = () => (window.matchMedia('(max-width: 768px)').matches ? 180 : 130);
 
     const sectionFromScroll = () => {
-      if (window.scrollY < 90 && !window.location.hash) return null;
+      if (!window.location.hash && window.scrollY < 90) return null;
 
       const doc = document.documentElement;
+      const maxScroll = doc.scrollHeight - window.innerHeight;
+      if (maxScroll < 200) return null;
+
       const nearBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 120;
       if (nearBottom) return ids[ids.length - 1] ?? null;
 
@@ -70,8 +73,12 @@ export function useActiveSection(ids: readonly string[]) {
     elements.forEach((el) => observer.observe(el));
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('hashchange', onHashChange);
+    if (pathname === '/' && !window.location.hash) window.scrollTo(0, 0);
     onHashChange();
-    update();
+    requestAnimationFrame(() => {
+      if (pathname === '/' && !window.location.hash) window.scrollTo(0, 0);
+      update();
+    });
 
     return () => {
       observer.disconnect();

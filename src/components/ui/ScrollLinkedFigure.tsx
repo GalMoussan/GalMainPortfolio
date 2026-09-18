@@ -40,15 +40,15 @@ export function ScrollLinkedFigure() {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="relative mx-auto w-full max-w-[250px] md:max-w-[300px] md:sticky md:top-[120px] md:self-start rounded-[24px] bg-[var(--light-navy)] p-2.5 border border-[rgba(215,227,238,0.22)] shadow-[0_16px_40px_rgba(6,8,12,0.45)]">
+    <div className="relative isolate mx-auto w-full max-w-[250px] md:max-w-[300px] md:sticky md:top-[120px] md:self-start rounded-[24px] bg-[var(--light-navy)] p-2.5 border border-[rgba(215,227,238,0.22)] shadow-[0_16px_40px_rgba(6,8,12,0.45)]">
       <div
         ref={frameRef}
-        className="relative group block w-full aspect-square origin-center will-change-transform"
+        className="relative group block w-full aspect-square origin-center"
         style={{ transformStyle: 'preserve-3d' }}
       >
         <div className="absolute top-[12px] left-[12px] w-full h-full rounded-[20px] border border-[rgba(110,216,255,0.45)] pointer-events-none transition-[top,left,box-shadow] duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:top-[8px] group-hover:left-[8px] group-hover:shadow-[0_0_28px_rgba(110,216,255,0.28)]" />
         <div className="relative rounded-[20px] overflow-hidden w-full h-full border border-[rgba(110,216,255,0.28)]">
-          <div className="absolute inset-0 bg-[var(--green)] mix-blend-multiply z-10 opacity-20 transition-opacity duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:opacity-0" />
+          <div className="absolute inset-0 bg-[rgba(94,231,255,0.12)] z-10 opacity-100 transition-opacity duration-300 ease-[cubic-bezier(0.645,0.045,0.355,1)] group-hover:opacity-0" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/profile.jpeg"

@@ -1,5 +1,7 @@
 'use client';
 
+import type { MouseEvent } from 'react';
+import { usePathname } from 'next/navigation';
 import { Logo } from './Logo';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
@@ -13,42 +15,45 @@ const navLinks = [
 
 const SECTION_IDS = navLinks.map((link) => link.id);
 
+function scrollToHash(event: MouseEvent<HTMLAnchorElement>, url: string) {
+  const id = url.startsWith('#') ? url.slice(1) : '';
+  const target = id ? document.getElementById(id) : null;
+  if (!target) return;
+  event.preventDefault();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  window.history.pushState(null, '', url);
+}
+
 export function Nav() {
+  const pathname = usePathname();
   const { scrolledToTop } = useScrollDirection();
   const activeId = useActiveSection(SECTION_IDS);
+  const docked = pathname !== '/' || !scrolledToTop;
 
   return (
-    <header
-      className={`fixed top-0 z-50 w-full px-[16px] sm:px-[25px] md:px-[50px] transition-all duration-300 ease-custom ${
-        scrolledToTop
-          ? 'py-3 md:py-4 bg-transparent'
-          : 'py-2 md:py-3 bg-[rgba(16,21,28,0.62)] backdrop-blur-md'
-      }`}
-    >
-      <nav
-        aria-label="Primary"
-        className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 md:gap-4 w-full max-w-[1600px] mx-auto"
-      >
-        <div className="flex items-center justify-between md:justify-start md:flex-none">
-          <Logo />
+    <header className={`site-chrome${docked ? ' is-docked' : ''}`}>
+      <div className="site-chrome-ends">
+        <Logo />
+        <a
+          href="/resume.pdf"
+          className="outline-button py-2.5 px-5"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Resume
+        </a>
+      </div>
 
-          <a
-            href="/resume.pdf"
-            className="outline-button py-2.5 px-5 md:hidden"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Resume
-          </a>
-        </div>
-
-        <ul className="nav-capsule order-last md:order-none md:absolute md:left-1/2 md:-translate-x-1/2">
+      <nav aria-label="Primary">
+        <ul className="nav-capsule">
           {navLinks.map((link) => {
             const isActive = activeId === link.id;
             return (
               <li key={link.name}>
                 <a
                   href={link.url}
+                  onClick={(event) => scrollToHash(event, link.url)}
                   aria-current={isActive ? 'true' : undefined}
                   className={`nav-capsule-link${isActive ? ' is-active' : ''}`}
                 >
@@ -58,15 +63,6 @@ export function Nav() {
             );
           })}
         </ul>
-
-        <a
-          href="/resume.pdf"
-          className="outline-button hidden md:inline-flex items-center py-2.5 px-5 flex-none"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Resume
-        </a>
       </nav>
     </header>
   );
