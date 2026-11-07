@@ -5,6 +5,8 @@ const nextConfig = {
       beforeFiles: [
         { source: "/onepiece", destination: "/onepiece/index.html" },
         { source: "/onepiece/", destination: "/onepiece/index.html" },
+        { source: "/mrMiao", destination: "/mrMiao/index.html" },
+        { source: "/mrMiao/", destination: "/mrMiao/index.html" },
       ],
     };
   },
