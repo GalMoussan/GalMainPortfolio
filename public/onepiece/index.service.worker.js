@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1794067825|1673038';
+const CACHE_VERSION = '1794087209|1885278';
 /** @type {string} */
 const CACHE_PREFIX = 'Drop Merge-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
@@ -34,9 +34,7 @@ self.addEventListener('activate', (event) => {
 	).then(function () {
 		// Enable navigation preload if available.
 		return ('navigationPreload' in self.registration) ? self.registration.navigationPreload.enable() : Promise.resolve();
-	}).then(function () {
-		return self.clients.claim();
-	}));
+	}).then(() => self.clients.claim()));
 });
 
 /**

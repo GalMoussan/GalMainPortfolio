@@ -97,6 +97,71 @@ body {
 	text-align: center;
 	z-index: 1;
 }
+
+#hs-form {
+	position: fixed;
+	display: none;
+	flex-direction: row;
+	align-items: stretch;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	z-index: 20;
+	box-sizing: border-box;
+	touch-action: manipulation;
+}
+
+#hs-input {
+	flex: 1 1 auto;
+	min-width: 0;
+	background-color: rgba(31, 15, 20, 0.96);
+	border: 2px solid #e0b088;
+	border-radius: 12px;
+	color: #fff4e4;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	padding: 0 12px;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	appearance: none;
+	touch-action: manipulation;
+}
+
+#hs-input::placeholder {
+	color: rgba(255, 244, 228, 0.45);
+}
+
+#hs-input:focus {
+	border-color: #ffd36a;
+	box-shadow: 0 0 0 2px rgba(255, 211, 106, 0.28);
+}
+
+#hs-save {
+	flex: 0 0 auto;
+	min-width: 84px;
+	background-color: #e25b3a;
+	border: none;
+	border-radius: 14px;
+	color: #fff8ef;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+	font-size: 17px;
+	font-weight: 700;
+	padding: 0 16px;
+	cursor: pointer;
+	box-sizing: border-box;
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+}
+
+#hs-save:hover {
+	background-color: #ff7652;
+}
+
+#hs-save:active {
+	background-color: #b84328;
+}
 		</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
@@ -107,6 +172,11 @@ body {
 		<canvas id="canvas">
 			Your browser does not support the canvas tag.
 		</canvas>
+
+		<form id="hs-form" autocomplete="off">
+			<input id="hs-input" type="text" maxlength="16" placeholder="Enter your name" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="done" />
+			<button id="hs-save" type="submit">Save</button>
+		</form>
 
 		<noscript>
 			Your browser does not support JavaScript.
@@ -120,7 +190,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","mainPack":"index.pck","experimentalVK":false,"fileSizes":{"index.pck":15884760,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":15666724,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
 GODOT_CONFIG.mainPack = 'index.pck';
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
@@ -132,6 +202,219 @@ const canvas = document.getElementById('canvas');
 		}
 	}, { passive: false });
 });
+
+(function () {
+	const STORAGE_KEY = 'onepiece_leaderboard_v1';
+	const MAX_ENTRIES = 3;
+	const MAX_NAME_LEN = 16;
+	const hsForm = document.getElementById('hs-form');
+	const hsInput = document.getElementById('hs-input');
+
+	let scores = [];
+	let sessionSubmitted = [];
+	let pendingSubmittedName = '';
+	let formVisible = false;
+	let fetchEpoch = 0;
+
+	function sanitizeName(raw) {
+		if (typeof raw !== 'string') return '';
+		return raw
+			.replace(/[\u0000-\u001F\u007F]/g, '')
+			.replace(/\s+/g, ' ')
+			.trim()
+			.slice(0, MAX_NAME_LEN);
+	}
+
+	function normalizeScores(list) {
+		if (!Array.isArray(list)) return [];
+		const valid = [];
+		for (let i = 0; i < list.length; i++) {
+			const item = list[i];
+			if (!item || typeof item !== 'object') continue;
+			const name = sanitizeName(item.name);
+			const score = Math.floor(Number(item.score));
+			if (!name || !Number.isFinite(score) || score <= 0) continue;
+			valid.push({ name, score });
+		}
+		valid.sort((a, b) => b.score - a.score);
+		return valid.slice(0, MAX_ENTRIES);
+	}
+
+	function mergeScoreLists() {
+		const merged = [];
+		const counts = new Map();
+		for (let i = 0; i < arguments.length; i++) {
+			const list = normalizeScores(arguments[i]);
+			const localCounts = new Map();
+			for (let j = 0; j < list.length; j++) {
+				const item = list[j];
+				const key = item.name.toLowerCase() + '::' + item.score;
+				const nextCount = (localCounts.get(key) || 0) + 1;
+				localCounts.set(key, nextCount);
+				const existingCount = counts.get(key) || 0;
+				if (nextCount > existingCount) {
+					counts.set(key, nextCount);
+					merged.push(item);
+				}
+			}
+		}
+		return normalizeScores(merged);
+	}
+
+	function loadStored() {
+		try {
+			const raw = window.localStorage.getItem(STORAGE_KEY);
+			if (!raw) return;
+			const parsed = JSON.parse(raw);
+			if (Array.isArray(parsed)) {
+				scores = normalizeScores(parsed);
+			} else if (parsed && Array.isArray(parsed.scores)) {
+				scores = normalizeScores(parsed.scores);
+			}
+		} catch (_) {}
+	}
+
+	function saveStored() {
+		try {
+			window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ scores }));
+		} catch (_) {}
+	}
+
+	loadStored();
+
+	['keydown', 'keyup', 'keypress', 'mousedown', 'mouseup', 'pointerdown', 'pointerup', 'touchstart', 'touchend', 'click'].forEach((evtName) => {
+		hsForm.addEventListener(evtName, (e) => {
+			e.stopPropagation();
+		});
+	});
+
+	hsForm.addEventListener('submit', (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		const cleaned = sanitizeName(hsInput.value);
+		if (!cleaned) {
+			hsInput.placeholder = 'Enter your name!';
+			hsInput.focus();
+			return;
+		}
+		pendingSubmittedName = cleaned;
+		hsInput.blur();
+		hsForm.style.display = 'none';
+		formVisible = false;
+		try {
+			canvas.focus();
+			canvas.dispatchEvent(new Event('focus'));
+			canvas.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+		} catch (_) {}
+	});
+
+	window.onepieceLeaderboard = {
+		getScoresJson: function () {
+			return JSON.stringify(scores);
+		},
+		seedScores: function (rawList) {
+			scores = mergeScoreLists(scores, rawList, sessionSubmitted);
+			saveStored();
+			return JSON.stringify(scores);
+		},
+		fetchRemote: function () {
+			const myEpoch = ++fetchEpoch;
+			const url = window.location.origin + '/api/onepiece-leaderboard?_t=' + Date.now();
+			fetch(url, {
+				method: 'GET',
+				headers: { 'Accept': 'application/json' },
+				cache: 'no-store',
+			})
+				.then((res) => (res.ok ? res.json() : null))
+				.then((data) => {
+					if (!data || !Array.isArray(data.scores)) return;
+					if (myEpoch !== fetchEpoch) {
+						scores = mergeScoreLists(data.scores, scores, sessionSubmitted);
+					} else {
+						scores = mergeScoreLists(data.scores, sessionSubmitted);
+					}
+					saveStored();
+				})
+				.catch(() => {});
+		},
+		submitScore: function (name, rawScore) {
+			const cleaned = sanitizeName(name);
+			const numScore = Math.floor(Number(rawScore));
+			if (!cleaned || !Number.isFinite(numScore) || numScore <= 0) {
+				return JSON.stringify(scores);
+			}
+			const previousScores = scores.slice();
+			const entry = { name: cleaned, score: numScore };
+			sessionSubmitted = normalizeScores(sessionSubmitted.concat([entry]));
+			scores = normalizeScores(scores.concat([entry]));
+			saveStored();
+			fetchEpoch++;
+			const url = window.location.origin + '/api/onepiece-leaderboard?_t=' + Date.now();
+			fetch(url, {
+				method: 'POST',
+				keepalive: true,
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+				},
+				body: JSON.stringify({
+					name: cleaned,
+					score: numScore,
+					previousScores: previousScores,
+				}),
+				cache: 'no-store',
+			})
+				.then((res) => (res.ok ? res.json() : null))
+				.then((data) => {
+					if (!data || !Array.isArray(data.scores)) return;
+					scores = mergeScoreLists(data.scores, sessionSubmitted);
+					saveStored();
+				})
+				.catch(() => {});
+			return JSON.stringify(scores);
+		},
+		syncForm: function (visible, x, y, w, h, vw, vh) {
+			if (!visible || vw <= 0 || vh <= 0) {
+				if (formVisible) {
+					hsForm.style.display = 'none';
+					formVisible = false;
+					try {
+						canvas.focus();
+						canvas.dispatchEvent(new Event('focus'));
+						canvas.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+					} catch (_) {}
+				}
+				return;
+			}
+			const rect = canvas.getBoundingClientRect();
+			const left = rect.left + (x / vw) * rect.width;
+			const top = rect.top + (y / vh) * rect.height;
+			const width = (w / vw) * rect.width;
+			const height = Math.max(38, (h / vh) * rect.height);
+			hsForm.style.left = Math.round(left) + 'px';
+			hsForm.style.top = Math.round(top) + 'px';
+			hsForm.style.width = Math.round(width) + 'px';
+			hsForm.style.height = Math.round(height) + 'px';
+			if (!formVisible) {
+				formVisible = true;
+				hsInput.value = '';
+				hsInput.placeholder = 'Enter your name';
+				hsForm.style.display = 'flex';
+				setTimeout(() => {
+					if (formVisible) {
+						try { hsInput.focus(); } catch (_) {}
+					}
+				}, 30);
+			}
+		},
+		consumeSubmittedName: function () {
+			const val = pendingSubmittedName;
+			pendingSubmittedName = '';
+			return val;
+		},
+	};
+	window.onepieceLeaderboard.fetchRemote();
+}());
 
 if ('serviceWorker' in navigator) {
 	navigator.serviceWorker.getRegistration().then((reg) => {

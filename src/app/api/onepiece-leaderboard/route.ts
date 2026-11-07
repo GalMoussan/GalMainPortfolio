@@ -50,6 +50,27 @@ function normalizeScores(raw: unknown): LeaderboardEntry[] {
   return valid.slice(0, MAX_ENTRIES);
 }
 
+function mergeScoreLists(...lists: LeaderboardEntry[][]): LeaderboardEntry[] {
+  const merged: LeaderboardEntry[] = [];
+  const counts = new Map<string, number>();
+
+  for (const list of lists) {
+    const localCounts = new Map<string, number>();
+    for (const item of normalizeScores(list)) {
+      const key = `${item.name.toLowerCase()}::${item.score}`;
+      const nextCount = (localCounts.get(key) ?? 0) + 1;
+      localCounts.set(key, nextCount);
+      const existingCount = counts.get(key) ?? 0;
+      if (nextCount > existingCount) {
+        counts.set(key, nextCount);
+        merged.push(item);
+      }
+    }
+  }
+
+  return normalizeScores(merged);
+}
+
 async function readScores(): Promise<LeaderboardEntry[]> {
   const url = process.env.KV_REST_API_URL;
   const token = process.env.KV_REST_API_TOKEN;
@@ -58,7 +79,8 @@ async function readScores(): Promise<LeaderboardEntry[]> {
   }
 
   try {
-    const response = await fetch(url, {
+    const separator = url.includes('?') ? '&' : '?';
+    const response = await fetch(`${url}${separator}_t=${Date.now()}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,9 +96,9 @@ async function readScores(): Promise<LeaderboardEntry[]> {
     }
 
     const data = (await response.json()) as { result?: string | null };
-    if (!data?.result) return [];
+    if (!data?.result) return [...memoryFallback];
     const parsed = JSON.parse(data.result);
-    const scores = normalizeScores(parsed);
+    const scores = mergeScoreLists(normalizeScores(parsed), memoryFallback);
     memoryFallback = scores;
     return scores;
   } catch (error) {
@@ -96,7 +118,8 @@ async function writeScores(scores: LeaderboardEntry[]): Promise<void> {
   }
 
   try {
-    const response = await fetch(url, {
+    const separator = url.includes('?') ? '&' : '?';
+    const response = await fetch(`${url}${separator}_t=${Date.now()}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -129,6 +152,7 @@ export async function POST(request: Request) {
     const name = sanitizeName(body?.name);
     const rawScore = typeof body?.score === 'number' ? body.score : Number(body?.score);
     const score = Number.isFinite(rawScore) ? Math.floor(rawScore) : 0;
+    const previousScores = normalizeScores(body?.previousScores);
 
     if (!name) {
       return NextResponse.json(
@@ -144,11 +168,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const current = await readScores();
+    const current = mergeScoreLists(await readScores(), previousScores);
     const qualifies =
       current.length < MAX_ENTRIES || score > current[MAX_ENTRIES - 1].score;
 
     if (!qualifies) {
+      if (current.length > 0) {
+        await writeScores(current);
+      }
       return NextResponse.json(
         { qualified: false, scores: current },
         { headers: CORS_HEADERS }
