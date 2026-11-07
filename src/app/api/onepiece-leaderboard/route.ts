@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
 
 export interface LeaderboardEntry {
   name: string;
@@ -79,8 +81,7 @@ async function readScores(): Promise<LeaderboardEntry[]> {
   }
 
   try {
-    const separator = url.includes('?') ? '&' : '?';
-    const response = await fetch(`${url}${separator}_t=${Date.now()}`, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -118,8 +119,7 @@ async function writeScores(scores: LeaderboardEntry[]): Promise<void> {
   }
 
   try {
-    const separator = url.includes('?') ? '&' : '?';
-    const response = await fetch(`${url}${separator}_t=${Date.now()}`, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
