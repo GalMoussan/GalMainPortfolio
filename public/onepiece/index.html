@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<base href="/onepiece/">
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -120,7 +119,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","mainPack":"index.pck","experimentalVK":false,"fileSizes":{"index.pck":15694456,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":15884760,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"serviceWorker":"index.service.worker.js"};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 const canvas = document.getElementById('canvas');
@@ -131,6 +130,25 @@ const canvas = document.getElementById('canvas');
 		}
 	}, { passive: false });
 });
+
+if ('serviceWorker' in navigator) {
+	navigator.serviceWorker.getRegistration().then((reg) => {
+		if (!reg) return;
+		reg.update();
+		if (reg.waiting) {
+			reg.waiting.postMessage('update');
+		}
+		reg.addEventListener('updatefound', () => {
+			const nextWorker = reg.installing;
+			if (!nextWorker) return;
+			nextWorker.addEventListener('statechange', () => {
+				if (nextWorker.state === 'installed' && navigator.serviceWorker.controller) {
+					nextWorker.postMessage('update');
+				}
+			});
+		});
+	}).catch(() => {});
+}
 
 (function () {
 	const statusOverlay = document.getElementById('status');
