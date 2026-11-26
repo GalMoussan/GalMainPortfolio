@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMotionValueEvent, type MotionValue } from 'framer-motion';
@@ -51,6 +51,7 @@ export function ProjectListCard({
 }: ProjectListCardProps) {
   const card = useOverlayWindow(progress, overlayWindow, reduceMotion);
   const [active, setActive] = useState(0);
+  const listRef = useRef<HTMLOListElement>(null);
 
   useMotionValueEvent(progress, 'change', (p) => {
     const [start, end] = overlayWindow;
@@ -59,11 +60,25 @@ export function ProjectListCard({
     setActive(Math.min(projects.length - 1, slot));
   });
 
+  // Small-screen cards scroll internally: bring the opened project into view inside
+  // the card (never the page) once the accordion transition has settled.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const item = listRef.current?.children[active];
+      const scroller = item?.closest('.sequence-card');
+      if (!item || !scroller || scroller.scrollHeight <= scroller.clientHeight) return;
+      const offset = item.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      // Instant, not smooth: WebKit skips repainting backdrop-filtered content during smooth scrollTo.
+      scroller.scrollTop += offset - 12;
+    }, 520);
+    return () => clearTimeout(timer);
+  }, [active]);
+
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(460px,34vw)]" label={label}>
       <SectionHeading subtitle={subtitle}>{title}</SectionHeading>
       {headerAction}
-      <ol className="m-0 list-none p-0">
+      <ol ref={listRef} className="m-0 list-none p-0">
         {projects.map((project, i) => {
           const open = i === active;
           const toolPage = toolPages[project.title];

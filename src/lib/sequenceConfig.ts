@@ -27,7 +27,10 @@ export const FRAME_COUNTS: Readonly<Record<SequenceName, number>> = {
   fire: 193,
 };
 
-/** Ordered, contiguous segments covering the timeline from 0 to TIMELINE_END. */
+/**
+ * Ordered, contiguous segments from 0. Past the last segment's end the final frame
+ * holds until TIMELINE_END, giving the contact overlay time on the finished shot.
+ */
 export const SEQUENCES: readonly SequenceDefinition[] = [
   { name: 'sunglasses', frameCount: FRAME_COUNTS.sunglasses, start: 0, end: 0.25 },
   { name: 'sitting', frameCount: FRAME_COUNTS.sitting, start: 0.25, end: 0.49 },
@@ -36,7 +39,7 @@ export const SEQUENCES: readonly SequenceDefinition[] = [
   { name: 'fire', frameCount: FRAME_COUNTS.fire, start: 1, end: 1.55 },
 ];
 
-export const TIMELINE_END = 1.55;
+export const TIMELINE_END = 1.65;
 
 /** Scroll distance (vh) per timeline unit. */
 export const VH_PER_TIMELINE_UNIT = 550;
@@ -69,7 +72,8 @@ export const BRIDGE_RGB = '36, 38, 51';
 
 /**
  * Timeline windows in which each overlay is on screen. `other` ends as the
- * phoenix starts rising, so the reveal plays without anything over it.
+ * phoenix starts rising, so the reveal plays without anything over it; `contact`
+ * runs to TIMELINE_END and stays up as the section scrolls away.
  */
 export const OVERLAY_WINDOWS = {
   hero: [0, 0.23],
@@ -77,6 +81,7 @@ export const OVERLAY_WINDOWS = {
   work: [0.5, 0.74],
   stack: [0.76, 0.98],
   other: [1.02, 1.3],
+  contact: [1.4, TIMELINE_END],
 } as const satisfies Record<string, readonly [number, number]>;
 
 /** Inside the about window the card cross-fades from About to Experience here. */
@@ -93,6 +98,7 @@ export const SECTION_ANCHORS = [
   { id: 'projects', progress: 0.55 },
   { id: 'stack', progress: 0.84 },
   { id: 'other-projects', progress: 1.06 },
+  { id: 'contact', progress: 1.46 },
 ] as const;
 
 export function frameUrl(name: SequenceName, index: number): string {

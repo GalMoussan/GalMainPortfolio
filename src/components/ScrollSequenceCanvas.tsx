@@ -294,14 +294,17 @@ function Scrims({ progress }: { progress: MotionValue<number> }) {
   const heroEnd = OVERLAY_WINDOWS.hero[1];
   const sideStart = OVERLAY_WINDOWS.about[0];
   const sideEnd = OVERLAY_WINDOWS.other[1];
+  const contactStart = OVERLAY_WINDOWS.contact[0];
   const heroOpacity = useTransform(progress, [0, heroEnd - 0.01, heroEnd + 0.02], [1, 1, 0]);
   // The side scrim lifts with the last card so the phoenix reveal plays at full brightness.
   const sideOpacity = useTransform(progress, [heroEnd, sideStart + 0.01, sideEnd - 0.01, sideEnd + 0.02], [0, 1, 1, 0]);
+  const contactOpacity = useTransform(progress, [contactStart - 0.01, contactStart + 0.02], [0, 1]);
 
   return (
     <>
       <motion.div aria-hidden="true" className="sequence-scrim-hero" style={{ opacity: heroOpacity }} />
       <motion.div aria-hidden="true" className="sequence-scrim-side" style={{ opacity: sideOpacity }} />
+      <motion.div aria-hidden="true" className="sequence-scrim-contact" style={{ opacity: contactOpacity }} />
       <div aria-hidden="true" className="sequence-scrim-top" />
     </>
   );

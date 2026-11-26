@@ -4,6 +4,7 @@ import type { MotionValue } from 'framer-motion';
 import { OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
 import { featuredProjects } from '@/data/featured-projects';
 import { otherProjects } from '@/data/other-projects';
+import { ContactOverlay } from './ContactOverlay';
 import { HeroOverlay } from './HeroOverlay';
 import { AboutExperienceCard } from './AboutExperienceCard';
 import { ProjectListCard } from './ProjectListCard';
@@ -43,6 +44,7 @@ export function SequenceOverlays({ progress, reduceMotion }: SequenceOverlaysPro
           </a>
         }
       />
+      <ContactOverlay progress={progress} reduceMotion={reduceMotion} />
     </>
   );
 }

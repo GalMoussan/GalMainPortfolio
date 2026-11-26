@@ -447,7 +447,8 @@
     background: linear-gradient(180deg, rgba(20, 21, 29, 0.55) 0%, rgba(20, 21, 29, 0) 100%);
   }
 
-  .sequence-scrim-hero {
+  .sequence-scrim-hero,
+  .sequence-scrim-contact {
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -461,13 +462,21 @@
         radial-gradient(120% 85% at 0% 100%, rgba(20, 21, 29, 0.82) 0%, rgba(20, 21, 29, 0.5) 38%, rgba(20, 21, 29, 0) 70%),
         linear-gradient(0deg, rgba(20, 21, 29, 0.45) 0%, rgba(20, 21, 29, 0) 45%);
     }
+
+    /* Mirror of the hero scrim: the closing copy sits bottom-right, under the phoenix. */
+    .sequence-scrim-contact {
+      background:
+        radial-gradient(110% 90% at 100% 100%, rgba(20, 21, 29, 0.86) 0%, rgba(20, 21, 29, 0.55) 38%, rgba(20, 21, 29, 0) 68%),
+        linear-gradient(0deg, rgba(20, 21, 29, 0.35) 0%, rgba(20, 21, 29, 0) 35%);
+    }
   }
 
   .sequence-scrim-side {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(0deg, rgba(20, 21, 29, 0.8) 0%, rgba(20, 21, 29, 0.45) 40%, rgba(20, 21, 29, 0) 70%);
+    /* Small screens: cards sit at the bottom, so only the lower half darkens. */
+    background: linear-gradient(0deg, rgba(20, 21, 29, 0.8) 0%, rgba(20, 21, 29, 0.45) 30%, rgba(20, 21, 29, 0) 55%);
   }
 
   @media (min-width: 1024px) {
@@ -488,12 +497,27 @@
   }
 
   .sequence-card .section-heading {
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem;
   }
 
   .sequence-card .section-heading-title {
     font-size: clamp(24px, 2.4vw, 32px);
     color: var(--white);
+  }
+
+  @media (max-width: 1023px) {
+    .sequence-card .section-heading {
+      margin-bottom: 0.75rem;
+    }
+
+    .sequence-card .section-heading-title {
+      font-size: 20px;
+    }
+
+    .sequence-card .section-heading-subtitle {
+      margin-top: 4px;
+      font-size: 12px;
+    }
   }
 
   .section-heading {
