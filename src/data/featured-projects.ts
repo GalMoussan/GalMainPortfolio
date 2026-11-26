@@ -2,6 +2,11 @@ export interface FeaturedProject {
   title: string;
   description: string;
   tech: string[];
+  /** Creation year of the GitHub repo. */
+  year: number;
+  /** Archive "Made at"; omitted means a personal project. */
+  madeAt?: string;
+  /** Only for public repos. */
   github?: string;
   external?: string;
   image: string;
@@ -9,54 +14,48 @@ export interface FeaturedProject {
 
 export const featuredProjects: FeaturedProject[] = [
   {
-    title: 'Tivnili',
+    title: 'Transcribe God',
     description:
-      "Personal brand landing page for Tivnili (תִּבְנִילִי — Hebrew: 'build for me'), my studio selling websites, AI tools, and strategy sessions to small business owners. Your business, finally built.",
-    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Express', 'Zod'],
-    github: 'https://github.com/GalMoussan/Tivnili',
-    external: 'https://tivnili.galmoussan.com',
-    image: '/images/tivnili.png',
+      'A study tool that turns any recording into something you can learn from. Drop in a lecture, a meeting or a video, and it transcribes it, summarises it and builds study material from it. I built it for my own university courses.',
+    tech: ['Python', 'whisper.cpp', 'ffmpeg', 'SQLite', 'Ollama', 'Claude API'],
+    year: 2026,
+    image: '/images/transcribe-god.png',
   },
   {
-    title: 'CinemaQuery',
+    title: 'KineticFlow',
     description:
-      'A semantic movie search engine powered by AI embeddings from OpenAI and intelligent re-ranking via Claude. Features a persona blending system that learns your preferences to deliver highly personalized movie recommendations tailored to your viewing mood.',
-    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'OpenAI', 'Claude', 'pgvector', 'Prisma', 'TanStack Query'],
-    github: 'https://github.com/galmoussan/cinemaquery',
-    external: 'https://cinemaquery.vercel.app',
-    image: '/images/cinema-query.png',
+      'An open-source tool for making kinetic-typography reels instantly. It runs locally on your own GPU and RAM: no cloud render queue, no subscription, no upload.',
+    tech: ['TypeScript', 'React', 'Vite', 'Hono', 'Playwright', 'ffmpeg'],
+    year: 2026,
+    github: 'https://github.com/GalMoussan/KineticFlow',
+    image: '/images/kineticflow.png',
   },
   {
-    title: 'Snake',
+    title: 'Yassa North website',
     description:
-      'A classic Snake game built with TypeScript and HTML5 Canvas, demonstrating modern web development practices. Features smooth controls, progressive difficulty, persistent high scores, and a retro arcade aesthetic. Implemented with a modular entity-component-system architecture, comprehensive testing (80%+ coverage), and immutable data patterns.',
-    tech: ['TypeScript', 'HTML5 Canvas', 'Vite', 'Vitest', 'Playwright', 'ESLint', 'Prettier'],
-    github: 'https://github.com/GalMoussan/Snake',
-    external: 'https://snake-pi-gray.vercel.app',
-    image: '/images/snake.png',
+      "The public website of Yassa North, the school where I lead AI and development. It presents the school's courses to students, parents and partner schools.",
+    tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    year: 2026,
+    madeAt: 'Yassa North',
+    external: 'https://iasanorth.com',
+    image: '/images/yassa-north.png',
   },
   {
-    title: 'CIM',
+    title: 'Ayalim Game',
     description:
-      'A content intelligence manager that streamlines editorial workflows. Helps teams plan, organize, and track content pipelines with a clean kanban-style interface and AI-assisted content suggestions.',
-    tech: ['TypeScript', 'Next.js', 'React'],
-    github: 'https://github.com/GalMoussan/CIM',
-    image: '/images/cim.png',
+      'A 2D adventure game in the browser: explore, fight monsters, and level up a character through a full progression system.',
+    tech: ['TypeScript', 'Phaser', 'Vite', 'Node.js', 'WebSockets'],
+    year: 2026,
+    external: 'https://ayalim-game.vercel.app',
+    image: '/images/ayalim-game.png',
   },
   {
-    title: 'X Intelligence Pipeline',
+    title: 'Connections',
     description:
-      'An automated data pipeline that ingests posts from X (Twitter), processes them through NLP enrichment, and surfaces actionable intelligence signals. Useful for trend monitoring and audience research.',
-    tech: ['Python', 'NLP', 'Data Pipeline'],
-    github: 'https://github.com/GalMoussan/x-intelligence-pipeline',
-    image: '/images/x-pipeline.png',
-  },
-  {
-    title: 'ReelSearch',
-    description:
-      'A modern movie and TV show discovery app with an intuitive search interface, detailed metadata, and personalized watchlist management. Built with a focus on fast search UX and clean visual design.',
-    tech: ['TypeScript', 'React', 'Tailwind CSS'],
-    github: 'https://github.com/GalMoussan/reelSearch',
-    image: '/images/reel-search.png',
+      'A Hebrew Connections-style word game built to play with friends: find the four hidden groups among 16 words. Daily puzzles, levels and leaderboards; mistakes are counted, but the game never ends early.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS', 'Motion'],
+    year: 2026,
+    external: 'https://connections-friends.vercel.app',
+    image: '/images/connections-friends.png',
   },
 ];
