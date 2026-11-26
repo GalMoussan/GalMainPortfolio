@@ -18,14 +18,16 @@ const geistMono = localFont({
   display: "swap",
 });
 
+const title = "Gal Moussan | Fullstack Developer & AI Integration Specialist";
+const description =
+  "Gal Moussan is a fullstack developer and AI integration specialist in Israel. He builds AI agent systems and web apps, and teaches teams to work with Claude Code and other coding agents.";
+
 export const metadata: Metadata = {
-  title: "Gal Moussan | Fullstack Developer & Tech Lead",
-  description:
-    "Gal Moussan is a fullstack developer and tech lead based in Tel Aviv, specializing in building CRM systems and web applications.",
+  title,
+  description,
   openGraph: {
-    title: "Gal Moussan | Fullstack Developer & Tech Lead",
-    description:
-      "Gal Moussan is a fullstack developer and tech lead based in Tel Aviv, specializing in building CRM systems and web applications.",
+    title,
+    description,
     locale: "en_US",
     type: "website",
   },
