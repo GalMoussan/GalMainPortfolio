@@ -9,18 +9,15 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "resume:build": "node scripts/resume/build.mjs"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
     "@vercel/analytics": "^1.6.1",
     "framer-motion": "^11.18.2",
     "next": "14.2.35",
     "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.73.1",
-    "resend": "^4.8.0",
-    "zod": "^3.25.76"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

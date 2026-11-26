@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { track } from '@vercel/analytics';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import type { VerticalConfig } from '../_lib/verticals/types';
+import { openBookCall } from '../_lib/cta';
 import { BeforeAfterDemo } from './BeforeAfterDemo';
 
 type HeroProps = {
@@ -25,22 +25,6 @@ export function Hero({ config }: HeroProps) {
 
     return () => clearInterval(interval);
   }, [config.hero.cyclingTexts.length, prefersReducedMotion]);
-
-  const handlePrimaryCTA = () => {
-    const calLink = process.env.NEXT_PUBLIC_CAL_LINK;
-
-    if (calLink) {
-      // v2: Cal.com integration
-      window.open(calLink, '_blank');
-      track('cta_click', { source: 'hero', method: 'cal.com' });
-    } else {
-      // v1: WhatsApp fallback
-      const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal
-      const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
-      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
-      track('cta_click', { source: 'hero', method: 'whatsapp' });
-    }
-  };
 
   return (
     <section id="hero" className="min-h-screen flex items-center py-[100px]">
@@ -89,16 +73,16 @@ export function Hero({ config }: HeroProps) {
 
           {/* Trust micro-badges */}
           <p className="text-sm text-[var(--slate)] mb-8">
-            Free 30-min diagnostic · Fixed prices · Built in 2–4 weeks · You own it forever
+            Free 30-min call · Fixed prices · Built in 2–4 weeks · You own it forever
           </p>
 
           {/* Primary CTA */}
           <div className="flex flex-col sm:flex-row gap-4 items-start">
             <button
-              onClick={handlePrimaryCTA}
+              onClick={() => openBookCall('hero')}
               className="bg-[var(--green)] text-[var(--navy)] px-8 py-4 rounded font-mono text-sm font-semibold hover:bg-[var(--green)] hover:opacity-90 transition-opacity"
             >
-              Book free 30-min diagnostic →
+              Book free 30-min call →
             </button>
             <a
               href="#how-it-works"

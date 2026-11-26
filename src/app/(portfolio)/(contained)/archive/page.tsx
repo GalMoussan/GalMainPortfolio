@@ -1,34 +1,29 @@
+import type { Metadata } from 'next';
 import { featuredProjects } from '@/data/featured-projects';
 import { otherProjects } from '@/data/other-projects';
+import { archivedProjects } from '@/data/archive-projects';
 import { IconExternalLink, IconGitHub } from '@/components/ui/Icons';
 
+export const metadata: Metadata = {
+  title: 'Archive | Gal Moussan',
+  description: "Everything I've built, by year.",
+};
+
 interface ArchiveProject {
-  year: string;
+  year: number;
   title: string;
-  madeAt?: string;
+  madeAt: string;
   tech: string[];
   github?: string;
   external?: string;
 }
 
+// Newest first; Array.prototype.sort is stable, so same-year rows keep their list order.
 const allProjects: ArchiveProject[] = [
-  ...featuredProjects.map((p) => ({
-    year: '2020',
-    title: p.title,
-    madeAt: 'Personal',
-    tech: p.tech,
-    github: p.github,
-    external: p.external,
-  })),
-  ...otherProjects.map((p) => ({
-    year: '2019',
-    title: p.title,
-    madeAt: 'Personal',
-    tech: p.tech,
-    github: p.github,
-    external: p.external,
-  })),
-];
+  ...featuredProjects.map((p) => ({ ...p, madeAt: p.madeAt ?? 'Personal' })),
+  ...otherProjects.map((p) => ({ ...p, madeAt: 'Personal', external: p.external ?? p.play })),
+  ...archivedProjects.map((p) => ({ ...p, madeAt: 'Personal' })),
+].sort((a, b) => b.year - a.year);
 
 export default function ArchivePage() {
   return (

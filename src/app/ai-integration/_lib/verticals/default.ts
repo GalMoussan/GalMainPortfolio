@@ -2,14 +2,14 @@ import type { VerticalConfig } from './types';
 
 export const defaultVertical: VerticalConfig = {
   slug: 'default',
-  displayName: 'AI Integration Services',
+  displayName: 'AI Integration & Development Services',
 
   hero: {
-    preHeadline: 'AUTONOMOUS AI AGENT SYSTEMS · BUILT FOR SMBs',
+    preHeadline: 'AI AGENT SYSTEMS · CUSTOM DEVELOPMENT · CODING-AGENT TRAINING',
     painQuestion: 'Your team is still copy-pasting between 5 tools. In 2026.',
     headlineLine1: 'While your competitors buy Zapier workflows,',
     headlineLine2: 'you get an AI workforce.',
-    subheadline: 'I build autonomous agent systems for businesses with 10+ employees — the same architecture enterprise AI teams ship, engineered for your size and budget.',
+    subheadline: 'I build autonomous agent systems for businesses, take on custom development, and teach teams to build with Claude Code and other coding agents. The same architecture enterprise AI teams ship, at a size and price that fits you.',
     cyclingTexts: [
       'Runs 24/7',
       'Handles leads automatically',
@@ -40,7 +40,7 @@ export const defaultVertical: VerticalConfig = {
           'Human approves only high-value leads',
         ],
         stat: { label: 'Processed today', value: '23 leads' },
-        statusLabel: 'Running · 0 errors · Avg response: 12s',
+        statusLabel: 'Running · Avg response: 12s',
       },
     },
     {
@@ -63,7 +63,7 @@ export const defaultVertical: VerticalConfig = {
           'Escalates complex issues automatically',
         ],
         stat: { label: 'Resolved today', value: '41' },
-        statusLabel: 'Running · 0 errors · Escalated to human: 6',
+        statusLabel: 'Running · Escalated to human: 6',
       },
     },
     {
@@ -83,10 +83,10 @@ export const defaultVertical: VerticalConfig = {
         bullets: [
           'Watch Source → Extract → Validate → Transform → Write Target',
           'Continuous monitoring, instant updates',
-          'Automatic retry on failures',
+          'Automatic retry on failures, every failure logged',
         ],
         stat: { label: 'Synced today', value: '1,247 records' },
-        statusLabel: 'Running · 0 errors · Last error: never',
+        statusLabel: 'Running · Retries handled automatically',
       },
     },
   ],
@@ -97,7 +97,7 @@ export const defaultVertical: VerticalConfig = {
     full: 'Entire lead-to-cash pipeline runs autonomously. Agents handle intake, qualification, proposals, follow-ups, contract handoff. You review, approve, collect.',
   },
 
-  caseStudySlugs: ['authorlex', 'digital-creator-ai', 'reelsearch'],
+  caseStudySlugs: ['authorlex', 'digital-creator-ai', 'transcribe-god'],
 
   tools: [
     'claude',
@@ -115,15 +115,16 @@ export const defaultVertical: VerticalConfig = {
   ],
 
   seoMeta: {
-    title: 'AI Integration Services | Autonomous Agent Systems for SMBs',
-    description: 'I build autonomous AI agent systems for businesses with 10+ employees. Not Zapier workflows—real multi-agent architecture at SMB prices.',
+    title: 'AI Integration, Development & Coding-Agent Training | Gal Moussan',
+    description: 'Autonomous AI agent systems for businesses, custom development, and hands-on training in Claude Code and other coding agents. Fixed prices, you own what I build.',
     keywords: [
       'AI integration Israel',
-      'AI automation consultant Tel Aviv',
-      'autonomous AI systems SMB',
+      'AI automation consultant',
       'AI agent developer Israel',
-      'business automation AI',
       'multi-agent systems',
+      'Claude Code training',
+      'coding agent workshop',
+      'custom web development Israel',
     ],
   },
 };

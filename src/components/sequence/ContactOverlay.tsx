@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion, type MotionValue } from 'framer-motion';
 import { OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
 import { email } from '@/data/social-links';
@@ -20,12 +21,17 @@ export function ContactCopy({ headingId }: { headingId: string }) {
         Get In Touch
       </h2>
       <p className="mb-0 mt-4 text-[16px] leading-[1.55] text-white/80 md:text-[18px]">
-        Although I&apos;m not currently looking for any new opportunities, my inbox is always open. Whether you have a
-        question or just want to say hi, I&apos;ll try my best to get back to you!
+        I&apos;m open to projects: AI agent systems, development work of any kind, and coding-agent training for teams.
+        Have something in mind, or just want to say hi? My inbox is open and I reply quickly.
       </p>
-      <a href={`mailto:${email}`} className="outline-button mt-6 inline-block px-8 py-5 leading-[1]">
-        Say Hello
-      </a>
+      <div className="mt-6 flex flex-wrap items-center gap-4">
+        <a href={`mailto:${email}`} className="outline-button inline-block px-8 py-5 leading-[1]">
+          Say Hello
+        </a>
+        <Link href="/ai-integration" className="outline-button inline-block px-6 py-4 leading-[1] text-white/80">
+          See services
+        </Link>
+      </div>
     </>
   );
 }

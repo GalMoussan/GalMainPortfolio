@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('AI Integration Landing Page', () => {
   test('page loads successfully', async ({ page }) => {
     await page.goto('/ai-integration');
-    await expect(page).toHaveTitle(/AI Integration Services/);
+    await expect(page).toHaveTitle(/AI Integration, Development & Coding-Agent Training/);
     await expect(page.locator('h1')).toBeVisible();
   });
 
@@ -84,7 +84,7 @@ test.describe('AI Integration Landing Page', () => {
     const pagePromise = context.waitForEvent('page');
 
     // Click primary CTA in hero
-    const ctaButton = page.locator('button:has-text("Book free 30-min diagnostic")');
+    const ctaButton = page.locator('button:has-text("Book free 30-min call")');
     await ctaButton.click();
 
     const newPage = await pagePromise;
@@ -103,42 +103,6 @@ test.describe('AI Integration Landing Page', () => {
 
     // Close the new page immediately
     await newPage.close();
-  });
-
-  test('form validation works', async ({ page }) => {
-    await page.goto('/ai-integration');
-
-    // Scroll to Coming Soon section
-    await page.locator('#coming-soon').scrollIntoViewIfNeeded();
-
-    const emailInput = page.locator('input[type="email"]');
-    const submitButton = page.locator('button:has-text("Get early access")');
-
-    // Try submitting with invalid email
-    await emailInput.fill('invalid-email');
-    await submitButton.click();
-
-    // HTML5 validation prevents submission - check that the input is invalid
-    const validationMessage = await emailInput.evaluate((el: HTMLInputElement) => el.validationMessage);
-    expect(validationMessage).toBeTruthy();
-    expect(validationMessage.toLowerCase()).toContain('email');
-  });
-
-  test('form submission shows success state', async ({ page }) => {
-    await page.goto('/ai-integration');
-
-    // Scroll to Coming Soon section
-    await page.locator('#coming-soon').scrollIntoViewIfNeeded();
-
-    const emailInput = page.locator('input[type="email"]');
-    const submitButton = page.locator('button:has-text("Get early access")');
-
-    // Submit with valid email
-    await emailInput.fill('test@example.com');
-    await submitButton.click();
-
-    // Should show success message
-    await expect(page.locator('text=You\'re on the list')).toBeVisible({ timeout: 5000 });
   });
 
   test('navigation links work', async ({ page }) => {

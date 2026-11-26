@@ -16,7 +16,7 @@ export const baseFaqs: FAQEntry[] = [
   {
     category: 'Is this right for my business?',
     question: 'My business is 200+ people. Is this for me?',
-    answer: 'Probably, yes. At your scale, even small efficiency gains compound across teams. The systems I build can integrate with enterprise tools (Salesforce, SAP, custom ERPs) and handle the complexity. We\'d scope it accordingly—starting with one high-impact department, proving ROI, then expanding.',
+    answer: 'Possibly, if we start small. I\'m a one-person shop, so I\'m a better fit for one department or one painful workflow than for a company-wide rollout. We\'d prove the ROI there first, and then decide together whether to expand.',
   },
 
   // How does it actually work?
@@ -63,6 +63,23 @@ export const baseFaqs: FAQEntry[] = [
     answer: 'Yes. You get full access to the codebase, documentation, and deployment instructions. You can modify it, hire someone else to extend it, or shut it down entirely. No lock-in. The only dependency is the LLM API (Claude, OpenAI, etc.), which you pay directly—not through me.',
   },
 
+  // Training
+  {
+    category: 'Training',
+    question: 'Which coding agents do you teach?',
+    answer: 'Mostly Claude Code, because it\'s what I use every day. The workflow carries over to Codex, Cursor and the other agents, and I\'ll teach on whichever one your team already pays for.',
+  },
+  {
+    category: 'Training',
+    question: 'Do my developers need AI experience?',
+    answer: 'No. They need to know your codebase. I bring the agent workflow; we apply it to your real code from the first hour.',
+  },
+  {
+    category: 'Training',
+    question: 'Can you train non-developers?',
+    answer: 'Yes. Business owners and managers get a shorter session on what coding agents can do, what they cost, and how to tell whether your team is using them well.',
+  },
+
   // Money & risk
   {
     category: 'Money & risk',
@@ -82,6 +99,6 @@ export const baseFaqs: FAQEntry[] = [
   {
     category: 'Money & risk',
     question: 'Do you offer refunds?',
-    answer: 'Yes, with a caveat. If after the diagnostic and architecture phase you decide this isn\'t right for your business, I refund 100%. Once we start building and you\'re seeing working prototypes, refunds are case-by-case. If the system fundamentally fails to deliver what we scoped, you get your money back. If you just change your mind, we talk. I want happy clients, not trapped ones.',
+    answer: 'Yes, with a caveat. If after the free call and architecture phase you decide this isn\'t right for your business, I refund 100%. Once we start building and you\'re seeing working prototypes, refunds are case-by-case. If the system fundamentally fails to deliver what we scoped, you get your money back. If you just change your mind, we talk. I want happy clients, not trapped ones.',
   },
 ];

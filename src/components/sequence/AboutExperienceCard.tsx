@@ -9,18 +9,18 @@ import { SideCard } from './SideCard';
 import { useCrossfade, useOverlayWindow } from './useOverlayWindow';
 
 const skills = [
-  'JavaScript (ES6+)',
   'TypeScript',
   'React',
   'Next.js',
   'Node.js',
   'Python',
+  'Prisma',
+  'PostgreSQL',
   'Tailwind CSS',
-  'AI/LLM APIs',
-  'Firebase',
+  'Claude & OpenAI APIs',
+  'Claude Code & coding agents',
   'Angular',
   'Playwright',
-  'Vitest',
 ];
 
 /** About, then Experience, in one card over the sofa side of the `sitting` shot. */
@@ -49,36 +49,26 @@ function AboutPanel() {
       <SectionHeading subtitle="About Me">About</SectionHeading>
       <div className="space-y-3 text-[15px] leading-[1.6] text-white/75">
         <p>
-          Hello! My name is Gal and I&apos;m a fullstack developer and tech lead based in Tel Aviv. With a background in
-          military leadership as an officer and company commander in the Israeli Air Force, I bring strong strategic
-          thinking and team management skills to every project I work on.
+          Hello! I&apos;m Gal, a fullstack developer and AI integration specialist working remotely from Israel. Before
+          tech, I served as an officer and company commander in the Israeli Air Force, where I learned to lead teams
+          under pressure and make decisions that hold up.
         </p>
         <p>
-          I&apos;ve had the privilege of working across startups in Israel and Australia, from{' '}
-          <a href="https://www.lagoonads.com/" className="inline-link" target="_blank" rel="noreferrer">
-            affiliate marketing platforms
-          </a>{' '}
-          to{' '}
-          <a href="#" className="inline-link" target="_blank" rel="noreferrer">
-            CRM systems
-          </a>{' '}
-          to{' '}
-          <a href="#" className="inline-link" target="_blank" rel="noreferrer">
-            QA automation
+          I&apos;ve worked across startups in Israel and Australia, on affiliate marketing platforms, CRM systems and QA
+          automation. Today I&apos;m Deputy Director and Chief of AI &amp; Development at{' '}
+          <a href="https://iasanorth.com" className="inline-link" target="_blank" rel="noreferrer">
+            Yassa North
           </a>
-          . My main focus these days is leading the development of an affiliate marketing CRM system at{' '}
-          <a href="https://www.lagoonads.com/" className="inline-link" target="_blank" rel="noreferrer">
-            Lagoonads
-          </a>
-          .
+          , where I build the school&apos;s website and internal tools and bring AI into how the school teaches and runs.
+          I&apos;ve also taught AI courses for kids and youth at Shamir Institute of Technology.
         </p>
         <p>
-          Outside of work, I&apos;m passionate about surfing, extreme sports, traveling, and volunteering — I&apos;ve
-          been teaching youth at risk how to surf with{' '}
-          <a href="#" className="inline-link" target="_blank" rel="noreferrer">
-            My Wave
-          </a>{' '}
-          since 2020.
+          My daily workflow runs on coding agents. I plan with a spec agent, build with worker agents, and put every
+          change through a reviewer before it ships. Teaching that way of working is now part of what I do.
+        </p>
+        <p>
+          Outside of work: surfing, extreme sports and traveling. From 2020 to 2025 I volunteered with My Wave, teaching
+          youth at risk how to surf.
         </p>
       </div>
 
@@ -141,9 +131,13 @@ function ExperiencePanel() {
             {job.title}{' '}
             <span className="text-[var(--green)]">
               @{' '}
-              <a href={job.url} className="inline-link" target="_blank" rel="noreferrer">
-                {job.company}
-              </a>
+              {job.url ? (
+                <a href={job.url} className="inline-link" target="_blank" rel="noreferrer">
+                  {job.company}
+                </a>
+              ) : (
+                job.company
+              )}
             </span>
           </h3>
           <p className="mb-4 font-mono text-[12px] text-white/55">{job.range}</p>

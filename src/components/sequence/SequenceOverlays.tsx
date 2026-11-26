@@ -25,7 +25,7 @@ export function SequenceOverlays({ progress, reduceMotion }: SequenceOverlaysPro
         progress={progress}
         reduceMotion={reduceMotion}
         window={OVERLAY_WINDOWS.work}
-        label="Selected work"
+        label="Featured projects"
         title="Work"
         subtitle="Some Things I've Built"
         projects={featuredProjects}

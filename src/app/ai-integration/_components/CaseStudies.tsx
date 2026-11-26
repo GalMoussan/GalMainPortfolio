@@ -9,7 +9,7 @@ export function CaseStudies({ slugs }: CaseStudiesProps) {
 
   return (
     <section id="case-studies" className="max-w-[1200px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">Real workflows I&apos;ve built.</h2>
+      <h2 className="numbered-heading">Real things I&apos;ve built.</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {featured.map((project) => (
@@ -35,7 +35,7 @@ export function CaseStudies({ slugs }: CaseStudiesProps) {
             </p>
 
             {/* Tech stack */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2">
               {project.tech.map((tech) => (
                 <span
                   key={tech}
@@ -45,16 +45,6 @@ export function CaseStudies({ slugs }: CaseStudiesProps) {
                 </span>
               ))}
             </div>
-
-            {/* Link */}
-            {project.link && (
-              <a
-                href={project.link}
-                className="inline-link text-sm"
-              >
-                View case study →
-              </a>
-            )}
           </div>
         ))}
       </div>

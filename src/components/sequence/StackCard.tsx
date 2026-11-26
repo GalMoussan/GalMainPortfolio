@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion, useTransform, type MotionValue } from 'framer-motion';
 import { OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
 import { caseStudies } from '@/app/ai-integration/_content/case-studies';
+import { modernAiStack } from '@/app/ai-integration/_content/about';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SideCard } from './SideCard';
 import { useOverlayWindow } from './useOverlayWindow';
@@ -12,7 +13,7 @@ import { useOverlayWindow } from './useOverlayWindow';
 const layers = [
   { label: 'Orchestration', study: caseStudies['digital-creator-ai'] },
   { label: 'Agents', study: caseStudies.authorlex },
-  { label: 'Retrieval', study: caseStudies.reelsearch },
+  { label: 'Retrieval', study: caseStudies['transcribe-god'] },
 ];
 
 const infrastructure = ['Next.js', 'Node.js', 'TypeScript', 'Python', 'PostgreSQL', 'Prisma', 'Supabase', 'Firebase'];
@@ -25,11 +26,9 @@ export function StackCard({ progress, reduceMotion }: { progress: MotionValue<nu
 
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(440px,32vw)]" label="AI orchestration and infrastructure">
-      <SectionHeading subtitle="Modern AI stack, daily.">AI Orchestration</SectionHeading>
+      <SectionHeading subtitle={modernAiStack.title}>AI Orchestration</SectionHeading>
       <p className="m-0 text-[14px] leading-[1.55] text-white/75">
-        I run autonomous Claude Code agent pipelines every day. I ship with the newest models the week they drop. While
-        enterprise agencies are still learning what MCP is, I&apos;ve been building multi-agent systems in production for
-        over a year.{' '}
+        {modernAiStack.body}{' '}
         <Link href="/ai-integration" className="inline-link">
           AI Integration Services →
         </Link>

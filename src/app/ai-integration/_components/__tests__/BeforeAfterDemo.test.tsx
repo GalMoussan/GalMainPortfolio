@@ -48,7 +48,7 @@ const mockScenarios: DemoScenario[] = [
       title: 'After Title 1',
       bullets: ['Step 1 → Step 2 → Step 3'],
       stat: { label: 'Processed', value: '23 items' },
-      statusLabel: 'Running · 0 errors',
+      statusLabel: 'Running · Avg response: 12s',
     },
   },
   {
@@ -94,10 +94,10 @@ describe('BeforeAfterDemo', () => {
     expect(screen.getByText('After Title 2')).toBeInTheDocument();
   });
 
-  it('renders LIVE DEMO header', () => {
+  it('renders the illustrative-example label', () => {
     render(<BeforeAfterDemo scenarios={mockScenarios} />);
 
-    expect(screen.getByText(/LIVE DEMO/)).toBeInTheDocument();
+    expect(screen.getByText('Illustrative example')).toBeInTheDocument();
   });
 
   it('renders drag hint initially', () => {
@@ -145,13 +145,13 @@ describe('BeforeAfterDemo', () => {
   it('displays status label when provided', () => {
     render(<BeforeAfterDemo scenarios={mockScenarios} />);
 
-    expect(screen.getByText('Running · 0 errors')).toBeInTheDocument();
+    expect(screen.getByText('Running · Avg response: 12s')).toBeInTheDocument();
   });
 
   it('renders copy overlays', () => {
     render(<BeforeAfterDemo scenarios={mockScenarios} />);
 
     expect(screen.getByText(/Manual · Slow · Errors/)).toBeInTheDocument();
-    expect(screen.getByText(/Autonomous · 24\/7 · 0 errors/)).toBeInTheDocument();
+    expect(screen.getByText(/Autonomous · 24\/7 · Logged/)).toBeInTheDocument();
   });
 });

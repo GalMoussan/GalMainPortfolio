@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- Source of public/resume.pdf. Regenerate with `npm run resume:build`. Not a public route. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gal Moussan — Resume</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 210mm;
+    height: 297mm;
+    padding: 13mm 14mm 11mm;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 10pt;
+    line-height: 1.38;
+    color: #555;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+  .label, .date, .contact, h2 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+  header { display: grid; grid-template-columns: 1fr 58mm; column-gap: 9mm; align-items: start; }
+  h1 { margin: 0; font-size: 34pt; line-height: 1.05; color: #111; letter-spacing: -0.01em; }
+  .contact { margin-top: 2mm; font-size: 9.5pt; line-height: 1.5; color: #222; }
+  .contact strong { color: #111; }
+  .summary { margin: 5mm 0 0; color: #555; }
+
+  main { display: grid; grid-template-columns: 1fr 58mm; column-gap: 9mm; margin-top: 6mm; }
+  h2 { margin: 0 0 2.4mm; font-size: 9.5pt; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1f74c9; }
+  section + section { margin-top: 5mm; }
+
+  .entry { margin-bottom: 3mm; break-inside: avoid; }
+  .entry:last-child { margin-bottom: 0; }
+  .role { margin: 0; font-size: 10.5pt; color: #111; line-height: 1.3; }
+  .role em { font-style: italic; }
+  .date { margin: 0.6mm 0 0.8mm; font-size: 8pt; letter-spacing: 0.04em; text-transform: uppercase; color: #777; }
+  .entry p { margin: 0; }
+
+  ul { margin: 0; padding: 0; list-style: none; }
+  .side li { margin-bottom: 2mm; }
+  .side li::before { content: '– '; }
+  .volunteer .role { font-size: 10pt; }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Gal Moussan</h1>
+      <p class="summary">
+        Fullstack developer and AI integration specialist with a background in military leadership. I build AI agent
+        systems and web applications, lead AI and development at a school, and teach teams to work effectively with
+        coding agents.
+      </p>
+    </div>
+    <div class="contact">
+      Israel · Remote<br>
+      <strong>055-885-9702</strong><br>
+      <strong><a href="mailto:galmoussan@gmail.com">galmoussan@gmail.com</a></strong><br>
+      <a href="https://www.linkedin.com/in/galmoussan97">linkedin.com/in/galmoussan97</a><br>
+      <a href="https://github.com/galmoussan">github.com/galmoussan</a>
+    </div>
+  </header>
+
+  <main>
+    <div>
+      <section>
+        <h2>Experience</h2>
+        <div class="entry">
+          <p class="role"><strong>Yassa North</strong> — <em>Deputy Director · Chief of AI &amp; Development</em></p>
+          <p class="date">September 2026 – present</p>
+          <p>Co-lead the school and own its AI and development work: the school website, internal tools for scheduling and coordination, and AI in teaching and operations.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>Freelance</strong> — <em>AI integration, development &amp; coding-agent training</em></p>
+          <p class="date">September 2026 – present</p>
+          <p>Autonomous AI agent systems for businesses, custom web development, and Claude Code / coding-agent training for teams.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>Shamir Institute of Technology</strong> — <em>AI Instructor</em></p>
+          <p class="date">March 2025 – August 2025</p>
+          <p>Taught AI courses for kids and youth, from AI fundamentals to building agents, custom tools and databases.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>Lagoonads</strong> — <em>Tech Lead, Fullstack Developer</em></p>
+          <p class="date">September 2024 – January 2025</p>
+          <p>Led the development of an affiliate marketing CRM system using Angular and Node.js.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>121Brokers</strong>, Australia — <em>Fullstack Developer</em></p>
+          <p class="date">April 2024 – September 2024</p>
+          <p>Developed and maintained a CRM system with three user interfaces using Angular, Node.js and Firebase.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>Netlinkz</strong>, Australia — <em>Automation Specialist</em></p>
+          <p class="date">September 2023 – March 2024</p>
+          <p>Led the migration of QA processes to an automated system using Selenium, TestNG, JavaScript and Node.js.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>VeracityAds</strong>, Israel — <em>Fullstack Developer</em></p>
+          <p class="date">December 2021 – 2023</p>
+          <p>Built and optimized an affiliate marketing CRM system with React, Python and Node.js.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>Tarific-Digital</strong>, Israel — <em>Frontend Developer</em></p>
+          <p class="date">January 2021 – November 2021</p>
+          <p>Designed and maintained websites using React and Node.js.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Military service</h2>
+        <div class="entry">
+          <p class="role"><strong>Officer &amp; Company Commander</strong>, Israeli Air Force</p>
+          <p class="date">August 2016 – August 2020</p>
+          <p>Led teams and delivered under high pressure.</p>
+        </div>
+      </section>
+    </div>
+
+    <aside class="side">
+      <section>
+        <h2>Skills</h2>
+        <ul>
+          <li>TypeScript, React, Next.js, Node.js, Python, Prisma, PostgreSQL, Angular</li>
+          <li>AI agent systems, LLM APIs (Claude, OpenAI), Claude Code and coding-agent workflows</li>
+          <li>Test automation: Playwright, Vitest, Selenium</li>
+          <li>Leadership and strategic thinking from military command</li>
+          <li>Hebrew and English</li>
+        </ul>
+      </section>
+
+      <section class="volunteer">
+        <h2>Volunteer</h2>
+        <div class="entry">
+          <p class="role"><strong>Heros for life</strong>, Backpacker</p>
+          <p class="date">2019–2022</p>
+          <p>Community service and school tutoring in the periphery and in developing countries.</p>
+        </div>
+        <div class="entry">
+          <p class="role"><strong>My Wave</strong>, Surf instructor</p>
+          <p class="date">2020–2025</p>
+          <p>Teaching youth at risk how to surf and handle life's problems at the same time.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>References</h2>
+        <p>Available upon request.</p>
+      </section>
+    </aside>
+  </main>
+</body>
+</html>

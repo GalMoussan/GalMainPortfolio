@@ -39,7 +39,7 @@ export type DemoSceneSpec = {
   title: string;
   bullets: string[];
   stat?: { label: string; value: string };
-  statusLabel?: string;              // "Running · 0 errors"
+  statusLabel?: string;              // "Running · Avg response: 12s"
 };
 
 export type Testimonial = {
