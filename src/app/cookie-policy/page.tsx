@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function CookiePolicyPage() {
   return (
-    <LegalPageLayout title="Cookie Policy" lastUpdated="May 24, 2026">
+    <LegalPageLayout title="Cookie Policy" lastUpdated="November 26, 2026">
       <h2>What Are Cookies</h2>
       <p>
         Cookies are small text files stored on your device (computer, tablet, or mobile phone) when you

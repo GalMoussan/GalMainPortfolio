@@ -8,25 +8,25 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <LegalPageLayout title="Privacy Policy" lastUpdated="May 24, 2026">
+    <LegalPageLayout title="Privacy Policy" lastUpdated="November 26, 2026">
       <h2>Introduction</h2>
       <p>
         This privacy policy describes how Gal Moussan (&quot;I&quot;, &quot;me&quot;, or &quot;my&quot;) collects, uses, and protects
-        your personal information when you visit galmoussan.com (the &quot;Site&quot;). This is a personal portfolio
-        website showcasing my work as a fullstack developer based in Tel Aviv, Israel.
+        your personal information when you visit galmoussan.com (the &quot;Site&quot;). The Site is my personal portfolio
+        and describes the services I offer as an independent developer based in Israel.
       </p>
       <p>
-        This Site is informational only — there are no user accounts, no e-commerce transactions, and no
-        paid services offered.
+        There are no user accounts and no payments on the Site. Any work we agree on is arranged directly with me,
+        outside the Site.
       </p>
 
       <h2>What Data Is Collected</h2>
 
-      <h3>Email Communications</h3>
+      <h3>Email and WhatsApp Communications</h3>
       <p>
-        When you contact me via the <code>mailto:galmoussan@gmail.com</code> link, your email address and
-        the content of your message are stored in my personal Gmail account. This is necessary to respond
-        to your inquiry.
+        When you contact me by email (galmoussan@gmail.com) or through a WhatsApp link on the Site, your contact
+        details and the content of your messages are stored in my Gmail or WhatsApp account. This is necessary to
+        respond to you.
       </p>
 
       <h3>Technical Data (Server Logs)</h3>
@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage() {
       <h2>How Data Is Used</h2>
       <p>I use your data solely to:</p>
       <ul>
-        <li>Respond to your email inquiries</li>
+        <li>Respond to your inquiries</li>
         <li>Operate and secure the Site</li>
         <li>Understand how visitors use the Site and improve content</li>
       </ul>
@@ -108,6 +108,13 @@ export default function PrivacyPolicyPage() {
           </a>
           .
         </li>
+        <li>
+          <strong>WhatsApp</strong> (Meta) — stores WhatsApp messages you send me. See WhatsApp&apos;s{' '}
+          <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </a>
+          .
+        </li>
       </ul>
       <p>
         Each service operates under its own privacy policy. I have no control over how they handle your
@@ -117,8 +124,8 @@ export default function PrivacyPolicyPage() {
       <h2>Data Retention</h2>
       <ul>
         <li>
-          <strong>Email correspondence:</strong> Kept as long as relevant to our communication (typically
-          indefinitely, unless you request deletion).
+          <strong>Email and WhatsApp correspondence:</strong> Kept as long as relevant to our communication, unless
+          you request deletion.
         </li>
         <li>
           <strong>Server logs:</strong> Retained according to Vercel&apos;s standard log retention policy.

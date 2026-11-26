@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalPageLayout title="Terms of Use" lastUpdated="May 24, 2026">
+    <LegalPageLayout title="Terms of Use" lastUpdated="November 26, 2026">
       <h2>Acceptance of Terms</h2>
       <p>
         By accessing and using galmoussan.com (the &quot;Site&quot;), you accept and agree to be bound by these
@@ -16,14 +16,12 @@ export default function TermsPage() {
 
       <h2>Nature of the Site</h2>
       <p>
-        This Site is a personal portfolio website for Gal Moussan, a fullstack developer based in Tel
-        Aviv, Israel. The Site is informational and educational in nature. It showcases projects, skills,
-        and contact information.
+        This Site is the personal portfolio of Gal Moussan, a fullstack developer and AI integration specialist based
+        in Israel. It showcases projects, skills and contact information, and describes the services I offer.
       </p>
       <p>
-        <strong>No services are sold</strong> through this Site. There are no user accounts, no
-        transactions, and no paid offerings. Contact is facilitated via a simple{' '}
-        <code>mailto:</code> link.
+        No purchases are made through this Site and there are no user accounts. Any engagement for services is agreed
+        directly between you and me, under separate terms.
       </p>
 
       <h2>Intellectual Property</h2>
@@ -50,9 +48,8 @@ export default function TermsPage() {
 
       <h2>Portfolio Projects Disclaimer</h2>
       <p>
-        Projects showcased on this Site (including but not limited to Pocket Ask, LeadsFactory, Content
-        Factory, and X Intelligence Pipeline) are <strong>portfolio demonstrations</strong> of technical
-        capabilities. They are presented for educational and showcase purposes.
+        Projects showcased on this Site are <strong>portfolio demonstrations</strong> of technical capabilities,
+        presented for showcase and educational purposes.
       </p>
       <p>
         <strong>Important:</strong> Any deployment or use of such projects in a production environment is
@@ -105,8 +102,9 @@ export default function TermsPage() {
 
       <h2>External Links</h2>
       <p>
-        The Site contains links to external websites, including but not limited to GitHub, LinkedIn,
-        Lagoonads, and live project deployments. These links are provided for your convenience.
+        The Site contains links to external websites, including but not limited to GitHub, LinkedIn, WhatsApp, the
+        websites of past and current employers, and live project deployments. These links are provided for your
+        convenience.
       </p>
       <p>
         I have no control over the content or practices of third-party websites and am not responsible
@@ -128,8 +126,8 @@ export default function TermsPage() {
         regard to its conflict of law principles.
       </p>
       <p>
-        Any disputes arising from or relating to these Terms or your use of the Site shall be subject to
-        the exclusive jurisdiction of the competent courts in <strong>Tel Aviv, Israel</strong>.
+        Any disputes arising from or relating to these Terms or your use of the Site shall be subject to the
+        exclusive jurisdiction of the competent courts in <strong>Israel</strong>.
       </p>
 
       <h2>Changes to These Terms</h2>
