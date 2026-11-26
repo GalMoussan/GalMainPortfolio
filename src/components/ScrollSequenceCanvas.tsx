@@ -15,6 +15,8 @@ import {
   BRIDGE_RGB,
   CUT_BRIDGES,
   OVERLAY_WINDOWS,
+  PORTRAIT_MAX_ASPECT,
+  PRIORITY_FRAME_STEP,
   PRIORITY_SEQUENCE,
   SCROLL_HEIGHT_VH,
   SECTION_ANCHORS,
@@ -23,6 +25,7 @@ import {
   VH_PER_TIMELINE_UNIT,
   frameUrl,
   type SequenceDefinition,
+  type FrameSet,
   type SequenceName,
 } from '@/lib/sequenceConfig';
 import { SequenceOverlays } from '@/components/sequence/SequenceOverlays';
@@ -93,6 +96,9 @@ export function ScrollSequenceCanvas() {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { alpha: false });
     if (!canvas || !ctx) return;
+
+    // Chosen once per load; a later rotation keeps this set and cover-fits it.
+    const frameSet: FrameSet = window.innerWidth / window.innerHeight < PORTRAIT_MAX_ASPECT ? 'portrait' : 'full';
 
     let cancelled = false;
     let raf: number | null = null;
@@ -178,7 +184,7 @@ export function ScrollSequenceCanvas() {
       requested[name][index] = 1;
       const img = new Image();
       img.decoding = 'async';
-      img.src = frameUrl(name, index);
+      img.src = frameUrl(name, index, frameSet);
       return img.decode().then(
         () => {
           if (cancelled) return;
@@ -214,12 +220,17 @@ export function ScrollSequenceCanvas() {
     };
 
     const priority = sequenceByName(PRIORITY_SEQUENCE);
+    const priorityIndices: number[] = [];
+    for (let i = 0; i < priority.frameCount; i += PRIORITY_FRAME_STEP) priorityIndices.push(i);
+    if (priorityIndices[priorityIndices.length - 1] !== priority.frameCount - 1) {
+      priorityIndices.push(priority.frameCount - 1);
+    }
     let priorityDone = 0;
     Promise.all(
-      Array.from({ length: priority.frameCount }, (_, i) =>
+      priorityIndices.map((i) =>
         loadFrame(priority.name, i).then(() => {
           priorityDone += 1;
-          if (!cancelled) setLoadedFraction(priorityDone / priority.frameCount);
+          if (!cancelled) setLoadedFraction(priorityDone / priorityIndices.length);
         }),
       ),
     ).then(async () => {

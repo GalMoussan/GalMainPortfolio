@@ -47,8 +47,24 @@ export const VH_PER_TIMELINE_UNIT = 550;
 /** Scroll container height: the scrubbed distance plus the pinned viewport. */
 export const SCROLL_HEIGHT_VH = 100 + VH_PER_TIMELINE_UNIT * TIMELINE_END;
 
-/** Fully decoded before the loading bar is dismissed; the rest stream in afterwards. */
+/** Opening shot: decoded (sparsely, see PRIORITY_FRAME_STEP) before the loading bar is dismissed. */
 export const PRIORITY_SEQUENCE: SequenceName = 'sunglasses';
+
+/**
+ * The loading bar waits for every Nth priority frame (plus the last); the frames in
+ * between stream in right after, nearest to the scroll position first.
+ */
+export const PRIORITY_FRAME_STEP = 4;
+
+/**
+ * `full`: 1600×900 frames in /sequence. `portrait`: the centre 506×900 of the same
+ * frames in /sequence-portrait (same frame counts), the region a portrait phone shows
+ * with cover fitting anyway, at about a third of the bytes.
+ */
+export type FrameSet = 'full' | 'portrait';
+
+/** Viewports narrower than this width/height ratio load the portrait set. */
+export const PORTRAIT_MAX_ASPECT = 0.75;
 
 /** Frames requested per background batch once the priority sequence is ready. */
 export const BACKGROUND_BATCH_SIZE = 12;
@@ -108,6 +124,7 @@ export const SECTION_ANCHORS: readonly SectionAnchor[] = [
   { id: 'contact', progress: 1.46, endBelowMd: true },
 ];
 
-export function frameUrl(name: SequenceName, index: number): string {
-  return `/sequence/${name}/frame_${String(index + 1).padStart(4, '0')}.webp`;
+export function frameUrl(name: SequenceName, index: number, set: FrameSet): string {
+  const root = set === 'portrait' ? 'sequence-portrait' : 'sequence';
+  return `/${root}/${name}/frame_${String(index + 1).padStart(4, '0')}.webp`;
 }
