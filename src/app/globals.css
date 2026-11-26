@@ -358,11 +358,11 @@
     width: max-content;
     max-width: calc(100% - 24px);
     border-radius: 999px;
-    background: rgba(12, 16, 22, 0.52);
+    /* Opaque enough without blur: on phones the capsule sits over the scrubbed canvas, where a
+       backdrop blur re-renders every frame. The blur is added back at lg (below). */
+    background: rgba(12, 16, 22, 0.86);
     border: 1px solid rgba(215, 227, 238, 0.38);
     box-shadow: 0 0 0 1px rgba(94, 231, 255, 0.12), 0 10px 40px rgba(6, 8, 12, 0.35);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
     overflow-x: auto;
     scrollbar-width: none;
     pointer-events: auto;
@@ -378,6 +378,14 @@
 
   .nav-capsule::-webkit-scrollbar {
     display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .nav-capsule {
+      background: rgba(12, 16, 22, 0.52);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+    }
   }
 
   @media (min-width: 768px) {
@@ -493,15 +501,23 @@
     }
   }
 
+  /* Small screens: solid, no backdrop blur. Re-blurring the canvas under a large card on every
+     scrubbed frame is the costliest thing on an iPhone, so the glass effect is desktop-only. */
   .sequence-card {
-    background: rgba(36, 38, 51, 0.72);
+    background: rgba(36, 38, 51, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 24px;
     box-shadow: 0 24px 60px rgba(12, 13, 18, 0.35);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
     color: rgba(255, 255, 255, 0.86);
     scrollbar-width: thin;
+  }
+
+  @media (min-width: 1024px) {
+    .sequence-card {
+      background: rgba(36, 38, 51, 0.72);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
   }
 
   .sequence-card .section-heading {

@@ -58,16 +58,37 @@ export const PRIORITY_FRAME_STEP = 8;
 
 /**
  * `full`: 1600×900 frames in /sequence. `portrait`: the centre 506×900 of the same
- * frames in /sequence-portrait (same frame counts), the region a portrait phone shows
- * with cover fitting anyway, at about a third of the bytes.
+ * frames, scaled to 432×768, in /sequence-portrait (same frame counts): the region a
+ * portrait phone shows with cover fitting anyway, at a fraction of the bytes and decode cost.
  */
 export type FrameSet = 'full' | 'portrait';
+
+export const FRAME_SIZES: Readonly<Record<FrameSet, { width: number; height: number }>> = {
+  full: { width: 1600, height: 900 },
+  portrait: { width: 432, height: 768 },
+};
 
 /** Viewports narrower than this width/height ratio load the portrait set. */
 export const PORTRAIT_MAX_ASPECT = 0.75;
 
 /** Parallel frame downloads once the loading bar is gone. */
 export const LOAD_CONCURRENCY = 8;
+
+/**
+ * Decoded frames kept ready around the scroll position, as a memory budget (RGBA bytes).
+ * Drawing only ever uses these pre-decoded bitmaps, so no frame is decoded on the main
+ * thread mid-scroll. Portrait: ~60 frames; full: ~40.
+ */
+export const DECODE_BUDGET_BYTES: Readonly<Record<FrameSet, number>> = {
+  full: 240 * 1024 * 1024,
+  portrait: 80 * 1024 * 1024,
+};
+
+/** Share of the decode window placed ahead of the scroll position (scrolling down is the norm). */
+export const DECODE_AHEAD_SHARE = 0.7;
+
+/** Parallel frame decodes. */
+export const DECODE_CONCURRENCY = 3;
 
 /**
  * Coarse-to-fine background loading. Each pass requests every `step`th frame, either

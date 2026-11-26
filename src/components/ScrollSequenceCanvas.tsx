@@ -13,6 +13,10 @@ import {
 import {
   BRIDGE_RGB,
   CUT_BRIDGES,
+  DECODE_AHEAD_SHARE,
+  DECODE_BUDGET_BYTES,
+  DECODE_CONCURRENCY,
+  FRAME_SIZES,
   LOAD_CONCURRENCY,
   LOAD_PASSES,
   OVERLAY_WINDOWS,
@@ -25,50 +29,63 @@ import {
   TIMELINE_END,
   VH_PER_TIMELINE_UNIT,
   frameUrl,
-  type SequenceDefinition,
   type FrameSet,
+  type SequenceDefinition,
   type SequenceName,
 } from '@/lib/sequenceConfig';
 import { SequenceOverlays } from '@/components/sequence/SequenceOverlays';
 
-type Frames = (HTMLImageElement | undefined)[];
-
 const MAX_DPR = 2;
+/** Decoded frames this far outside the decode window survive (hysteresis against churn). */
+const EVICT_MARGIN = 8;
+
+type Shot = SequenceDefinition & { offset: number };
+
+/** Every shot's frames share one flat index space; `offset` is a shot's first global index. */
+const SHOTS: readonly Shot[] = SEQUENCES.reduce<Shot[]>((shots, seq) => {
+  const prev = shots[shots.length - 1];
+  shots.push({ ...seq, offset: prev ? prev.offset + prev.frameCount : 0 });
+  return shots;
+}, []);
+const TOTAL_FRAMES = SHOTS.reduce((n, shot) => n + shot.frameCount, 0);
+/** Shot index of each global frame. */
+const SHOT_OF = SHOTS.reduce((map, shot, s) => map.fill(s, shot.offset, shot.offset + shot.frameCount), new Uint8Array(TOTAL_FRAMES));
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const smoothstep = (t: number) => t * t * (3 - 2 * t);
 
-function sequenceByName(name: SequenceName): SequenceDefinition {
-  const seq = SEQUENCES.find((s) => s.name === name);
-  if (!seq) throw new Error(`Unknown sequence: ${name}`);
-  return seq;
+function shotByName(name: SequenceName): Shot {
+  const shot = SHOTS.find((s) => s.name === name);
+  if (!shot) throw new Error(`Unknown sequence: ${name}`);
+  return shot;
 }
 
-function sequenceIndexAt(p: number): number {
-  const i = SEQUENCES.findIndex((s) => p < s.end);
-  return i === -1 ? SEQUENCES.length - 1 : i;
+function shotIndexAt(p: number): number {
+  const i = SHOTS.findIndex((s) => p < s.end);
+  return i === -1 ? SHOTS.length - 1 : i;
 }
 
-function frameIndexAt(seq: SequenceDefinition, p: number): number {
-  return Math.round(clamp01((p - seq.start) / (seq.end - seq.start)) * (seq.frameCount - 1));
+/** Frame index within `shot` for timeline position `p`. */
+function frameIndexAt(shot: Shot, p: number): number {
+  return Math.round(clamp01((p - shot.start) / (shot.end - shot.start)) * (shot.frameCount - 1));
 }
 
-/** Closest decoded frame to `index`, so a frame still in flight never blanks the canvas. */
-function nearestFrame(frames: Frames, index: number) {
-  for (let d = 0; d < frames.length; d++) {
-    const before = frames[index - d];
-    if (before) return { img: before, index: index - d };
-    const after = frames[index + d];
-    if (after) return { img: after, index: index + d };
+/** Closest decoded frame to `index` within `shot`, so a frame still in flight never blanks the canvas. */
+function nearestFrame(bitmaps: (ImageBitmap | undefined)[], shot: Shot, index: number) {
+  for (let d = 0; d < shot.frameCount; d++) {
+    const before = index - d;
+    if (before >= 0 && bitmaps[shot.offset + before]) return { bitmap: bitmaps[shot.offset + before]!, index: before };
+    const after = index + d;
+    if (after < shot.frameCount && bitmaps[shot.offset + after]) return { bitmap: bitmaps[shot.offset + after]!, index: after };
   }
   return null;
 }
 
 /** `object-fit: cover` for canvas: fill the viewport, crop the overflow evenly. */
-function drawCover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, w: number, h: number, alpha = 1) {
-  const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
-  const dw = img.naturalWidth * scale;
-  const dh = img.naturalHeight * scale;
+function drawCover(ctx: CanvasRenderingContext2D, img: ImageBitmap, w: number, h: number, alpha = 1) {
+  const scale = Math.max(w / img.width, h / img.height);
+  const dw = img.width * scale;
+  const dh = img.height * scale;
   ctx.globalAlpha = alpha;
   ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
   ctx.globalAlpha = 1;
@@ -100,6 +117,10 @@ export function ScrollSequenceCanvas() {
 
     // Chosen once per load; a later rotation keeps this set and cover-fits it.
     const frameSet: FrameSet = window.innerWidth / window.innerHeight < PORTRAIT_MAX_ASPECT ? 'portrait' : 'full';
+    const frameSize = FRAME_SIZES[frameSet];
+    const windowFrames = Math.floor(DECODE_BUDGET_BYTES[frameSet] / (frameSize.width * frameSize.height * 4));
+    const ahead = Math.round(windowFrames * DECODE_AHEAD_SHARE);
+    const behind = windowFrames - ahead;
 
     let cancelled = false;
     let raf: number | null = null;
@@ -107,53 +128,77 @@ export function ScrollSequenceCanvas() {
     let width = 0;
     let height = 0;
 
-    const frames = {} as Record<SequenceName, Frames>;
-    const requested = {} as Record<SequenceName, Uint8Array>;
-    for (const seq of SEQUENCES) {
-      frames[seq.name] = Array.from<HTMLImageElement | undefined>({ length: seq.frameCount });
-      requested[seq.name] = new Uint8Array(seq.frameCount);
-    }
+    /** Compressed frames as downloaded. */
+    const blobs: (Blob | undefined)[] = new Array(TOTAL_FRAMES);
+    /** Decoded frames inside the decode window; the only thing ever drawn. */
+    const bitmaps: (ImageBitmap | undefined)[] = new Array(TOTAL_FRAMES);
+    const requested = new Uint8Array(TOTAL_FRAMES);
+    const decoding = new Uint8Array(TOTAL_FRAMES);
+
+    /** Global index of the frame in view; the decode window is centred on it. */
+    let center = 0;
+    /** Global indices of the exact frames the scroll position calls for. */
+    let wanted: number[] = [0];
+    /** Shot the scroll position is in, and the shot whose frame is on the canvas. */
+    let targetShot = 0;
+    let drawnShot = -1;
 
     const bridges = CUT_BRIDGES.map((bridge) => {
-      const toSeq = sequenceByName(bridge.to);
-      return { ...bridge, fromSeq: sequenceByName(bridge.from), toSeq, start: toSeq.start - bridge.halfWidth };
+      const toShot = shotByName(bridge.to);
+      return { ...bridge, fromShot: shotByName(bridge.from), toShot, start: toShot.start - bridge.halfWidth };
     });
 
-    /** Exact frames the current scroll position calls for (`name:index`). */
-    let wanted = new Set<string>();
+    const inWindow = (g: number, margin = 0) => g >= center - behind - margin && g <= center + ahead + margin;
+
+    const moveWindow = (g: number) => {
+      if (g === center) return;
+      center = g;
+      for (let i = 0; i < TOTAL_FRAMES; i++) {
+        const bitmap = bitmaps[i];
+        if (bitmap && !inWindow(i, EVICT_MARGIN)) {
+          bitmap.close();
+          bitmaps[i] = undefined;
+        }
+      }
+      pumpDecode();
+    };
 
     const render = () => {
       raf = null;
       if (!width || !height) return;
       const p = Math.min(TIMELINE_END, Math.max(0, progressRef.current.get()));
+      targetShot = shotIndexAt(p);
+      const shot = SHOTS[targetShot];
+      const target = frameIndexAt(shot, p);
+      moveWindow(shot.offset + target);
       const bridge = bridges.find((b) => p > b.start && p < b.start + 2 * b.halfWidth);
 
       if (!bridge) {
-        const seq = SEQUENCES[sequenceIndexAt(p)];
-        const target = frameIndexAt(seq, p);
-        wanted = new Set([`${seq.name}:${target}`]);
-        const frame = nearestFrame(frames[seq.name], target);
+        wanted = [shot.offset + target];
+        const frame = nearestFrame(bitmaps, shot, target);
         // Nothing decoded for this shot yet: keep whatever is on screen.
         if (!frame) return;
-        const key = `${seq.name}:${frame.index}`;
+        const key = `${shot.name}:${frame.index}`;
         if (key === lastKey) return;
         lastKey = key;
-        drawCover(ctx, frame.img, width, height);
+        drawnShot = targetShot;
+        drawCover(ctx, frame.bitmap, width, height);
         return;
       }
 
       const t = (p - bridge.start) / (2 * bridge.halfWidth);
-      const fromTarget = frameIndexAt(bridge.fromSeq, p);
-      const toTarget = frameIndexAt(bridge.toSeq, p);
-      wanted = new Set([`${bridge.from}:${fromTarget}`, `${bridge.to}:${toTarget}`]);
-      const a = nearestFrame(frames[bridge.fromSeq.name], fromTarget);
-      const b = nearestFrame(frames[bridge.toSeq.name], toTarget);
+      const fromTarget = frameIndexAt(bridge.fromShot, p);
+      const toTarget = frameIndexAt(bridge.toShot, p);
+      wanted = [bridge.fromShot.offset + fromTarget, bridge.toShot.offset + toTarget];
+      const a = nearestFrame(bitmaps, bridge.fromShot, fromTarget);
+      const b = nearestFrame(bitmaps, bridge.toShot, toTarget);
       if (!a && !b) return;
       const key = `bridge:${bridge.to}:${a?.index}:${b?.index}:${t.toFixed(3)}`;
       if (key === lastKey) return;
       lastKey = key;
-      if (a) drawCover(ctx, a.img, width, height);
-      if (b) drawCover(ctx, b.img, width, height, a ? smoothstep(t) : 1);
+      drawnShot = targetShot;
+      if (a) drawCover(ctx, a.bitmap, width, height);
+      if (b) drawCover(ctx, b.bitmap, width, height, a ? smoothstep(t) : 1);
       ctx.fillStyle = `rgba(${BRIDGE_RGB}, ${bridge.maxDarkness * Math.sin(Math.PI * t)})`;
       ctx.fillRect(0, 0, width, height);
     };
@@ -163,16 +208,62 @@ export function ScrollSequenceCanvas() {
     };
     scheduleDrawRef.current = scheduleDraw;
 
+    /** Next frame to decode: nearest to the frame in view, ahead and behind in the window's proportions. */
+    const nextDecode = () => {
+      const decodable = (g: number) => g >= 0 && g < TOTAL_FRAMES && blobs[g] && !bitmaps[g] && !decoding[g];
+      for (let k = 0; k <= ahead; k++) {
+        if (decodable(center + k)) return center + k;
+        const back = center - Math.ceil((k * behind) / ahead);
+        if (back < center && decodable(back)) return back;
+      }
+      return -1;
+    };
+
+    let activeDecodes = 0;
+    const pumpDecode = () => {
+      while (!cancelled && activeDecodes < DECODE_CONCURRENCY) {
+        const g = nextDecode();
+        if (g < 0) return;
+        activeDecodes += 1;
+        decoding[g] = 1;
+        createImageBitmap(blobs[g]!)
+          .then(
+            (bitmap) => {
+              if (cancelled || !inWindow(g, EVICT_MARGIN)) {
+                bitmap.close();
+                return;
+              }
+              bitmaps[g] = bitmap;
+              // Repaint for the exact frame in view, or for the first frame of a shot the canvas
+              // hasn't shown yet. Never for a merely closer frame: that would make the video creep
+              // forward with nobody scrolling.
+              if (wanted.includes(g) || (drawnShot !== targetShot && SHOT_OF[g] === targetShot)) scheduleDraw();
+            },
+            // Undecodable frame: drop it so it isn't retried; nearestFrame() bridges the gap.
+            () => {
+              blobs[g] = undefined;
+            },
+          )
+          .finally(() => {
+            activeDecodes -= 1;
+            decoding[g] = 0;
+            pumpDecode();
+          });
+      }
+    };
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
       width = rect.width;
       height = rect.height;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
+      // Never render more pixels than the frames carry: `cover` is CSS px per frame px.
+      const cover = Math.max(width / frameSize.width, height / frameSize.height);
+      const scale = Math.max(1, Math.min(window.devicePixelRatio || 1, MAX_DPR, 1 / cover));
+      canvas.width = Math.round(width * scale);
+      canvas.height = Math.round(height * scale);
       // Resizing resets the context; restore the CSS-pixel transform and smoothing.
       // Default (bilinear) quality: 'high' is markedly slower per draw on mobile Safari.
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.setTransform(scale, 0, 0, scale, 0, 0);
       ctx.imageSmoothingEnabled = true;
       lastKey = '';
       render();
@@ -180,77 +271,88 @@ export function ScrollSequenceCanvas() {
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas);
 
-    const loadFrame = (name: SequenceName, index: number): Promise<void> => {
-      if (requested[name][index]) return Promise.resolve();
-      requested[name][index] = 1;
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = frameUrl(name, index, frameSet);
-      return img.decode().then(
-        () => {
-          if (cancelled) return;
-          frames[name][index] = img;
-          // Repaint only when this is the exact frame on screen; redrawing closer fallbacks
-          // as they stream in would make the video creep forward with nobody scrolling.
-          if (wanted.has(`${name}:${index}`)) scheduleDraw();
-        },
-        // Missing or corrupt frame: nearestFrame() bridges the gap.
-        () => undefined,
-      );
+    const fetchFrame = (g: number): Promise<void> => {
+      if (requested[g]) return Promise.resolve();
+      requested[g] = 1;
+      const shot = SHOTS[SHOT_OF[g]];
+      return fetch(frameUrl(shot.name, g - shot.offset, frameSet))
+        .then((res) => (res.ok ? res.blob() : undefined))
+        .then(
+          (blob) => {
+            if (cancelled || !blob) return;
+            blobs[g] = blob;
+            if (inWindow(g)) pumpDecode();
+          },
+          // Network failure: nearestFrame() bridges the gap.
+          () => undefined,
+        );
     };
 
     /**
-     * Next frame to fetch, following LOAD_PASSES. Shots go by urgency (on screen, the
+     * Next frame to download, following LOAD_PASSES. Shots go by urgency (on screen, the
      * ones after it, then the ones before); in the shot on screen, frames ahead come first.
      */
-    const nextFrame = () => {
+    const nextFetch = () => {
       const p = progressRef.current.get();
-      const current = sequenceIndexAt(p);
-      const shots = [...SEQUENCES.slice(current), ...SEQUENCES.slice(0, current).reverse()];
+      const current = shotIndexAt(p);
+      const order = [...SHOTS.slice(current), ...SHOTS.slice(0, current).reverse()];
       for (const { step, scope } of LOAD_PASSES) {
-        for (const seq of scope === 'near' ? shots.slice(0, 2) : shots) {
-          const flags = requested[seq.name];
-          const from = seq === SEQUENCES[current] ? frameIndexAt(seq, p) : 0;
-          for (let k = 0; k < flags.length; k++) {
-            const i = (from + k) % flags.length;
-            if (i % step === 0 && !flags[i]) return { name: seq.name, index: i };
+        for (const shot of scope === 'near' ? order.slice(0, 2) : order) {
+          const from = shot === SHOTS[current] ? frameIndexAt(shot, p) : 0;
+          for (let k = 0; k < shot.frameCount; k++) {
+            const i = (from + k) % shot.frameCount;
+            if (i % step === 0 && !requested[shot.offset + i]) return shot.offset + i;
           }
         }
       }
-      return null;
+      return -1;
     };
 
     /** Keeps LOAD_CONCURRENCY downloads in flight, choosing each next frame as a slot frees up. */
     let inFlight = 0;
     const pump = () => {
       while (!cancelled && inFlight < LOAD_CONCURRENCY) {
-        const next = nextFrame();
-        if (!next) return;
+        const g = nextFetch();
+        if (g < 0) return;
         inFlight += 1;
-        void loadFrame(next.name, next.index).then(() => {
+        void fetchFrame(g).then(() => {
           inFlight -= 1;
           pump();
         });
       }
     };
 
-    const priority = sequenceByName(PRIORITY_SEQUENCE);
-    const priorityIndices: number[] = [];
-    for (let i = 0; i < priority.frameCount; i += PRIORITY_FRAME_STEP) priorityIndices.push(i);
-    if (priorityIndices[priorityIndices.length - 1] !== priority.frameCount - 1) {
-      priorityIndices.push(priority.frameCount - 1);
+    const priority = shotByName(PRIORITY_SEQUENCE);
+    const priorityFrames: number[] = [];
+    for (let i = 0; i < priority.frameCount; i += PRIORITY_FRAME_STEP) priorityFrames.push(priority.offset + i);
+    if (priorityFrames[priorityFrames.length - 1] !== priority.offset + priority.frameCount - 1) {
+      priorityFrames.push(priority.offset + priority.frameCount - 1);
     }
     let priorityDone = 0;
     Promise.all(
-      priorityIndices.map((i) =>
-        loadFrame(priority.name, i).then(() => {
+      priorityFrames.map((g) =>
+        fetchFrame(g).then(() => {
           priorityDone += 1;
-          if (!cancelled) setLoadedFraction(priorityDone / priorityIndices.length);
+          if (!cancelled) setLoadedFraction(priorityDone / priorityFrames.length);
         }),
       ),
-    ).then(() => {
+    ).then(async () => {
+      if (cancelled) return;
+      // Decode the opening frame before the loading bar lifts, so it never reveals a blank canvas.
+      const first = blobs[priority.offset];
+      if (first && !bitmaps[priority.offset]) {
+        decoding[priority.offset] = 1;
+        try {
+          bitmaps[priority.offset] = await createImageBitmap(first);
+        } catch {
+          // Undecodable: the loader still lifts and nearestFrame() uses the next decoded frame.
+        }
+        decoding[priority.offset] = 0;
+      }
       if (cancelled) return;
       setReady(true);
+      scheduleDraw();
+      pumpDecode();
       pump();
     });
 
@@ -259,6 +361,7 @@ export function ScrollSequenceCanvas() {
       resizeObserver.disconnect();
       if (raf !== null) cancelAnimationFrame(raf);
       scheduleDrawRef.current = () => undefined;
+      for (const bitmap of bitmaps) bitmap?.close();
     };
   }, []);
 
