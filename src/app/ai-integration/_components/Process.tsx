@@ -8,8 +8,8 @@ const steps = [
     number: '01',
     title: 'Diagnostic',
     subtitle: 'Free, 30 min.',
-    description: 'We talk. I map your workflows, identify the highest-leverage automation, and tell you honestly if AI even makes sense for your business. Some businesses I turn away.',
-    detail: 'No sales pitch. If AI is overkill for your use case, I&apos;ll tell you.',
+    description: 'We talk. I map your workflows, find the highest-leverage place to start, and tell you honestly whether AI even makes sense for your business. Some businesses I turn away.',
+    detail: "No sales pitch. If AI is overkill for your use case, I'll tell you.",
   },
   {
     number: '02',

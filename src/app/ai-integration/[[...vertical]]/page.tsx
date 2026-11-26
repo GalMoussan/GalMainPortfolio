@@ -6,9 +6,10 @@ import { BeforeAfterDemo } from '../_components/BeforeAfterDemo';
 import { SocialProofStrip } from '../_components/SocialProofStrip';
 import { ComparisonDiff } from '../_components/ComparisonDiff';
 import { Services } from '../_components/Services';
+import { Training } from '../_components/Training';
+import { Development } from '../_components/Development';
 import { Process } from '../_components/Process';
 import { CaseStudies } from '../_components/CaseStudies';
-import { ComingSoon } from '../_components/ComingSoon';
 import { AboutGal } from '../_components/AboutGal';
 import { FAQ } from '../_components/FAQ';
 import { FinalCTA } from '../_components/FinalCTA';
@@ -48,6 +49,10 @@ export default function AIIntegrationPage({ params }: PageProps) {
       name: 'Gal Moussan',
       jobTitle: 'AI Integration Engineer',
       url: 'https://galmoussan.com',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'IL',
+      },
     },
     areaServed: {
       '@type': 'Country',
@@ -55,7 +60,7 @@ export default function AIIntegrationPage({ params }: PageProps) {
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'AI Integration Services',
+      name: config.displayName,
       itemListElement: [
         {
           '@type': 'Offer',
@@ -125,37 +130,42 @@ export default function AIIntegrationPage({ params }: PageProps) {
         <Services config={config} />
       </ScrollRevealSection>
 
-      {/* Section 6 - Process */}
+      {/* Section 6 - Training */}
+      <ScrollRevealSection>
+        <Training />
+      </ScrollRevealSection>
+
+      {/* Section 7 - Development */}
+      <ScrollRevealSection>
+        <Development />
+      </ScrollRevealSection>
+
+      {/* Section 8 - Process */}
       <ScrollRevealSection>
         <Process />
       </ScrollRevealSection>
 
-      {/* Section 7 - Case Studies */}
+      {/* Section 9 - Case Studies */}
       <ScrollRevealSection>
         <CaseStudies slugs={config.caseStudySlugs} />
       </ScrollRevealSection>
 
-      {/* Section 8 - Coming Soon */}
-      <ScrollRevealSection>
-        <ComingSoon />
-      </ScrollRevealSection>
-
-      {/* Section 9 - About Gal */}
+      {/* Section 10 - About Gal */}
       <ScrollRevealSection>
         <AboutGal />
       </ScrollRevealSection>
 
-      {/* Section 10 - FAQ */}
+      {/* Section 11 - FAQ */}
       <ScrollRevealSection>
         <FAQ additionalFaqs={config.faqAdditional} />
       </ScrollRevealSection>
 
-      {/* Section 11 - Final CTA */}
+      {/* Section 12 - Final CTA */}
       <ScrollRevealSection>
         <FinalCTA />
       </ScrollRevealSection>
 
-      {/* Section 12 - Footer (already in layout) */}
+      {/* Section 13 - Footer (already in layout) */}
     </>
   );
 }

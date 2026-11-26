@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { track } from '@vercel/analytics';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Logo } from '@/components/layout/Logo';
+import { openBookCall } from '../_lib/cta';
 
 const navLinks = [
   { name: 'What I build', href: '#what-i-build' },
+  { name: 'Training', href: '#training' },
   { name: 'How it works', href: '#how-it-works' },
   { name: 'Pricing', href: '#what-i-build' }, // Same as services section
   { name: 'FAQ', href: '#faq' },
@@ -24,22 +25,6 @@ export function AINav() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleCTAClick = () => {
-    const calLink = process.env.NEXT_PUBLIC_CAL_LINK;
-
-    if (calLink) {
-      // v2: Cal.com integration
-      window.open(calLink, '_blank');
-      track('cta_click', { source: 'nav', method: 'cal.com' });
-    } else {
-      // v1: WhatsApp fallback
-      const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal - provide real WhatsApp number
-      const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
-      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
-      track('cta_click', { source: 'nav', method: 'whatsapp' });
-    }
-  };
 
   return (
     <header
@@ -72,7 +57,7 @@ export function AINav() {
 
         {/* Desktop CTA button */}
         <button
-          onClick={handleCTAClick}
+          onClick={() => openBookCall('nav')}
           className="hidden md:block outline-button py-3 px-5"
         >
           Book free call
@@ -115,7 +100,7 @@ export function AINav() {
             ))}
             <button
               onClick={() => {
-                handleCTAClick();
+                openBookCall('nav');
                 setIsOpen(false);
               }}
               className="outline-button py-4 px-6 text-base mt-4"

@@ -1,24 +1,8 @@
 'use client';
 
-import { track } from '@vercel/analytics';
+import { openBookCall } from '../_lib/cta';
 
 export function FinalCTA() {
-  const handleCTAClick = () => {
-    const calLink = process.env.NEXT_PUBLIC_CAL_LINK;
-
-    if (calLink) {
-      // v2: Cal.com integration
-      window.open(calLink, '_blank');
-      track('cta_click', { source: 'final_cta', method: 'cal.com' });
-    } else {
-      // v1: WhatsApp fallback
-      const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '972500000000'; // TODO: @gal
-      const message = encodeURIComponent("Hi Gal, I'd like to book a free 30-min AI diagnostic for my business.");
-      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
-      track('cta_click', { source: 'final_cta', method: 'whatsapp' });
-    }
-  };
-
   return (
     <section id="final-cta" className="bg-[var(--green-tint)] border-t-2 border-b-2 border-[var(--green)] py-20">
       <div className="max-w-[800px] mx-auto text-center px-[25px]">
@@ -30,7 +14,7 @@ export function FinalCTA() {
         </p>
 
         <button
-          onClick={handleCTAClick}
+          onClick={() => openBookCall('final_cta')}
           className="inline-flex items-center gap-3 bg-[var(--green)] text-[var(--navy)] px-8 py-4 rounded font-mono text-sm font-semibold hover:opacity-90 transition-opacity"
         >
           {/* WhatsApp icon */}

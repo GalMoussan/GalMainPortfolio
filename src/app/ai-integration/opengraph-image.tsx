@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import { getVerticalConfig } from './_lib/verticals/_registry';
 
 export const runtime = 'edge';
-export const alt = 'AI Integration Services';
+export const alt = 'AI Integration & Development Services';
 export const size = {
   width: 1200,
   height: 630,

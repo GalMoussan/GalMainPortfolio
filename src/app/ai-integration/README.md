@@ -17,23 +17,25 @@ src/app/ai-integration/
 │   ├── BeforeAfterDemo.tsx    # Interactive slider comparison
 │   ├── SocialProofStrip.tsx   # Tools + animated stats
 │   ├── Services.tsx           # 3-tier pricing cards (dual currency)
+│   ├── Training.tsx           # Coding-agent training offers (#training)
+│   ├── Development.tsx        # Custom development pitch (#development)
 │   ├── Process.tsx            # 4-step timeline with hover details
 │   ├── FAQ.tsx                # Accordion with analytics tracking
-│   ├── ComingSoon.tsx         # Email capture form (react-hook-form + zod)
 │   ├── AINav.tsx              # Sticky nav with scroll effects
 │   ├── FinalCTA.tsx           # Bottom conversion CTA
 │   └── __tests__/             # Unit tests (Vitest)
-├── _lib/verticals/            # Vertical configuration system
-│   ├── types.ts               # TypeScript definitions
-│   ├── _registry.ts           # Config resolver (getVerticalConfig)
-│   ├── default.ts             # Default vertical content
-│   └── __tests__/             # Registry unit tests
+├── _lib/
+│   ├── cta.ts                 # WhatsApp number, prefilled messages, Cal.com/WhatsApp CTA handlers
+│   └── verticals/             # Vertical configuration system
+│       ├── types.ts           # TypeScript definitions
+│       ├── _registry.ts       # Config resolver (getVerticalConfig)
+│       ├── default.ts         # Default vertical content
+│       └── __tests__/         # Registry unit tests
 └── _content/                  # Shared content
+    ├── about.ts               # "Modern AI stack, daily." copy (also on the homepage)
     ├── faqs.ts                # Base FAQ entries
+    ├── training.ts            # Training offers
     └── case-studies.ts        # Portfolio case studies
-
-src/app/api/early-access/
-└── route.ts                   # Email capture API (Resend)
 
 tests/
 └── ai-integration.spec.ts     # E2E tests (Playwright)
@@ -138,28 +140,14 @@ Vertical will be accessible at `/ai-integration/for-real-estate`
 Set these in Vercel project settings (or `.env.local` for dev):
 
 ```bash
-# Required for email capture (Phase 6)
-RESEND_API_KEY=re_xxxxxxxxxxxxx
-
-# Required for WhatsApp CTAs (Phase 6)
-NEXT_PUBLIC_WHATSAPP_NUMBER=972501234567  # No + sign
-
 # Optional for Cal.com (v2)
 NEXT_PUBLIC_CAL_LINK=https://cal.com/galmoussan/30min
 ```
 
-### Resend Setup
+### WhatsApp CTAs
 
-1. Create account at [resend.com](https://resend.com)
-2. Verify your sending domain (e.g., `galmoussan.com`)
-3. Get API key from dashboard
-4. Update `src/app/api/early-access/route.ts` with your verified `from` address
-
-### WhatsApp Number Format
-
-- International format without `+` sign
-- Example: `972501234567` (not `+972-50-123-4567`)
-- Used in `https://wa.me/{number}?text={message}`
+- The number and the prefilled messages live in `_lib/cta.ts` (`WHATSAPP_NUMBER`, `WHATSAPP_MESSAGES`).
+- International format without `+` sign, used in `https://wa.me/{number}?text={message}`.
 
 ## Manual Testing Checklist
 
@@ -168,7 +156,6 @@ Before deploying to production:
 - [ ] **Mobile (375px, 430px)**:
   - [ ] Hamburger menu opens/closes
   - [ ] All CTAs reachable
-  - [ ] Forms usable
   - [ ] No horizontal scroll
 - [ ] **Desktop (1280px, 1440px, 1920px)**:
   - [ ] All sections visible
@@ -179,11 +166,7 @@ Before deploying to production:
   - [ ] Nav CTA opens WhatsApp
   - [ ] Final CTA opens WhatsApp
   - [ ] Mobile menu CTA opens WhatsApp
-- [ ] **Email Capture**:
-  - [ ] Invalid email shows validation error
-  - [ ] Valid email shows success message
-  - [ ] Email received in Resend dashboard
-  - [ ] Confirmation email sent to user
+  - [ ] Training and Development CTAs open WhatsApp with their own messages
 - [ ] **404 Handling**:
   - [ ] `/ai-integration/for-unknown` returns 404
   - [ ] `/ai-integration` loads default vertical
@@ -206,10 +189,9 @@ See `OPEN_QUESTIONS.md` for blockers and pending Gal input.
 - First Load JS: 159 kB (target: 150 kB)
 - Exceedance due to:
   - +16kb @vercel/analytics
-  - +8kb react-hook-form + zod
   - ~40kb Framer Motion
 
-Trade-offs accepted for conversion tracking, form validation, and UX polish.
+Trade-offs accepted for conversion tracking and UX polish.
 
 ## Development Commands
 
@@ -222,10 +204,6 @@ npm run lint         # ESLint
 ```
 
 ## Troubleshooting
-
-**Build fails with Resend error:**
-- Ensure `RESEND_API_KEY` is not required at build time
-- API route initializes Resend client lazily (inside POST handler)
 
 **OG image not rendering:**
 - Check `/ai-integration/opengraph-image` directly
@@ -247,6 +225,6 @@ npm run lint         # ESLint
 - Cal.com modal integration (already wired, env var gated)
 - Additional vertical variations (real-estate, clinics, ecommerce)
 - A/B testing for headline variations
-- Animated workflow diagram tool (Coming Soon feature)
+- Animated workflow diagram tool
 - Testimonial carousel
 - Video demos per scenario

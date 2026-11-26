@@ -87,7 +87,7 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
       {/* Top strip */}
       <div className="flex items-center justify-between px-6 py-3 bg-[var(--lightest-navy)] border-b border-[var(--navy)]">
         <span className="font-mono text-xs text-[var(--light-slate)]">
-          LIVE DEMO · Watch a real workflow transform
+          Illustrative example
         </span>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse" />
@@ -274,7 +274,7 @@ function AfterSide({
       {/* Copy overlay */}
       <div className="absolute top-4 right-4">
         <p className="text-xs font-mono text-[var(--green)]">
-          Autonomous · 24/7 · 0 errors
+          Autonomous · 24/7 · Logged
         </p>
       </div>
 

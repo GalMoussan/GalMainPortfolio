@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { getVerticalConfig } from '../_registry';
 import { notFound } from 'next/navigation';
 
@@ -13,7 +13,7 @@ describe('getVerticalConfig', () => {
   it('returns default config for "default" slug', () => {
     const config = getVerticalConfig('default');
     expect(config.slug).toBe('default');
-    expect(config.displayName).toBe('AI Integration Services');
+    expect(config.displayName).toBe('AI Integration & Development Services');
     expect(config.hero).toBeDefined();
     expect(config.demoScenarios).toHaveLength(3);
   });

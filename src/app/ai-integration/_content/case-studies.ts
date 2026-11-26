@@ -1,10 +1,11 @@
+import { featuredProjects } from '@/data/featured-projects';
+
 export type CaseStudy = {
   slug: string;
   title: string;
   problem: string;
   solution: string;
   tech: string[];
-  link?: string;
 };
 
 export const caseStudies: Record<string, CaseStudy> = {
@@ -14,7 +15,6 @@ export const caseStudies: Record<string, CaseStudy> = {
     problem: 'How to transform unstructured personal reflections into publishable how-to books',
     solution: '4 AI agents coordinate to structure, write, edit, and refine chapters—turning raw thoughts into coherent narratives',
     tech: ['Next.js', 'Prisma', 'pgvector', 'Custom agent framework'],
-    link: '#case-studies', // TODO: Replace with real case study page when available
   },
   'digital-creator-ai': {
     slug: 'digital-creator-ai',
@@ -22,14 +22,13 @@ export const caseStudies: Record<string, CaseStudy> = {
     problem: 'SMB clients need consistent social media content without hiring a full team',
     solution: '5-agent pipeline (TrendScout → ContentStrategist → ScriptWriter → VisualDirector → QualityGate) runs autonomous content generation',
     tech: ['BullMQ', 'Claude', 'HeyGen', 'FAL.ai'],
-    link: '#case-studies',
   },
-  reelsearch: {
-    slug: 'reelsearch',
-    title: 'reelSearch',
-    problem: 'Saved Instagram reels pile up with no way to search or organize them',
-    solution: 'AI-powered semantic search using Whisper transcription + Claude vision + pgvector—turn your reel collection into a searchable knowledge base',
-    tech: ['Whisper', 'Claude Vision', 'pgvector', 'Next.js'],
-    link: '#case-studies',
+  'transcribe-god': {
+    slug: 'transcribe-god',
+    title: 'Transcribe God',
+    problem: 'Lectures, meetings and videos pile up, and turning them into something you can study takes hours.',
+    solution: 'A pipeline that transcribes any recording, summarises it and builds study material from it, end to end.',
+    // Same tech as its portfolio card (read from the repo).
+    tech: featuredProjects.find((p) => p.title === 'Transcribe God')?.tech ?? [],
   },
 };

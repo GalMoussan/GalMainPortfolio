@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { modernAiStack } from '../_content/about';
 
 export function AboutGal() {
   return (
@@ -32,27 +33,32 @@ export function AboutGal() {
           <div>
             <h3 className="text-[var(--green)] font-semibold mb-2">Builder, not consultant.</h3>
             <p className="text-[var(--slate)]">
-              I&apos;m Gal. Fullstack dev, 5+ years, tech lead on production systems. I don&apos;t subcontract. The person selling you the system is the person building it.
+              I&apos;m Gal. Fullstack developer for 5+ years, former tech lead on production systems, and today Chief of AI &amp; Development at a school. I don&apos;t subcontract. The person selling you the system is the person building it.
             </p>
           </div>
 
           <div>
-            <h3 className="text-[var(--green)] font-semibold mb-2">Modern AI stack, daily.</h3>
+            <h3 className="text-[var(--green)] font-semibold mb-2">{modernAiStack.title}</h3>
+            <p className="text-[var(--slate)]">{modernAiStack.body}</p>
+          </div>
+
+          <div>
+            <h3 className="text-[var(--green)] font-semibold mb-2">I teach this.</h3>
             <p className="text-[var(--slate)]">
-              I run autonomous Claude Code agent pipelines every day. I ship with the newest models the week they drop. While enterprise agencies are still learning what MCP is, I&apos;ve been building multi-agent systems in production for over a year.
+              I&apos;ve taught AI to kids, youth and teams. If I can explain agents to a 13-year-old, I can get your developers shipping with them.
             </p>
           </div>
 
           <div>
             <h3 className="text-[var(--green)] font-semibold mb-2">Honest about fit.</h3>
             <p className="text-[var(--slate)]">
-              I&apos;ll tell you when AI isn&apos;t the answer. Some processes need a better spreadsheet, not an agent. I&apos;d rather refund you in the diagnostic than build something that doesn&apos;t work.
+              I&apos;ll tell you when AI isn&apos;t the answer. Some processes need a better spreadsheet, not an agent. I&apos;d rather say so on the free call than build something that doesn&apos;t work.
             </p>
           </div>
 
           <div className="pt-4 border-t border-[var(--lightest-navy)]">
             <p className="text-[var(--slate)] text-sm">
-              Tel Aviv · Available in Hebrew &amp; English · Works across time zones
+              Israel · Remote · Hebrew &amp; English
             </p>
           </div>
         </div>
