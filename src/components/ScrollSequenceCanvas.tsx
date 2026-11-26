@@ -7,7 +7,6 @@ import {
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
   type MotionValue,
 } from 'framer-motion';
@@ -77,11 +76,9 @@ export function ScrollSequenceCanvas() {
   const reduceMotion = useReducedMotion() ?? false;
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 170, damping: 32, mass: 0.6, restDelta: 0.0001 });
-  // Scroll progress (0–1) scaled to timeline units (0–TIMELINE_END).
-  const rawTimeline = useTransform(scrollYProgress, (v) => v * TIMELINE_END);
-  const smoothTimeline = useTransform(smoothProgress, (v) => v * TIMELINE_END);
-  const progress = reduceMotion ? rawTimeline : smoothTimeline;
+  // Scroll progress (0–1) scaled to timeline units (0–TIMELINE_END). Unsmoothed on purpose:
+  // frames follow the scroll position exactly and never keep moving once scrolling stops.
+  const progress = useTransform(scrollYProgress, (v) => v * TIMELINE_END);
 
   const progressRef = useRef(progress);
   progressRef.current = progress;
@@ -91,7 +88,6 @@ export function ScrollSequenceCanvas() {
   const [ready, setReady] = useState(false);
 
   useMotionValueEvent(progress, 'change', () => scheduleDrawRef.current());
-  useEffect(() => scheduleDrawRef.current(), [progress]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -116,6 +112,9 @@ export function ScrollSequenceCanvas() {
       return { ...bridge, fromSeq: sequenceByName(bridge.from), toSeq, start: toSeq.start - bridge.halfWidth };
     });
 
+    /** Exact frames the current scroll position calls for (`name:index`). */
+    let wanted = new Set<string>();
+
     const render = () => {
       raf = null;
       if (!width || !height) return;
@@ -124,7 +123,9 @@ export function ScrollSequenceCanvas() {
 
       if (!bridge) {
         const seq = SEQUENCES[sequenceIndexAt(p)];
-        const frame = nearestFrame(frames[seq.name], frameIndexAt(seq, p));
+        const target = frameIndexAt(seq, p);
+        wanted = new Set([`${seq.name}:${target}`]);
+        const frame = nearestFrame(frames[seq.name], target);
         // Nothing decoded for this shot yet: keep whatever is on screen.
         if (!frame) return;
         const key = `${seq.name}:${frame.index}`;
@@ -135,8 +136,11 @@ export function ScrollSequenceCanvas() {
       }
 
       const t = (p - bridge.start) / (2 * bridge.halfWidth);
-      const a = nearestFrame(frames[bridge.fromSeq.name], frameIndexAt(bridge.fromSeq, p));
-      const b = nearestFrame(frames[bridge.toSeq.name], frameIndexAt(bridge.toSeq, p));
+      const fromTarget = frameIndexAt(bridge.fromSeq, p);
+      const toTarget = frameIndexAt(bridge.toSeq, p);
+      wanted = new Set([`${bridge.from}:${fromTarget}`, `${bridge.to}:${toTarget}`]);
+      const a = nearestFrame(frames[bridge.fromSeq.name], fromTarget);
+      const b = nearestFrame(frames[bridge.toSeq.name], toTarget);
       if (!a && !b) return;
       const key = `bridge:${bridge.to}:${a?.index}:${b?.index}:${t.toFixed(3)}`;
       if (key === lastKey) return;
@@ -179,21 +183,30 @@ export function ScrollSequenceCanvas() {
         () => {
           if (cancelled) return;
           frames[name][index] = img;
-          scheduleDraw();
+          // Repaint only when this is the exact frame on screen; redrawing closer fallbacks
+          // as they stream in would make the video creep forward with nobody scrolling.
+          if (wanted.has(`${name}:${index}`)) scheduleDraw();
         },
         // Missing or corrupt frame: nearestFrame() bridges the gap.
         () => undefined,
       );
     };
 
-    /** Next unrequested frames: the shot on screen first, then later shots, then earlier ones. */
+    /**
+     * Next unrequested frames: the shot on screen first (outward from the frame in view),
+     * then later shots, then earlier ones.
+     */
     const nextBatch = () => {
-      const current = sequenceIndexAt(progressRef.current.get());
+      const p = progressRef.current.get();
+      const current = sequenceIndexAt(p);
       for (const seq of [...SEQUENCES.slice(current), ...SEQUENCES.slice(0, current)]) {
         const flags = requested[seq.name];
+        const from = seq === SEQUENCES[current] ? frameIndexAt(seq, p) : 0;
         const indices: number[] = [];
-        for (let i = 0; i < flags.length && indices.length < BACKGROUND_BATCH_SIZE; i++) {
-          if (!flags[i]) indices.push(i);
+        // Offsets 0, -1, +1, -2, +2, …; out-of-range ones are skipped.
+        for (let d = 0; d < flags.length * 2 && indices.length < BACKGROUND_BATCH_SIZE; d++) {
+          const i = d % 2 === 0 ? from + d / 2 : from - (d + 1) / 2;
+          if (i >= 0 && i < flags.length && !flags[i]) indices.push(i);
         }
         if (indices.length) return { name: seq.name, indices };
       }
@@ -235,14 +248,14 @@ export function ScrollSequenceCanvas() {
         className="relative"
         style={{ height: `${SCROLL_HEIGHT_VH}vh` }}
       >
-        {SECTION_ANCHORS.map(({ id, progress: at }) => (
+        {SECTION_ANCHORS.map(({ id, progress: at, endBelowMd }) => (
           <div
             key={id}
             id={id}
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 h-px"
+            className={`pointer-events-none absolute inset-x-0 top-[var(--anchor-top)] h-px ${endBelowMd ? 'max-md:top-full' : ''}`}
             // scroll-margin 0: html's scroll-padding-top already offsets for the nav.
-            style={{ top: `${at * VH_PER_TIMELINE_UNIT}vh`, scrollMarginTop: 0 }}
+            style={{ '--anchor-top': `${at * VH_PER_TIMELINE_UNIT}vh`, scrollMarginTop: 0 } as React.CSSProperties}
           />
         ))}
 

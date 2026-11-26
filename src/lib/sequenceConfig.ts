@@ -87,19 +87,26 @@ export const OVERLAY_WINDOWS = {
 /** Inside the about window the card cross-fades from About to Experience here. */
 export const ABOUT_TO_EXPERIENCE = 0.37;
 
+interface SectionAnchor {
+  id: string;
+  progress: number;
+  /** Below md the section sits after the sequence, so the anchor moves to the sequence's end. */
+  endBelowMd?: boolean;
+}
+
 /**
  * In-page anchors (nav links, deep links) placed at these timeline positions.
  * Each sits a little past its overlay's fade-in to absorb `scroll-padding-top`.
  */
-export const SECTION_ANCHORS = [
+export const SECTION_ANCHORS: readonly SectionAnchor[] = [
   { id: 'hero', progress: 0 },
   { id: 'about', progress: 0.31 },
   { id: 'jobs', progress: 0.41 },
   { id: 'projects', progress: 0.55 },
   { id: 'stack', progress: 0.84 },
   { id: 'other-projects', progress: 1.06 },
-  { id: 'contact', progress: 1.46 },
-] as const;
+  { id: 'contact', progress: 1.46, endBelowMd: true },
+];
 
 export function frameUrl(name: SequenceName, index: number): string {
   return `/sequence/${name}/frame_${String(index + 1).padStart(4, '0')}.webp`;

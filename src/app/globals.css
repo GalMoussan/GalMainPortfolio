@@ -447,13 +447,17 @@
     background: linear-gradient(180deg, rgba(20, 21, 29, 0.55) 0%, rgba(20, 21, 29, 0) 100%);
   }
 
-  .sequence-scrim-hero,
-  .sequence-scrim-contact {
+  .sequence-scrim-hero {
     position: absolute;
     inset: 0;
     pointer-events: none;
     /* Portrait crops put the subject behind the copy: darker, taller fade on small screens. */
     background: linear-gradient(0deg, rgba(20, 21, 29, 0.88) 0%, rgba(20, 21, 29, 0.62) 42%, rgba(20, 21, 29, 0) 72%);
+  }
+
+  /* Phones show contact in a solid section after the sequence, so no scrim there. */
+  .sequence-scrim-contact {
+    display: none;
   }
 
   @media (min-width: 768px) {
@@ -465,6 +469,10 @@
 
     /* Mirror of the hero scrim: the closing copy sits bottom-right, under the phoenix. */
     .sequence-scrim-contact {
+      display: block;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
       background:
         radial-gradient(110% 90% at 100% 100%, rgba(20, 21, 29, 0.86) 0%, rgba(20, 21, 29, 0.55) 38%, rgba(20, 21, 29, 0) 68%),
         linear-gradient(0deg, rgba(20, 21, 29, 0.35) 0%, rgba(20, 21, 29, 0) 35%);
