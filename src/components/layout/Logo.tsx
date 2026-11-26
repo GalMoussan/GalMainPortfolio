@@ -95,7 +95,8 @@ export function Logo() {
           muted
           playsInline
           loop
-          preload="auto"
+          // Only plays on hover/tap: don't spend first-load bandwidth on it.
+          preload="none"
           aria-hidden="true"
           tabIndex={-1}
           disablePictureInPicture

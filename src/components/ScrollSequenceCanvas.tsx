@@ -11,9 +11,10 @@ import {
   type MotionValue,
 } from 'framer-motion';
 import {
-  BACKGROUND_BATCH_SIZE,
   BRIDGE_RGB,
   CUT_BRIDGES,
+  LOAD_CONCURRENCY,
+  LOAD_PASSES,
   OVERLAY_WINDOWS,
   PORTRAIT_MAX_ASPECT,
   PRIORITY_FRAME_STEP,
@@ -170,9 +171,9 @@ export function ScrollSequenceCanvas() {
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       // Resizing resets the context; restore the CSS-pixel transform and smoothing.
+      // Default (bilinear) quality: 'high' is markedly slower per draw on mobile Safari.
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
       lastKey = '';
       render();
     };
@@ -199,24 +200,38 @@ export function ScrollSequenceCanvas() {
     };
 
     /**
-     * Next unrequested frames: the shot on screen first (outward from the frame in view),
-     * then later shots, then earlier ones.
+     * Next frame to fetch, following LOAD_PASSES. Shots go by urgency (on screen, the
+     * ones after it, then the ones before); in the shot on screen, frames ahead come first.
      */
-    const nextBatch = () => {
+    const nextFrame = () => {
       const p = progressRef.current.get();
       const current = sequenceIndexAt(p);
-      for (const seq of [...SEQUENCES.slice(current), ...SEQUENCES.slice(0, current)]) {
-        const flags = requested[seq.name];
-        const from = seq === SEQUENCES[current] ? frameIndexAt(seq, p) : 0;
-        const indices: number[] = [];
-        // Offsets 0, -1, +1, -2, +2, …; out-of-range ones are skipped.
-        for (let d = 0; d < flags.length * 2 && indices.length < BACKGROUND_BATCH_SIZE; d++) {
-          const i = d % 2 === 0 ? from + d / 2 : from - (d + 1) / 2;
-          if (i >= 0 && i < flags.length && !flags[i]) indices.push(i);
+      const shots = [...SEQUENCES.slice(current), ...SEQUENCES.slice(0, current).reverse()];
+      for (const { step, scope } of LOAD_PASSES) {
+        for (const seq of scope === 'near' ? shots.slice(0, 2) : shots) {
+          const flags = requested[seq.name];
+          const from = seq === SEQUENCES[current] ? frameIndexAt(seq, p) : 0;
+          for (let k = 0; k < flags.length; k++) {
+            const i = (from + k) % flags.length;
+            if (i % step === 0 && !flags[i]) return { name: seq.name, index: i };
+          }
         }
-        if (indices.length) return { name: seq.name, indices };
       }
       return null;
+    };
+
+    /** Keeps LOAD_CONCURRENCY downloads in flight, choosing each next frame as a slot frees up. */
+    let inFlight = 0;
+    const pump = () => {
+      while (!cancelled && inFlight < LOAD_CONCURRENCY) {
+        const next = nextFrame();
+        if (!next) return;
+        inFlight += 1;
+        void loadFrame(next.name, next.index).then(() => {
+          inFlight -= 1;
+          pump();
+        });
+      }
     };
 
     const priority = sequenceByName(PRIORITY_SEQUENCE);
@@ -233,14 +248,10 @@ export function ScrollSequenceCanvas() {
           if (!cancelled) setLoadedFraction(priorityDone / priorityIndices.length);
         }),
       ),
-    ).then(async () => {
+    ).then(() => {
       if (cancelled) return;
       setReady(true);
-      while (!cancelled) {
-        const batch = nextBatch();
-        if (!batch) break;
-        await Promise.all(batch.indices.map((i) => loadFrame(batch.name, i)));
-      }
+      pump();
     });
 
     return () => {

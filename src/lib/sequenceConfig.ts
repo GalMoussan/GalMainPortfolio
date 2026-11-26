@@ -54,7 +54,7 @@ export const PRIORITY_SEQUENCE: SequenceName = 'sunglasses';
  * The loading bar waits for every Nth priority frame (plus the last); the frames in
  * between stream in right after, nearest to the scroll position first.
  */
-export const PRIORITY_FRAME_STEP = 4;
+export const PRIORITY_FRAME_STEP = 8;
 
 /**
  * `full`: 1600×900 frames in /sequence. `portrait`: the centre 506×900 of the same
@@ -66,8 +66,24 @@ export type FrameSet = 'full' | 'portrait';
 /** Viewports narrower than this width/height ratio load the portrait set. */
 export const PORTRAIT_MAX_ASPECT = 0.75;
 
-/** Frames requested per background batch once the priority sequence is ready. */
-export const BACKGROUND_BATCH_SIZE = 12;
+/** Parallel frame downloads once the loading bar is gone. */
+export const LOAD_CONCURRENCY = 8;
+
+/**
+ * Coarse-to-fine background loading. Each pass requests every `step`th frame, either
+ * of the shot on screen and the next one (`near`) or of every shot (`all`), so any
+ * scroll position soon has a frame close by and detail fills in where it's needed first.
+ */
+export const LOAD_PASSES: readonly { step: number; scope: 'near' | 'all' }[] = [
+  { step: 8, scope: 'near' },
+  { step: 4, scope: 'near' },
+  { step: 8, scope: 'all' },
+  { step: 2, scope: 'near' },
+  { step: 4, scope: 'all' },
+  { step: 1, scope: 'near' },
+  { step: 2, scope: 'all' },
+  { step: 1, scope: 'all' },
+];
 
 export interface CutBridge {
   from: SequenceName;
