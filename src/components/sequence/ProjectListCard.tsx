@@ -4,48 +4,78 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMotionValueEvent, type MotionValue } from 'framer-motion';
-import { OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
-import { featuredProjects } from '@/data/featured-projects';
 import { IconExternalLink, IconGitHub } from '@/components/ui/Icons';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SideCard } from './SideCard';
 import { useOverlayWindow } from './useOverlayWindow';
+
+export interface ListedProject {
+  title: string;
+  description: string;
+  tech: string[];
+  github?: string;
+  external?: string;
+  image?: string;
+}
 
 const toolPages: Record<string, string> = {
   CinemaQuery: '/tools/cinema-query',
   Snake: '/tools/snake',
 };
 
+interface ProjectListCardProps {
+  progress: MotionValue<number>;
+  reduceMotion: boolean;
+  window: readonly [number, number];
+  label: string;
+  title: string;
+  subtitle?: string;
+  projects: readonly ListedProject[];
+  /** Rendered under the heading, e.g. a link to the archive. */
+  headerAction?: React.ReactNode;
+}
+
 /**
- * Featured work beside the VS Code laptop in the `zoom` shot. Scrolling steps the
- * expanded project through the list; clicking a title opens it directly.
+ * Project accordion in a side card. Scrolling through `window` steps the expanded
+ * project through the list; clicking a title opens it directly.
  */
-export function WorkCard({ progress, reduceMotion }: { progress: MotionValue<number>; reduceMotion: boolean }) {
-  const card = useOverlayWindow(progress, OVERLAY_WINDOWS.work, reduceMotion);
+export function ProjectListCard({
+  progress,
+  reduceMotion,
+  window: overlayWindow,
+  label,
+  title,
+  subtitle,
+  projects,
+  headerAction,
+}: ProjectListCardProps) {
+  const card = useOverlayWindow(progress, overlayWindow, reduceMotion);
   const [active, setActive] = useState(0);
 
   useMotionValueEvent(progress, 'change', (p) => {
-    const [start, end] = OVERLAY_WINDOWS.work;
+    const [start, end] = overlayWindow;
     if (p < start || p > end) return;
-    const slot = Math.floor(((p - start) / (end - start)) * featuredProjects.length);
-    setActive(Math.min(featuredProjects.length - 1, slot));
+    const slot = Math.floor(((p - start) / (end - start)) * projects.length);
+    setActive(Math.min(projects.length - 1, slot));
   });
 
   return (
-    <SideCard style={card} desktopWidth="lg:w-[min(460px,34vw)]" label="Selected work">
-      <SectionHeading subtitle="Some Things I've Built">Work</SectionHeading>
+    <SideCard style={card} desktopWidth="lg:w-[min(460px,34vw)]" label={label}>
+      <SectionHeading subtitle={subtitle}>{title}</SectionHeading>
+      {headerAction}
       <ol className="m-0 list-none p-0">
-        {featuredProjects.map((project, i) => {
+        {projects.map((project, i) => {
           const open = i === active;
           const toolPage = toolPages[project.title];
+          const panelId = `${label.replace(/\s+/g, '-').toLowerCase()}-${i}`;
           return (
             <li key={project.title} className="border-t border-white/10 first:border-t-0">
               <button
                 type="button"
                 aria-expanded={open}
-                aria-controls={`work-${i}`}
+                aria-controls={panelId}
                 onClick={() => setActive(i)}
-                className="flex w-full items-baseline gap-3 py-3 text-left"
+                className="flex w-full items-baseline gap-3 py-2.5 text-left"
               >
                 <span className="font-mono text-[12px] text-[var(--green)]">{String(i + 1).padStart(2, '0')}</span>
                 <span
@@ -58,21 +88,23 @@ export function WorkCard({ progress, reduceMotion }: { progress: MotionValue<num
               </button>
 
               <div
-                id={`work-${i}`}
+                id={panelId}
                 className={`grid transition-[grid-template-rows] duration-500 ease-custom ${
                   open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                 }`}
               >
                 <div className={`overflow-hidden ${open ? 'visible' : 'invisible'}`}>
                   <div className="pb-4">
-                    <Image
-                      src={project.image}
-                      alt=""
-                      width={112}
-                      height={70}
-                      sizes="112px"
-                      className="float-left mb-2 mr-4 hidden h-[70px] w-[112px] rounded-[10px] border border-white/10 bg-[var(--navy)] object-cover sm:block"
-                    />
+                    {project.image && (
+                      <Image
+                        src={project.image}
+                        alt=""
+                        width={112}
+                        height={70}
+                        sizes="112px"
+                        className="float-left mb-2 mr-4 hidden h-[70px] w-[112px] rounded-[10px] border border-white/10 bg-[var(--navy)] object-cover sm:block"
+                      />
+                    )}
                     <p className="m-0 text-[14px] leading-[1.55] text-white/75">{project.description}</p>
                     <ul className="clear-both m-0 mt-3 flex list-none flex-wrap gap-x-3 gap-y-1 p-0 font-mono text-[11.5px] text-white/55">
                       {project.tech.map((t) => (

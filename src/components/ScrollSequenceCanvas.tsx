@@ -13,12 +13,15 @@ import {
 } from 'framer-motion';
 import {
   BACKGROUND_BATCH_SIZE,
-  CUT_BRIDGE,
+  BRIDGE_RGB,
+  CUT_BRIDGES,
   OVERLAY_WINDOWS,
   PRIORITY_SEQUENCE,
   SCROLL_HEIGHT_VH,
   SECTION_ANCHORS,
   SEQUENCES,
+  TIMELINE_END,
+  VH_PER_TIMELINE_UNIT,
   frameUrl,
   type SequenceDefinition,
   type SequenceName,
@@ -75,7 +78,10 @@ export function ScrollSequenceCanvas() {
 
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 170, damping: 32, mass: 0.6, restDelta: 0.0001 });
-  const progress = reduceMotion ? scrollYProgress : smoothProgress;
+  // Scroll progress (0–1) scaled to timeline units (0–TIMELINE_END).
+  const rawTimeline = useTransform(scrollYProgress, (v) => v * TIMELINE_END);
+  const smoothTimeline = useTransform(smoothProgress, (v) => v * TIMELINE_END);
+  const progress = reduceMotion ? rawTimeline : smoothTimeline;
 
   const progressRef = useRef(progress);
   progressRef.current = progress;
@@ -105,17 +111,18 @@ export function ScrollSequenceCanvas() {
       requested[seq.name] = new Uint8Array(seq.frameCount);
     }
 
-    const bridgeFrom = sequenceByName(CUT_BRIDGE.from);
-    const bridgeTo = sequenceByName(CUT_BRIDGE.to);
-    const bridgeStart = bridgeTo.start - CUT_BRIDGE.halfWidth;
+    const bridges = CUT_BRIDGES.map((bridge) => {
+      const toSeq = sequenceByName(bridge.to);
+      return { ...bridge, fromSeq: sequenceByName(bridge.from), toSeq, start: toSeq.start - bridge.halfWidth };
+    });
 
     const render = () => {
       raf = null;
       if (!width || !height) return;
-      const p = clamp01(progressRef.current.get());
-      const bridgeT = (p - bridgeStart) / (2 * CUT_BRIDGE.halfWidth);
+      const p = Math.min(TIMELINE_END, Math.max(0, progressRef.current.get()));
+      const bridge = bridges.find((b) => p > b.start && p < b.start + 2 * b.halfWidth);
 
-      if (bridgeT <= 0 || bridgeT >= 1) {
+      if (!bridge) {
         const seq = SEQUENCES[sequenceIndexAt(p)];
         const frame = nearestFrame(frames[seq.name], frameIndexAt(seq, p));
         // Nothing decoded for this shot yet: keep whatever is on screen.
@@ -127,15 +134,16 @@ export function ScrollSequenceCanvas() {
         return;
       }
 
-      const a = nearestFrame(frames[bridgeFrom.name], frameIndexAt(bridgeFrom, p));
-      const b = nearestFrame(frames[bridgeTo.name], frameIndexAt(bridgeTo, p));
+      const t = (p - bridge.start) / (2 * bridge.halfWidth);
+      const a = nearestFrame(frames[bridge.fromSeq.name], frameIndexAt(bridge.fromSeq, p));
+      const b = nearestFrame(frames[bridge.toSeq.name], frameIndexAt(bridge.toSeq, p));
       if (!a && !b) return;
-      const key = `bridge:${a?.index}:${b?.index}:${bridgeT.toFixed(3)}`;
+      const key = `bridge:${bridge.to}:${a?.index}:${b?.index}:${t.toFixed(3)}`;
       if (key === lastKey) return;
       lastKey = key;
       if (a) drawCover(ctx, a.img, width, height);
-      if (b) drawCover(ctx, b.img, width, height, a ? smoothstep(bridgeT) : 1);
-      ctx.fillStyle = `rgba(${CUT_BRIDGE.rgb}, ${CUT_BRIDGE.maxDarkness * Math.sin(Math.PI * bridgeT)})`;
+      if (b) drawCover(ctx, b.img, width, height, a ? smoothstep(t) : 1);
+      ctx.fillStyle = `rgba(${BRIDGE_RGB}, ${bridge.maxDarkness * Math.sin(Math.PI * t)})`;
       ctx.fillRect(0, 0, width, height);
     };
 
@@ -180,7 +188,7 @@ export function ScrollSequenceCanvas() {
 
     /** Next unrequested frames: the shot on screen first, then later shots, then earlier ones. */
     const nextBatch = () => {
-      const current = sequenceIndexAt(clamp01(progressRef.current.get()));
+      const current = sequenceIndexAt(progressRef.current.get());
       for (const seq of [...SEQUENCES.slice(current), ...SEQUENCES.slice(0, current)]) {
         const flags = requested[seq.name];
         const indices: number[] = [];
@@ -221,8 +229,12 @@ export function ScrollSequenceCanvas() {
 
   return (
     <>
-      {/* Must stay in sync with SCROLL_HEIGHT_VH. */}
-      <section ref={containerRef} aria-label="Introduction" className="relative h-[650vh]">
+      <section
+        ref={containerRef}
+        aria-label="Introduction"
+        className="relative"
+        style={{ height: `${SCROLL_HEIGHT_VH}vh` }}
+      >
         {SECTION_ANCHORS.map(({ id, progress: at }) => (
           <div
             key={id}
@@ -230,7 +242,7 @@ export function ScrollSequenceCanvas() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 h-px"
             // scroll-margin 0: html's scroll-padding-top already offsets for the nav.
-            style={{ top: `calc(${at} * ${SCROLL_HEIGHT_VH - 100}vh)`, scrollMarginTop: 0 }}
+            style={{ top: `${at * VH_PER_TIMELINE_UNIT}vh`, scrollMarginTop: 0 }}
           />
         ))}
 
@@ -281,8 +293,10 @@ export function ScrollSequenceCanvas() {
 function Scrims({ progress }: { progress: MotionValue<number> }) {
   const heroEnd = OVERLAY_WINDOWS.hero[1];
   const sideStart = OVERLAY_WINDOWS.about[0];
+  const sideEnd = OVERLAY_WINDOWS.other[1];
   const heroOpacity = useTransform(progress, [0, heroEnd - 0.01, heroEnd + 0.02], [1, 1, 0]);
-  const sideOpacity = useTransform(progress, [heroEnd, sideStart + 0.01], [0, 1]);
+  // The side scrim lifts with the last card so the phoenix reveal plays at full brightness.
+  const sideOpacity = useTransform(progress, [heroEnd, sideStart + 0.01, sideEnd - 0.01, sideEnd + 0.02], [0, 1, 1, 0]);
 
   return (
     <>
