@@ -80,6 +80,13 @@ export function HamburgerMenu() {
             ))}
           </ol>
           <a
+            href="/ai-integration"
+            onClick={() => setIsOpen(false)}
+            className="block font-mono text-[var(--lightest-slate)] hover:text-[var(--green)] transition-colors text-[18px] p-[10px]"
+          >
+            Services
+          </a>
+          <a
             href="/resume.pdf"
             className="outline-button py-[18px] px-[50px]"
             target="_blank"

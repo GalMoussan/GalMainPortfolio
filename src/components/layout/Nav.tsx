@@ -6,14 +6,14 @@ import { Logo } from './Logo';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 
-const navLinks = [
+const sectionLinks = [
   { name: 'About', url: '#about', id: 'about' },
   { name: 'Experience', url: '#jobs', id: 'jobs' },
   { name: 'Work', url: '#projects', id: 'projects' },
   { name: 'Contact', url: '#contact', id: 'contact' },
 ] as const;
 
-const SECTION_IDS = navLinks.map((link) => link.id);
+const SECTION_IDS = sectionLinks.map((link) => link.id);
 
 function scrollToHash(event: MouseEvent<HTMLAnchorElement>, url: string) {
   const id = url.startsWith('#') ? url.slice(1) : '';
@@ -47,7 +47,7 @@ export function Nav() {
 
       <nav aria-label="Primary">
         <ul className="nav-capsule">
-          {navLinks.map((link) => {
+          {sectionLinks.map((link) => {
             const isActive = activeId === link.id;
             return (
               <li key={link.name}>
@@ -62,6 +62,11 @@ export function Nav() {
               </li>
             );
           })}
+          <li>
+            <a href="/ai-integration" className="nav-capsule-link">
+              Services
+            </a>
+          </li>
         </ul>
       </nav>
     </header>

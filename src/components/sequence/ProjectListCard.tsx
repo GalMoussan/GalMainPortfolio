@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useMotionValueEvent, type MotionValue } from 'framer-motion';
 import { IconExternalLink, IconGitHub } from '@/components/ui/Icons';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -16,12 +15,9 @@ export interface ListedProject {
   github?: string;
   external?: string;
   image?: string;
+  /** Page on this site where the project can be played. */
+  play?: string;
 }
-
-const toolPages: Record<string, string> = {
-  CinemaQuery: '/tools/cinema-query',
-  Snake: '/tools/snake',
-};
 
 interface ProjectListCardProps {
   progress: MotionValue<number>;
@@ -81,7 +77,6 @@ export function ProjectListCard({
       <ol ref={listRef} className="m-0 list-none p-0">
         {projects.map((project, i) => {
           const open = i === active;
-          const toolPage = toolPages[project.title];
           const panelId = `${label.replace(/\s+/g, '-').toLowerCase()}-${i}`;
           return (
             <li key={project.title} className="border-t border-white/10 first:border-t-0">
@@ -149,13 +144,14 @@ export function ProjectListCard({
                           <IconExternalLink size={18} />
                         </a>
                       )}
-                      {toolPage && (
-                        <Link
-                          href={toolPage}
+                      {project.play && (
+                        // Plain <a>: /onepiece is a static game export, not a Next.js route.
+                        <a
+                          href={project.play}
                           className="rounded-full border border-[var(--green)] px-4 py-1.5 font-sans text-[12px] font-medium text-[var(--green)] transition-all duration-300 hover:bg-[var(--green-tint)] hover:shadow-[0_0_18px_var(--cyan-bloom)]"
                         >
-                          View Tool →
-                        </Link>
+                          Play →
+                        </a>
                       )}
                     </div>
                   </div>
