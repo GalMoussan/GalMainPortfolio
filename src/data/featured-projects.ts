@@ -9,6 +9,15 @@ export interface FeaturedProject {
 
 export const featuredProjects: FeaturedProject[] = [
   {
+    title: 'Tivnili',
+    description:
+      "Personal brand landing page for Tivnili (תִּבְנִילִי — Hebrew: 'build for me'), my studio selling websites, AI tools, and strategy sessions to small business owners. Your business, finally built.",
+    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Express', 'Zod'],
+    github: 'https://github.com/GalMoussan/Tivnili',
+    external: 'https://tivnili.galmoussan.com',
+    image: '/images/tivnili.png',
+  },
+  {
     title: 'CinemaQuery',
     description:
       'A semantic movie search engine powered by AI embeddings from OpenAI and intelligent re-ranking via Claude. Features a persona blending system that learns your preferences to deliver highly personalized movie recommendations tailored to your viewing mood.',

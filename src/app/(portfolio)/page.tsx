@@ -1,21 +1,21 @@
-import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Experience } from "@/components/sections/Experience";
-import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
-import { NoteworthyProjects } from "@/components/sections/NoteworthyProjects";
-import { Contact } from "@/components/sections/Contact";
-import { ScrollScrubFigure } from "@/components/ui/ScrollScrubFigure";
+import { ScrollSequenceCanvas } from '@/components/ScrollSequenceCanvas';
+import { NoteworthyProjects } from '@/components/sections/NoteworthyProjects';
+import { Contact } from '@/components/sections/Contact';
+import { Footer } from '@/components/layout/Footer';
 
 export default function Home() {
   return (
     <>
-      <ScrollScrubFigure />
-      <Hero />
-      <About />
-      <Experience />
-      <FeaturedProjects />
-      <NoteworthyProjects />
-      <Contact />
+      <main>
+        <ScrollSequenceCanvas />
+        <div className="bg-[#242633] px-[25px] sm:px-[50px] lg:px-[100px] xl:px-[150px]">
+          <NoteworthyProjects />
+          <Contact />
+        </div>
+      </main>
+      <div className="bg-[#242633]">
+        <Footer />
+      </div>
     </>
   );
 }

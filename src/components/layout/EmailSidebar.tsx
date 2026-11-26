@@ -2,7 +2,7 @@ import { email } from '@/data/social-links';
 
 export function EmailSidebar() {
   return (
-    <div className="hidden md:flex fixed bottom-0 right-10 flex-col items-center gap-[10px] z-10">
+    <div className="hidden md:flex fixed bottom-0 right-10 flex-col items-center gap-[10px] z-20">
       <a
         href={`mailto:${email}`}
         className="font-mono text-[12px] text-[var(--light-slate)] tracking-widest hover:text-[var(--green)] hover:-translate-y-[3px] transition-all duration-250 ease-custom [writing-mode:vertical-rl] p-[10px]"

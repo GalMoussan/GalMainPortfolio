@@ -11,7 +11,7 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
 
 export function SocialSidebar() {
   return (
-    <div className="hidden md:flex fixed bottom-0 left-10 flex-col items-center gap-[10px] z-10">
+    <div className="hidden md:flex fixed bottom-0 left-10 flex-col items-center gap-[10px] z-20">
       <ul className="flex flex-col items-center gap-[20px] list-none p-0 m-0 mb-[20px]">
         {socialLinks.map((link) => {
           const Icon = iconMap[link.name];

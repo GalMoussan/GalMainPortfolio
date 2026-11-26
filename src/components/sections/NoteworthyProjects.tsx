@@ -17,7 +17,7 @@ export function NoteworthyProjects() {
 
   return (
     <section className="relative z-[2] max-w-[1000px] mx-auto py-[100px] text-center">
-      <div className="text-scrim inline-block mb-[50px]">
+      <div className="inline-block mb-[50px]">
         <h2 className="section-heading-title justify-center text-center">
           Other Noteworthy Projects
         </h2>
