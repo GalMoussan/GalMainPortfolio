@@ -111,12 +111,17 @@ export interface CutBridge {
   to: SequenceName;
   /** Half the dissolve length, in timeline units, centred on the `to` sequence's start. */
   halfWidth: number;
+  /** Peak darkening at the cut's midpoint; 0 is a plain cross-dissolve. */
   maxDarkness: number;
 }
 
-/** Dip-to-dark cross-dissolves across the hard cuts between shots. */
+/**
+ * Cross-dissolves across the cuts between shots: dip-to-dark for the hard cuts, a short plain
+ * dissolve where two shots nearly match (zoom → explode) so the small jump doesn't read as a hitch.
+ */
 export const CUT_BRIDGES: readonly CutBridge[] = [
   { from: 'sunglasses', to: 'sitting', halfWidth: 0.02, maxDarkness: 0.85 },
+  { from: 'zoom', to: 'explode', halfWidth: 0.008, maxDarkness: 0 },
   { from: 'explode', to: 'fire', halfWidth: 0.02, maxDarkness: 0.85 },
 ];
 

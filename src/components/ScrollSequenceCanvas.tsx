@@ -239,8 +239,10 @@ export function ScrollSequenceCanvas() {
       drawnShot = targetShot;
       if (a) drawCover(ctx, a.bitmap, width, height);
       if (b) drawCover(ctx, b.bitmap, width, height, a ? smoothstep(t) : 1);
-      ctx.fillStyle = `rgba(${BRIDGE_RGB}, ${bridge.maxDarkness * Math.sin(Math.PI * t)})`;
-      ctx.fillRect(0, 0, width, height);
+      if (bridge.maxDarkness > 0) {
+        ctx.fillStyle = `rgba(${BRIDGE_RGB}, ${bridge.maxDarkness * Math.sin(Math.PI * t)})`;
+        ctx.fillRect(0, 0, width, height);
+      }
     };
 
     const scheduleDraw = () => {
