@@ -26,55 +26,32 @@ import {
   PRIORITY_SEQUENCE,
   SCROLL_HEIGHT_VH,
   SECTION_ANCHORS,
-  SEQUENCES,
   TIMELINE_END,
   VH_PER_TIMELINE_UNIT,
   frameUrl,
   type FrameSet,
-  type SequenceDefinition,
-  type SequenceName,
 } from '@/lib/sequenceConfig';
+import {
+  SHOTS,
+  TOTAL_FRAMES,
+  frameIndexAt,
+  framePositionAt,
+  shotByName,
+  shotIndexAt,
+  type Shot,
+} from '@/lib/sequenceTimeline';
 import { SequenceOverlays } from '@/components/sequence/SequenceOverlays';
+import { ChapterCards } from '@/components/sequence/ChapterCards';
+import { Timecode } from '@/components/sequence/Timecode';
 
 const MAX_DPR = 2;
 /** Decoded frames this far outside the decode window survive (hysteresis against churn). */
 const EVICT_MARGIN = 8;
 
-type Shot = SequenceDefinition & { offset: number };
-
-/** Every shot's frames share one flat index space; `offset` is a shot's first global index. */
-const SHOTS: readonly Shot[] = SEQUENCES.reduce<Shot[]>((shots, seq) => {
-  const prev = shots[shots.length - 1];
-  shots.push({ ...seq, offset: prev ? prev.offset + prev.frameCount : 0 });
-  return shots;
-}, []);
-const TOTAL_FRAMES = SHOTS.reduce((n, shot) => n + shot.frameCount, 0);
 /** Shot index of each global frame. */
 const SHOT_OF = SHOTS.reduce((map, shot, s) => map.fill(s, shot.offset, shot.offset + shot.frameCount), new Uint8Array(TOTAL_FRAMES));
 
-const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const smoothstep = (t: number) => t * t * (3 - 2 * t);
-
-function shotByName(name: SequenceName): Shot {
-  const shot = SHOTS.find((s) => s.name === name);
-  if (!shot) throw new Error(`Unknown sequence: ${name}`);
-  return shot;
-}
-
-function shotIndexAt(p: number): number {
-  const i = SHOTS.findIndex((s) => p < s.end);
-  return i === -1 ? SHOTS.length - 1 : i;
-}
-
-/** Fractional frame position within `shot` for timeline position `p`. */
-function framePositionAt(shot: Shot, p: number): number {
-  return clamp01((p - shot.start) / (shot.end - shot.start)) * (shot.frameCount - 1);
-}
-
-/** Frame index within `shot` for timeline position `p`. */
-function frameIndexAt(shot: Shot, p: number): number {
-  return Math.round(framePositionAt(shot, p));
-}
 
 /** Cross-fade amounts are quantised to this many steps, so sub-pixel scrolls don't redraw. */
 const BLEND_STEPS = 32;
@@ -453,7 +430,9 @@ export function ScrollSequenceCanvas() {
           {/* will-change: its own GPU layer, so scrolling never repaints the full-screen canvas. */}
           <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full will-change-transform" />
           <Scrims progress={progress} />
+          <ChapterCards progress={progress} reduceMotion={reduceMotion} />
           <SequenceOverlays progress={progress} reduceMotion={reduceMotion} />
+          <Timecode progress={progress} />
         </div>
       </section>
 

@@ -33,14 +33,6 @@
   --font-sans: var(--font-geist), 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', ui-monospace, monospace;
   --font-display: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
-}
-
-/* TEMPORARY (style-v3 preview): ?display=instrument swaps the headline serif for comparison. */
-html[data-display='instrument'] {
-  --font-display: var(--font-instrument), 'Iowan Old Style', Georgia, serif;
-}
-
-:root {
 
   /* Font sizes */
   --fz-xxs: 12px;
@@ -686,6 +678,87 @@ html[data-display='instrument'] {
   .btn-chip:focus-visible {
     color: var(--amber);
     border-color: rgba(244, 165, 65, 0.6);
+  }
+
+  /* Kinetic headlines: each word rises out of its own mask. Clipped below only, so exits can drift
+     up; the padding keeps descenders inside the mask without changing the line height. */
+  .kinetic-mask {
+    display: inline-block;
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+    clip-path: inset(-0.45em -0.5em 0 -0.5em);
+  }
+
+  .kinetic-word,
+  .kinetic-token {
+    display: inline-block;
+  }
+
+  /* Film timecode under the logo: chapter, name, MM:SS:FF. */
+  .timecode {
+    position: absolute;
+    top: 80px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--linen-faint);
+    text-shadow: 0 1px 12px rgba(20, 21, 29, 0.6);
+  }
+
+  .timecode-rule {
+    width: 18px;
+    height: 1px;
+    background: rgba(243, 236, 225, 0.35);
+  }
+
+  @media (min-width: 768px) {
+    .timecode {
+      top: 96px;
+      left: 50px;
+      font-size: 11px;
+    }
+  }
+
+  /* Chapter cards over the cuts: upper third on phones (bottom sheets hold the lower part),
+     the hero's lower-left corner from md up (side cards hold the right). */
+  .chapter-card-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20, 21, 29, 0.72) 0%, rgba(20, 21, 29, 0.4) 38%, rgba(20, 21, 29, 0) 62%);
+  }
+
+  .chapter-card-copy {
+    position: absolute;
+    top: 21%;
+    left: 25px;
+    right: 25px;
+    text-shadow: 0 1px 24px rgba(20, 21, 29, 0.45);
+  }
+
+  @media (min-width: 768px) {
+    .chapter-card-scrim {
+      background: radial-gradient(95% 85% at 0% 100%, rgba(20, 21, 29, 0.8) 0%, rgba(20, 21, 29, 0.45) 45%, rgba(20, 21, 29, 0) 75%);
+    }
+
+    .chapter-card-copy {
+      top: auto;
+      right: auto;
+      bottom: 112px;
+      left: 100px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .chapter-card-copy {
+      left: 150px;
+    }
   }
 
   /* Noteworthy project cards */

@@ -6,7 +6,7 @@ import { ABOUT_PANEL_SPLITS, OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
 import { jobs } from '@/data/jobs';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SideCard } from './SideCard';
-import { useOverlayWindow, usePanelFade } from './useOverlayWindow';
+import { PANEL_FADE, useOverlayWindow, usePanelFade } from './useOverlayWindow';
 
 const skills = [
   'TypeScript',
@@ -23,42 +23,57 @@ const skills = [
   'Playwright',
 ];
 
-/** Shared by both About panels so the heading holds still while the body cross-fades. */
-const aboutHeading = <SectionHeading subtitle="About Me">About</SectionHeading>;
+const [TO_ABOUT_MORE, TO_EXPERIENCE] = ABOUT_PANEL_SPLITS;
+/** "About" spans both About panels; "Experience" takes over in the cross-fade to its panel. */
+const ABOUT_TITLE_WINDOW = [OVERLAY_WINDOWS.about[0], TO_EXPERIENCE + PANEL_FADE] as const;
+const EXPERIENCE_TITLE_WINDOW = [TO_EXPERIENCE - PANEL_FADE, OVERLAY_WINDOWS.about[1]] as const;
+
+interface PanelProps {
+  progress: MotionValue<number>;
+  reduceMotion: boolean;
+}
+
+/** Shared by both About panels; both copies move identically, so the title holds still across the cross-fade. */
+function AboutHeading({ progress, reduceMotion }: PanelProps) {
+  return (
+    <SectionHeading subtitle="About Me" kinetic={{ progress, reduceMotion, window: ABOUT_TITLE_WINDOW }}>
+      About
+    </SectionHeading>
+  );
+}
 
 /**
  * About (two panels), then Experience, in one card over the sofa side of the `sitting`
  * shot. Splitting About keeps the card short enough not to scroll on laptop screens.
  */
-export function AboutExperienceCard({ progress, reduceMotion }: { progress: MotionValue<number>; reduceMotion: boolean }) {
+export function AboutExperienceCard({ progress, reduceMotion }: PanelProps) {
   const card = useOverlayWindow(progress, OVERLAY_WINDOWS.about, reduceMotion);
-  const [toAboutMore, toExperience] = ABOUT_PANEL_SPLITS;
-  const intro = usePanelFade(progress, undefined, toAboutMore);
-  const more = usePanelFade(progress, toAboutMore, toExperience);
-  const experience = usePanelFade(progress, toExperience);
+  const intro = usePanelFade(progress, undefined, TO_ABOUT_MORE);
+  const more = usePanelFade(progress, TO_ABOUT_MORE, TO_EXPERIENCE);
+  const experience = usePanelFade(progress, TO_EXPERIENCE);
 
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(460px,34vw)]" label="About and experience">
       {/* minmax(0,1fr): the nowrap tab row must scroll, not widen the track. */}
       <div className="grid grid-cols-[minmax(0,1fr)]">
         <motion.div style={intro} className="[grid-area:1/1]">
-          <AboutIntroPanel />
+          <AboutIntroPanel progress={progress} reduceMotion={reduceMotion} />
         </motion.div>
         <motion.div style={more} className="[grid-area:1/1]">
-          <AboutMorePanel />
+          <AboutMorePanel progress={progress} reduceMotion={reduceMotion} />
         </motion.div>
         <motion.div style={experience} className="[grid-area:1/1]">
-          <ExperiencePanel />
+          <ExperiencePanel progress={progress} reduceMotion={reduceMotion} />
         </motion.div>
       </div>
     </SideCard>
   );
 }
 
-function AboutIntroPanel() {
+function AboutIntroPanel(props: PanelProps) {
   return (
     <>
-      {aboutHeading}
+      <AboutHeading {...props} />
       <div className="space-y-3 text-[15px] leading-[1.65] text-[var(--linen-dim)]">
         <p>
           Hello! I&apos;m Gal, a fullstack developer and AI integration specialist working remotely from Israel. Before
@@ -79,10 +94,10 @@ function AboutIntroPanel() {
   );
 }
 
-function AboutMorePanel() {
+function AboutMorePanel(props: PanelProps) {
   return (
     <>
-      {aboutHeading}
+      <AboutHeading {...props} />
       <div className="space-y-3 text-[15px] leading-[1.65] text-[var(--linen-dim)]">
         <p>
           My daily workflow runs on coding agents. I plan with a spec agent, build with worker agents, and put every
@@ -111,12 +126,17 @@ function AboutMorePanel() {
   );
 }
 
-function ExperiencePanel() {
+function ExperiencePanel({ progress, reduceMotion }: PanelProps) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
     <>
-      <SectionHeading subtitle="Where I've Worked">Experience</SectionHeading>
+      <SectionHeading
+        subtitle="Where I've Worked"
+        kinetic={{ progress, reduceMotion, window: EXPERIENCE_TITLE_WINDOW }}
+      >
+        Experience
+      </SectionHeading>
       <div
         role="tablist"
         aria-label="Job tabs"

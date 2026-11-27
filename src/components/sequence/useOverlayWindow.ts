@@ -52,7 +52,7 @@ export function useOverlayWindow(
 }
 
 /** Half-width of a panel cross-fade, in timeline units. */
-const PANEL_FADE = 0.012;
+export const PANEL_FADE = 0.012;
 
 /**
  * One of several panels sharing a card: fades in around `from` and out around `to`.

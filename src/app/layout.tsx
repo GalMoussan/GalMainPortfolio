@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Fraunces, Instrument_Serif } from "next/font/google";
+import { Fraunces } from "next/font/google";
 import { StarBackground } from "@/components/StarBackground";
 import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
@@ -25,15 +25,6 @@ const fraunces = Fraunces({
   style: ["normal", "italic"],
   axes: ["opsz", "SOFT"],
   variable: "--font-fraunces",
-  display: "swap",
-});
-
-// TEMPORARY (style-v3 preview): alternative display serif, chosen with ?display=instrument.
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
   display: "swap",
 });
 
@@ -67,18 +58,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${instrumentSerif.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{history.scrollRestoration='manual'}catch(e){}function pin(){if(location.pathname!=='/'||location.hash)return;window.scrollTo(0,0)}pin();document.addEventListener('DOMContentLoaded',pin);window.addEventListener('pageshow',pin);window.addEventListener('load',pin);})();`,
-          }}
-        />
-        {/* TEMPORARY (style-v3 preview): ?display=instrument|fraunces picks the headline serif for the session. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var q=new URLSearchParams(location.search).get('display');if(q)sessionStorage.setItem('display',q);var d=sessionStorage.getItem('display');if(d)document.documentElement.dataset.display=d}catch(e){}})();`,
           }}
         />
       </head>

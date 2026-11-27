@@ -79,7 +79,9 @@ export function ProjectListCard({
 
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(460px,34vw)]" label={label}>
-      <SectionHeading subtitle={subtitle}>{title}</SectionHeading>
+      <SectionHeading subtitle={subtitle} kinetic={{ progress, reduceMotion, window: overlayWindow }}>
+        {title}
+      </SectionHeading>
       {headerAction}
       <ol ref={listRef} className="m-0 list-none p-0">
         {projects.map((project, i) => {

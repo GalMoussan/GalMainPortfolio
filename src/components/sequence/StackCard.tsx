@@ -30,7 +30,9 @@ export function StackCard({ progress, reduceMotion }: { progress: MotionValue<nu
 
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(460px,36vw)]" label="AI orchestration and infrastructure">
-      <SectionHeading subtitle={modernAiStack.title}>AI Orchestration</SectionHeading>
+      <SectionHeading subtitle={modernAiStack.title} kinetic={{ progress, reduceMotion, window: OVERLAY_WINDOWS.stack }}>
+        AI Orchestration
+      </SectionHeading>
       <p className="m-0 text-[14px] leading-[1.6] text-[var(--linen-dim)] [@media(max-height:820px)]:text-[13px]">
         {modernAiStack.body}{' '}
         <Link href="/ai-integration" className="prose-link">

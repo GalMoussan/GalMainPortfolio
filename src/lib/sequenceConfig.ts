@@ -41,6 +41,18 @@ export const SEQUENCES: readonly SequenceDefinition[] = [
 
 export const TIMELINE_END = 1.65;
 
+/** One chapter per shot: shown by the corner timecode and the chapter cards at each cut. */
+export const CHAPTER_TITLES: Readonly<Record<SequenceName, string>> = {
+  sunglasses: 'Introduction',
+  sitting: 'The builder',
+  zoom: 'The work',
+  explode: 'The machine',
+  fire: "What's next",
+};
+
+/** Frame rate the corner timecode counts in (the frames were cut from 24 fps footage). */
+export const TIMECODE_FPS = 24;
+
 /** Scroll distance (vh) per timeline unit. */
 export const VH_PER_TIMELINE_UNIT = 550;
 
