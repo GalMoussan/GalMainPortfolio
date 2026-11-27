@@ -31,9 +31,9 @@ export function StackCard({ progress, reduceMotion }: { progress: MotionValue<nu
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(460px,36vw)]" label="AI orchestration and infrastructure">
       <SectionHeading subtitle={modernAiStack.title}>AI Orchestration</SectionHeading>
-      <p className="m-0 text-[14px] leading-[1.55] text-white/75 [@media(max-height:820px)]:text-[13px]">
+      <p className="m-0 text-[14px] leading-[1.6] text-[var(--linen-dim)] [@media(max-height:820px)]:text-[13px]">
         {modernAiStack.body}{' '}
-        <Link href="/ai-integration" className="inline-link">
+        <Link href="/ai-integration" className="prose-link">
           AI Integration Services →
         </Link>
       </p>
@@ -41,8 +41,8 @@ export function StackCard({ progress, reduceMotion }: { progress: MotionValue<nu
       <ol className="m-0 mt-4 list-none space-y-3 p-0 [@media(max-height:820px)]:mt-3 [@media(max-height:820px)]:space-y-2">
         {layers.map(({ label, study }, i) => (
           <StackLayer key={label} progress={progress} order={i} staggered={staggered} label={label}>
-            <h3 className="m-0 mt-1 text-[15px] font-semibold tracking-[-0.01em] text-white">{study.title}</h3>
-            <p className="m-0 mt-1 text-[13px] leading-[1.5] text-white/70">{study.solution}</p>
+            <h3 className="display m-0 mt-1 text-[18px] leading-tight [@media(max-height:820px)]:text-[16px]">{study.title}</h3>
+            <p className="m-0 mt-1 text-[13px] leading-[1.55] text-[var(--linen-dim)]">{study.solution}</p>
             <TechList items={study.tech} />
           </StackLayer>
         ))}
@@ -69,8 +69,8 @@ function StackLayer({ progress, order, staggered, label, children }: StackLayerP
   const x = useTransform(progress, [revealStart, revealStart + 0.02], [16, 0]);
 
   return (
-    <motion.li style={staggered ? { opacity, x } : undefined} className="border-l border-[rgba(94,231,255,0.4)] pl-4">
-      <p className="m-0 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--green)]">
+    <motion.li style={staggered ? { opacity, x } : undefined} className="border-l border-[rgba(243,236,225,0.14)] pl-4">
+      <p className="eyebrow m-0">
         {String(order + 1).padStart(2, '0')} · {label}
       </p>
       {children}
@@ -84,7 +84,7 @@ function TechList({ items }: { items: readonly string[] }) {
       {items.map((item) => (
         <li
           key={item}
-          className="rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 font-mono text-[11px] text-white/70"
+          className="rounded-full border border-[rgba(94,231,255,0.25)] px-2.5 py-0.5 text-[11.5px] text-[rgba(94,231,255,0.85)] [@media(max-height:820px)]:py-0"
         >
           {item}
         </li>

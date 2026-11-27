@@ -41,13 +41,13 @@ export function CookieConsent() {
       aria-live="polite"
       aria-label="Cookie consent"
     >
-      <p className="m-0 text-[13px] leading-[1.5] text-white/75">
+      <p className="m-0 text-[13px] leading-[1.55] text-[var(--linen-dim)]">
         This site uses cookies. Privacy-friendly analytics (Vercel Analytics) load only if you accept.{' '}
-        <Link href="/cookie-policy" className="text-[var(--green)] hover:underline">
+        <Link href="/cookie-policy" className="prose-link">
           Cookie Policy
         </Link>{' '}
         ·{' '}
-        <Link href="/privacy-policy" className="text-[var(--green)] hover:underline">
+        <Link href="/privacy-policy" className="prose-link">
           Privacy Policy
         </Link>
       </p>
@@ -55,14 +55,14 @@ export function CookieConsent() {
       <div className="mt-3 flex justify-end gap-2">
         <button
           onClick={handleDecline}
-          className="rounded-full border border-white/25 px-4 py-1.5 font-sans text-[12px] font-medium text-white/80 transition-colors duration-200 hover:border-white/50 hover:text-white"
+          className="rounded-full border border-[rgba(243,236,225,0.3)] px-4 py-1.5 font-sans text-[12px] font-medium text-[var(--linen-dim)] transition-colors duration-200 hover:border-[rgba(243,236,225,0.6)] hover:text-[var(--linen)]"
           aria-label="Decline cookies"
         >
           Decline
         </button>
         <button
           onClick={handleAccept}
-          className="rounded-full bg-[var(--green)] px-4 py-1.5 font-sans text-[12px] font-semibold text-[var(--navy)] transition-shadow duration-300 hover:shadow-[0_0_18px_var(--cyan-bloom)]"
+          className="rounded-full bg-[var(--amber)] px-4 py-1.5 font-sans text-[12px] font-semibold text-[#1c1b20] transition-shadow duration-300 hover:shadow-[0_0_0_4px_var(--amber-tint)]"
           aria-label="Accept cookies"
         >
           Accept

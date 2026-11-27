@@ -22,7 +22,7 @@ export function SocialSidebar() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={link.name}
-                className="text-[var(--light-slate)] hover:text-[var(--green)] hover:-translate-y-[3px] transition-all duration-250 ease-custom inline-block p-[10px]"
+                className="text-[var(--linen-dim)] hover:text-[var(--amber)] hover:-translate-y-[3px] transition-all duration-250 ease-custom inline-block p-[10px]"
               >
                 {Icon && <Icon size={20} />}
               </a>

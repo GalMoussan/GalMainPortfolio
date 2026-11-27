@@ -59,7 +59,7 @@ function AboutIntroPanel() {
   return (
     <>
       {aboutHeading}
-      <div className="space-y-3 text-[15px] leading-[1.6] text-white/75">
+      <div className="space-y-3 text-[15px] leading-[1.65] text-[var(--linen-dim)]">
         <p>
           Hello! I&apos;m Gal, a fullstack developer and AI integration specialist working remotely from Israel. Before
           tech, I served as an officer and company commander in the Israeli Air Force, where I learned to lead teams
@@ -68,7 +68,7 @@ function AboutIntroPanel() {
         <p>
           I&apos;ve worked across startups in Israel and Australia, on affiliate marketing platforms, CRM systems and QA
           automation. Today I&apos;m Deputy Director and Chief of AI &amp; Development at{' '}
-          <a href="https://iasanorth.com" className="inline-link" target="_blank" rel="noreferrer">
+          <a href="https://iasanorth.com" className="prose-link" target="_blank" rel="noreferrer">
             Yassa North
           </a>
           , where I build the school&apos;s website and internal tools and bring AI into how the school teaches and runs.
@@ -83,7 +83,7 @@ function AboutMorePanel() {
   return (
     <>
       {aboutHeading}
-      <div className="space-y-3 text-[15px] leading-[1.6] text-white/75">
+      <div className="space-y-3 text-[15px] leading-[1.65] text-[var(--linen-dim)]">
         <p>
           My daily workflow runs on coding agents. I plan with a spec agent, build with worker agents, and put every
           change through a reviewer before it ships. Teaching that way of working is now part of what I do.
@@ -94,14 +94,16 @@ function AboutMorePanel() {
         </p>
       </div>
 
-      <p className="mt-4 text-[14px] text-white/65">Here are a few technologies I&apos;ve been working with recently:</p>
-      <ul className="m-0 mt-3 grid list-none grid-cols-2 gap-x-3 gap-y-1 p-0 sm:grid-cols-3">
-        {skills.map((skill) => (
-          <li
-            key={skill}
-            className="relative pl-[18px] font-mono text-[12px] leading-[20px] text-white/70 before:absolute before:left-0 before:text-[var(--green)] before:content-['▹']"
-          >
+      <p className="mt-5 text-[14px] text-[var(--linen-faint)]">Here are a few technologies I&apos;ve been working with recently:</p>
+      <ul className="m-0 mt-2 flex list-none flex-wrap gap-x-2 gap-y-1 p-0 text-[13.5px] leading-[1.7] text-[var(--linen-dim)]">
+        {skills.map((skill, i) => (
+          <li key={skill}>
             {skill}
+            {i < skills.length - 1 && (
+              <span aria-hidden="true" className="ml-2 text-[var(--amber)]">
+                ·
+              </span>
+            )}
           </li>
         ))}
       </ul>
@@ -130,10 +132,10 @@ function ExperiencePanel() {
             aria-controls={`job-panel-${i}`}
             id={`job-tab-${i}`}
             onClick={() => setActiveTab(i)}
-            className={`-mb-px min-h-[40px] whitespace-nowrap border-b-2 px-3 font-mono text-[12px] transition-colors duration-200 ease-custom ${
+            className={`-mb-px min-h-[40px] whitespace-nowrap border-b-2 px-3 font-sans text-[13px] transition-colors duration-200 ease-custom ${
               activeTab === i
-                ? 'border-[var(--green)] bg-[var(--green-tint)] text-[var(--green)]'
-                : 'border-transparent text-white/60 hover:text-[var(--green)]'
+                ? 'border-[var(--amber)] text-[var(--linen)]'
+                : 'border-transparent text-[var(--linen-faint)] hover:text-[var(--linen)]'
             }`}
           >
             {job.company}
@@ -150,25 +152,23 @@ function ExperiencePanel() {
           hidden={activeTab !== i}
           className="pt-5"
         >
-          <h3 className="mb-[2px] text-[18px] font-semibold tracking-[-0.02em] text-white">
-            {job.title}{' '}
-            <span className="text-[var(--green)]">
-              @{' '}
-              {job.url ? (
-                <a href={job.url} className="inline-link" target="_blank" rel="noreferrer">
-                  {job.company}
-                </a>
-              ) : (
-                job.company
-              )}
-            </span>
-          </h3>
-          <p className="mb-4 font-mono text-[12px] text-white/55">{job.range}</p>
+          <h3 className="display m-0 text-[22px] leading-[1.15]">{job.title}</h3>
+          <p className="mb-4 mt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--linen-faint)]">
+            {job.url ? (
+              <a href={job.url} className="text-[var(--amber)] hover:text-[var(--amber)]" target="_blank" rel="noreferrer">
+                {job.company}
+              </a>
+            ) : (
+              <span className="text-[var(--amber)]">{job.company}</span>
+            )}
+            <span aria-hidden="true"> · </span>
+            {job.range}
+          </p>
           <ul className="m-0 list-none p-0">
             {job.duties.map((duty) => (
               <li
                 key={duty}
-                className="relative mb-2 pl-[22px] text-[14px] leading-[1.55] text-white/75 before:absolute before:left-0 before:text-[13px] before:text-[var(--green)] before:content-['▹']"
+                className="relative mb-2 pl-6 text-[14px] leading-[1.6] text-[var(--linen-dim)] before:absolute before:left-0 before:text-[var(--amber)] before:content-['—']"
               >
                 {duty}
               </li>

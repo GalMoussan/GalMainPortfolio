@@ -39,7 +39,7 @@ export function SequenceOverlays({ progress, reduceMotion }: SequenceOverlaysPro
         title="Other Noteworthy Projects"
         projects={otherProjects}
         headerAction={
-          <a href="/archive" className="outline-button -mt-2 mb-3 inline-block px-4 py-2 text-[12px]">
+          <a href="/archive" className="btn-chip -mt-1 mb-3 !px-3.5 !py-1.5 !text-[12px]">
             view the archive
           </a>
         }

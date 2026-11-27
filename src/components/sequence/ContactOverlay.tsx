@@ -10,26 +10,25 @@ import { useOverlayWindow } from './useOverlayWindow';
 export function ContactCopy({ headingId }: { headingId: string }) {
   return (
     <>
-      <p className="m-0 font-mono text-[12px] uppercase tracking-[0.24em] text-white/75">Contact</p>
-      <p className="m-0 mt-2 font-sans text-[15px] font-medium tracking-[0.04em] text-[var(--green)]">
-        What&apos;s Next?
-      </p>
+      <p className="eyebrow m-0">Contact</p>
+      <p className="display m-0 mt-3 text-[20px] italic text-[var(--linen-dim)]">What&apos;s Next?</p>
+      {/* One line: wrapping would push the block up over the glowing laptop in the final shot. */}
       <h2
         id={headingId}
-        className="m-0 mt-2 font-sans text-[clamp(36px,5vw,60px)] font-semibold leading-[1.05] tracking-[-0.035em] text-white"
+        className="display m-0 mt-1 whitespace-nowrap text-[clamp(40px,3.9vw,56px)] leading-[1] tracking-[-0.03em]"
       >
         Get In Touch
       </h2>
-      <p className="mb-0 mt-4 text-[16px] leading-[1.55] text-white/80 md:text-[18px]">
+      <p className="mb-0 mt-5 text-[16px] leading-[1.65] text-[var(--linen-dim)] md:text-[17px]">
         I&apos;m open to projects: AI agent systems, development work of any kind, and coding-agent training for teams.
         Have something in mind, or just want to say hi? My inbox is open and I reply quickly.
       </p>
-      <div className="mt-6 flex flex-wrap items-center gap-4">
-        <a href={`mailto:${email}`} className="outline-button inline-block px-8 py-5 leading-[1]">
+      <div className="mt-7 flex flex-wrap items-center gap-6">
+        <a href={`mailto:${email}`} className="btn-primary">
           Say Hello
         </a>
-        <Link href="/ai-integration" className="outline-button inline-block px-6 py-4 leading-[1] text-white/80">
-          See services
+        <Link href="/ai-integration" className="btn-link">
+          See services →
         </Link>
       </div>
     </>

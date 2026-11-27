@@ -21,9 +21,26 @@
   --cyan-bloom: rgba(94, 231, 255, 0.42);
   --silver: #d7e3ee;
 
+  /* Kinetic editorial (v3), colours taken from the film: linen text, phoenix amber for
+     emphasis. Cyan (--green) stays for small tech details only. */
+  --linen: #f3ece1;
+  --linen-dim: rgba(243, 236, 225, 0.76);
+  --linen-faint: rgba(243, 236, 225, 0.52);
+  --amber: #f4a541;
+  --amber-tint: rgba(244, 165, 65, 0.16);
+
   /* Typography */
   --font-sans: var(--font-geist), 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', ui-monospace, monospace;
+  --font-display: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+}
+
+/* TEMPORARY (style-v3 preview): ?display=instrument swaps the headline serif for comparison. */
+html[data-display='instrument'] {
+  --font-display: var(--font-instrument), 'Iowan Old Style', Georgia, serif;
+}
+
+:root {
 
   /* Font sizes */
   --fz-xxs: 12px;
@@ -431,18 +448,18 @@
   }
 
   .nav-capsule-link:hover {
-    color: var(--green);
+    color: var(--amber);
   }
 
   .nav-capsule-link.is-active,
   .nav-capsule-link[aria-current="true"] {
-    color: var(--white);
-    background: rgba(94, 231, 255, 0.18);
-    box-shadow: inset 0 0 0 1px rgba(215, 227, 238, 0.45);
+    color: var(--linen);
+    background: rgba(243, 236, 225, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(243, 236, 225, 0.28);
   }
 
   .nav-capsule-link:focus-visible {
-    outline: 2px solid var(--green);
+    outline: 2px solid var(--amber);
     outline-offset: 2px;
   }
 
@@ -471,7 +488,7 @@
   @media (min-width: 768px) {
     .sequence-scrim-hero {
       background:
-        radial-gradient(120% 90% at 0% 100%, rgba(20, 21, 29, 0.88) 0%, rgba(20, 21, 29, 0.6) 40%, rgba(20, 21, 29, 0) 74%),
+        radial-gradient(125% 115% at 0% 100%, rgba(20, 21, 29, 0.88) 0%, rgba(20, 21, 29, 0.6) 42%, rgba(20, 21, 29, 0) 76%),
         linear-gradient(0deg, rgba(20, 21, 29, 0.45) 0%, rgba(20, 21, 29, 0) 45%);
     }
 
@@ -505,7 +522,7 @@
      scrubbed frame is the costliest thing on an iPhone, so the glass effect is desktop-only. */
   .sequence-card {
     background: rgba(36, 38, 51, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(243, 236, 225, 0.08);
     border-radius: 24px;
     box-shadow: 0 24px 60px rgba(12, 13, 18, 0.35);
     color: rgba(255, 255, 255, 0.86);
@@ -525,8 +542,7 @@
   }
 
   .sequence-card .section-heading-title {
-    font-size: clamp(24px, 2.4vw, 32px);
-    color: var(--white);
+    font-size: clamp(28px, 2.6vw, 38px);
   }
 
   @media (max-width: 1023px) {
@@ -535,12 +551,11 @@
     }
 
     .sequence-card .section-heading-title {
-      font-size: 20px;
+      font-size: 24px;
     }
 
     .sequence-card .section-heading-subtitle {
-      margin-top: 4px;
-      font-size: 12px;
+      margin-bottom: 6px;
     }
   }
 
@@ -549,22 +564,128 @@
   }
 
   .section-heading-title {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(28px, 4vw, 40px);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    color: var(--lightest-slate);
+    font-weight: 400;
+    font-variation-settings: 'SOFT' 50;
+    letter-spacing: -0.02em;
+    color: var(--linen);
     margin: 0;
-    line-height: 1.1;
+    line-height: 1.05;
   }
 
+  /* Sits above the title, editorial style. */
   .section-heading-subtitle {
-    margin: 8px 0 0;
+    margin: 0 0 10px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* Kinetic editorial (v3) text components */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: 'SOFT' 50;
+    letter-spacing: -0.02em;
+    color: var(--linen);
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .prose-link {
+    color: var(--amber);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(244, 165, 65, 0.45);
+    transition: text-decoration-color 0.2s var(--easing);
+  }
+
+  .prose-link:hover,
+  .prose-link:focus-visible {
+    color: var(--amber);
+    text-decoration-color: var(--amber);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    background: var(--linen);
+    color: #1c1b20;
+    padding: 0.95rem 1.6rem;
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--green);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    transition: background-color 0.2s var(--easing), box-shadow 0.3s var(--easing);
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus-visible {
+    background: #fff;
+    color: #1c1b20;
+    box-shadow: 0 0 0 5px var(--amber-tint);
+  }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--linen);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+    text-decoration-color: rgba(243, 236, 225, 0.4);
+    transition: color 0.2s var(--easing), text-decoration-color 0.2s var(--easing);
+  }
+
+  .btn-link:hover,
+  .btn-link:focus-visible {
+    color: var(--amber);
+    text-decoration-color: var(--amber);
+  }
+
+  /* Small dark pill: Resume, archive, Play, password reveal. */
+  .btn-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 999px;
+    border: 1px solid rgba(243, 236, 225, 0.3);
+    background: rgba(12, 16, 22, 0.62);
+    color: var(--linen);
+    padding: 0.6rem 1.1rem;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    transition: color 0.2s var(--easing), border-color 0.2s var(--easing);
+  }
+
+  .btn-chip:hover,
+  .btn-chip:focus-visible {
+    color: var(--amber);
+    border-color: rgba(244, 165, 65, 0.6);
   }
 
   /* Noteworthy project cards */

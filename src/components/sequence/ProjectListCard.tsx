@@ -86,7 +86,7 @@ export function ProjectListCard({
           const open = i === active;
           const panelId = `${label.replace(/\s+/g, '-').toLowerCase()}-${i}`;
           return (
-            <li key={project.title} className="border-t border-white/10 first:border-t-0">
+            <li key={project.title} className="border-t border-[rgba(243,236,225,0.1)] first:border-t-0">
               <button
                 type="button"
                 aria-expanded={open}
@@ -94,10 +94,10 @@ export function ProjectListCard({
                 onClick={() => setActive(i)}
                 className="flex w-full items-baseline gap-3 py-2.5 text-left"
               >
-                <span className="font-mono text-[12px] text-[var(--green)]">{String(i + 1).padStart(2, '0')}</span>
+                <span className="display w-6 text-[15px] italic text-[var(--amber)]">{String(i + 1).padStart(2, '0')}</span>
                 <span
-                  className={`text-[17px] font-semibold tracking-[-0.02em] transition-colors duration-300 ${
-                    open ? 'text-white' : 'text-white/55 hover:text-white'
+                  className={`display text-[20px] leading-tight transition-colors duration-300 ${
+                    open ? 'text-[var(--linen)]' : 'text-[var(--linen-faint)] hover:text-[var(--linen)]'
                   }`}
                 >
                   {project.title}
@@ -122,8 +122,8 @@ export function ProjectListCard({
                         className="float-left mb-2 mr-4 hidden h-[70px] w-[112px] rounded-[10px] border border-white/10 bg-[var(--navy)] object-cover sm:block"
                       />
                     )}
-                    <p className="m-0 text-[14px] leading-[1.55] text-white/75">{project.description}</p>
-                    <ul className="clear-both m-0 mt-3 flex list-none flex-wrap gap-x-3 gap-y-1 p-0 font-mono text-[11.5px] text-white/55">
+                    <p className="m-0 text-[14px] leading-[1.6] text-[var(--linen-dim)]">{project.description}</p>
+                    <ul className="clear-both m-0 mt-3 flex list-none flex-wrap gap-x-3 gap-y-1 p-0 text-[12px] text-[rgba(94,231,255,0.78)]">
                       {project.tech.map((t) => (
                         <li key={t}>{t}</li>
                       ))}
@@ -135,7 +135,7 @@ export function ProjectListCard({
                           target="_blank"
                           rel="noreferrer"
                           aria-label={`${project.title} on GitHub`}
-                          className="text-white/80 transition-colors hover:text-[var(--green)]"
+                          className="text-[var(--linen-dim)] transition-colors hover:text-[var(--amber)]"
                         >
                           <IconGitHub size={18} />
                         </a>
@@ -146,17 +146,14 @@ export function ProjectListCard({
                           target="_blank"
                           rel="noreferrer"
                           aria-label={`${project.title} live site`}
-                          className="text-white/80 transition-colors hover:text-[var(--green)]"
+                          className="text-[var(--linen-dim)] transition-colors hover:text-[var(--amber)]"
                         >
                           <IconExternalLink size={18} />
                         </a>
                       )}
                       {project.play && (
                         // Plain <a>: /onepiece is a static game export, not a Next.js route.
-                        <a
-                          href={project.play}
-                          className="rounded-full border border-[var(--green)] px-4 py-1.5 font-sans text-[12px] font-medium text-[var(--green)] transition-all duration-300 hover:bg-[var(--green-tint)] hover:shadow-[0_0_18px_var(--cyan-bloom)]"
-                        >
+                        <a href={project.play} className="btn-chip !px-3.5 !py-1.5 !text-[12px]">
                           Play →
                         </a>
                       )}

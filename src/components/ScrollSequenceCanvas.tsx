@@ -475,10 +475,10 @@ export function ScrollSequenceCanvas() {
               aria-valuenow={Math.round(loadedFraction * 100)}
               className="w-[min(260px,60vw)]"
             >
-              <p className="mb-4 font-mono text-[12px] uppercase tracking-[0.24em] text-white/55">Gal Moussan</p>
+              <p className="display mb-4 text-[22px] italic text-[var(--linen-dim)]">Gal Moussan</p>
               <div className="h-[2px] w-full overflow-hidden rounded-full bg-white/10">
                 <div
-                  className="h-full origin-left bg-[var(--green)] transition-transform duration-300 ease-out"
+                  className="h-full origin-left bg-[var(--amber)] transition-transform duration-300 ease-out"
                   style={{ transform: `scaleX(${loadedFraction})` }}
                 />
               </div>

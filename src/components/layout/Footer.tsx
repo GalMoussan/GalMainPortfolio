@@ -25,7 +25,7 @@ export function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label={link.name}
-              className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors p-[10px]"
+              className="text-[var(--linen-dim)] hover:text-[var(--amber)] transition-colors p-[10px]"
             >
               {Icon && <Icon size={20} />}
             </a>
@@ -38,25 +38,25 @@ export function Footer() {
           href="https://github.com/galmoussan"
           target="_blank"
           rel="noreferrer"
-          className="font-mono text-[12px] text-[var(--slate)] hover:text-[var(--green)] transition-colors leading-[1]"
+          className="text-[12px] tracking-[0.02em] text-[var(--linen-faint)] hover:text-[var(--amber)] transition-colors leading-[1]"
         >
           Built by Gal Moussan
         </a>
 
-        <div className="font-mono text-[12px] text-[var(--slate)] leading-[1]">
+        <div className="text-[12px] tracking-[0.02em] text-[var(--linen-faint)] leading-[1]">
           © {currentYear} Gal Moussan. All rights reserved.
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-[8px] font-mono text-[12px] text-[var(--slate)]">
-          <Link href="/privacy-policy" className="hover:text-[var(--green)] transition-colors">
+        <div className="flex flex-wrap items-center justify-center gap-[8px] text-[12px] tracking-[0.02em] text-[var(--linen-faint)]">
+          <Link href="/privacy-policy" className="hover:text-[var(--amber)] transition-colors">
             Privacy Policy
           </Link>
           <span>·</span>
-          <Link href="/terms" className="hover:text-[var(--green)] transition-colors">
+          <Link href="/terms" className="hover:text-[var(--amber)] transition-colors">
             Terms of Use
           </Link>
           <span>·</span>
-          <Link href="/cookie-policy" className="hover:text-[var(--green)] transition-colors">
+          <Link href="/cookie-policy" className="hover:text-[var(--amber)] transition-colors">
             Cookie Policy
           </Link>
         </div>

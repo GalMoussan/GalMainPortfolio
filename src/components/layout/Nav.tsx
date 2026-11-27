@@ -37,8 +37,8 @@ export function Nav() {
         <Logo />
         <a
           href="/resume.pdf"
-          // Dark backing like the nav capsule: an outline alone vanishes over the bright video frames.
-          className="outline-button bg-[rgba(12,16,22,0.62)] py-2.5 px-5"
+          // Dark backing: an outline alone vanishes over the bright video frames.
+          className="btn-chip"
           target="_blank"
           rel="noreferrer"
         >
