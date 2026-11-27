@@ -34,47 +34,39 @@ export function CookieConsent() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 bg-[var(--lightest-navy)] border-t-2 border-[var(--green)] p-[20px] md:p-[30px] z-40"
+      // Compact card in the site's style: under the header on phones (the hero copy and nav
+      // capsule own the bottom), bottom-right on larger screens (hero copy is bottom-left).
+      className="fixed inset-x-3 top-[76px] z-40 rounded-[18px] border border-white/10 bg-[rgba(36,38,51,0.94)] p-4 shadow-[0_18px_50px_rgba(12,13,18,0.45)] md:inset-x-auto md:bottom-6 md:right-[100px] md:top-auto md:w-[340px]"
       role="dialog"
       aria-live="polite"
       aria-label="Cookie consent"
     >
-      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-[20px]">
-        <div className="flex-1">
-          <p className="text-[var(--lightest-slate)] text-[var(--fz-md)] leading-[1.5] mb-[10px]">
-            <strong>This site uses cookies</strong>
-          </p>
-          <p className="text-[var(--slate)] text-[var(--fz-sm)] leading-[1.5]">
-            We use essential cookies for site functionality and privacy-friendly analytics (Vercel
-            Analytics) to understand how visitors use the site. Analytics only load if you accept. See
-            our{' '}
-            <Link href="/cookie-policy" className="text-[var(--green)] hover:underline">
-              Cookie Policy
-            </Link>{' '}
-            and{' '}
-            <Link href="/privacy-policy" className="text-[var(--green)] hover:underline">
-              Privacy Policy
-            </Link>{' '}
-            for details.
-          </p>
-        </div>
+      <p className="m-0 text-[13px] leading-[1.5] text-white/75">
+        This site uses cookies. Privacy-friendly analytics (Vercel Analytics) load only if you accept.{' '}
+        <Link href="/cookie-policy" className="text-[var(--green)] hover:underline">
+          Cookie Policy
+        </Link>{' '}
+        ·{' '}
+        <Link href="/privacy-policy" className="text-[var(--green)] hover:underline">
+          Privacy Policy
+        </Link>
+      </p>
 
-        <div className="flex gap-[12px]">
-          <button
-            onClick={handleDecline}
-            className="px-[24px] py-[12px] border border-[var(--green)] text-[var(--green)] font-mono text-[var(--fz-sm)] hover:bg-[var(--green-tint)] transition-colors duration-200 whitespace-nowrap"
-            aria-label="Decline cookies"
-          >
-            Decline
-          </button>
-          <button
-            onClick={handleAccept}
-            className="px-[24px] py-[12px] bg-[var(--green)] text-[var(--navy)] font-mono text-[var(--fz-sm)] hover:bg-[var(--blue)] transition-colors duration-200 whitespace-nowrap font-semibold"
-            aria-label="Accept cookies"
-          >
-            Accept
-          </button>
-        </div>
+      <div className="mt-3 flex justify-end gap-2">
+        <button
+          onClick={handleDecline}
+          className="rounded-full border border-white/25 px-4 py-1.5 font-sans text-[12px] font-medium text-white/80 transition-colors duration-200 hover:border-white/50 hover:text-white"
+          aria-label="Decline cookies"
+        >
+          Decline
+        </button>
+        <button
+          onClick={handleAccept}
+          className="rounded-full bg-[var(--green)] px-4 py-1.5 font-sans text-[12px] font-semibold text-[var(--navy)] transition-shadow duration-300 hover:shadow-[0_0_18px_var(--cyan-bloom)]"
+          aria-label="Accept cookies"
+        >
+          Accept
+        </button>
       </div>
     </div>
   );

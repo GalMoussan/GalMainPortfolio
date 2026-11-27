@@ -77,11 +77,11 @@ export const LOAD_CONCURRENCY = 8;
 /**
  * Decoded frames kept ready around the scroll position, as a memory budget (RGBA bytes).
  * Drawing only ever uses these pre-decoded bitmaps, so no frame is decoded on the main
- * thread mid-scroll. Portrait: ~60 frames; full: ~40.
+ * thread mid-scroll. Portrait: ~100 frames (room for a fast flick on a phone); full: ~40.
  */
 export const DECODE_BUDGET_BYTES: Readonly<Record<FrameSet, number>> = {
   full: 240 * 1024 * 1024,
-  portrait: 80 * 1024 * 1024,
+  portrait: 128 * 1024 * 1024,
 };
 
 /** Share of the decode window placed ahead of the scroll position (scrolling down is the norm). */

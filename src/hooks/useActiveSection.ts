@@ -25,35 +25,61 @@ export function useActiveSection(ids: readonly string[]) {
     let hashLock: string | null = null;
     let hashLockUntil = 0;
 
-    const spyOffset = () => (window.matchMedia('(max-width: 768px)').matches ? 180 : 130);
+    // Section tops in document coordinates, the page height and the spy line only change
+    // with layout, so they're measured then, not per scroll event: getBoundingClientRect()
+    // inside a scroll handler forces a layout mid-frame, which costs frames on phones.
+    let tops: number[] = [];
+    let scrollHeight = 0;
+    let spyOffset = 130;
+    const measure = () => {
+      tops = elements.map((el) => el.getBoundingClientRect().top + window.scrollY);
+      scrollHeight = document.documentElement.scrollHeight;
+      spyOffset = window.matchMedia('(max-width: 768px)').matches ? 180 : 130;
+    };
 
     const sectionFromScroll = () => {
-      if (!window.location.hash && window.scrollY < 90) return null;
+      const y = window.scrollY;
+      if (!window.location.hash && y < 90) return null;
 
-      const doc = document.documentElement;
-      const maxScroll = doc.scrollHeight - window.innerHeight;
+      const maxScroll = scrollHeight - window.innerHeight;
       if (maxScroll < 200) return null;
 
-      const nearBottom = window.innerHeight + window.scrollY >= doc.scrollHeight - 120;
+      const nearBottom = window.innerHeight + y >= scrollHeight - 120;
       if (nearBottom) return ids[ids.length - 1] ?? null;
 
-      const line = spyOffset();
+      const line = y + spyOffset;
       let current: string | null = null;
-      for (const el of elements) {
-        if (el.getBoundingClientRect().top <= line) {
-          current = el.id;
-        }
-      }
+      elements.forEach((el, i) => {
+        if (tops[i] <= line) current = el.id;
+      });
       return current;
+    };
+
+    // Mirror of the state: per-frame updates only reach React when the section changes.
+    let shown: string | null | undefined;
+    const show = (id: string | null) => {
+      if (id === shown) return;
+      shown = id;
+      setActiveId(id);
     };
 
     const update = () => {
       if (hashLock && Date.now() < hashLockUntil) {
-        setActiveId(hashLock);
+        show(hashLock);
         return;
       }
       hashLock = null;
-      setActiveId(sectionFromScroll());
+      show(sectionFromScroll());
+    };
+
+    // At most one update per frame, however many scroll events arrive.
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        update();
+      });
     };
 
     const onHashChange = () => {
@@ -61,19 +87,19 @@ export function useActiveSection(ids: readonly string[]) {
       if (ids.includes(id)) {
         hashLock = id;
         hashLockUntil = Date.now() + 1200;
-        setActiveId(id);
+        show(id);
       }
     };
 
-    const observer = new IntersectionObserver(update, {
-      rootMargin: '-15% 0px -65% 0px',
-      threshold: [0, 0.15, 0.35, 0.6, 1],
+    const resizeObserver = new ResizeObserver(() => {
+      measure();
+      update();
     });
-
-    elements.forEach((el) => observer.observe(el));
-    window.addEventListener('scroll', update, { passive: true });
+    resizeObserver.observe(document.body);
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', onHashChange);
     if (pathname === '/' && !window.location.hash) window.scrollTo(0, 0);
+    measure();
     onHashChange();
     requestAnimationFrame(() => {
       if (pathname === '/' && !window.location.hash) window.scrollTo(0, 0);
@@ -81,8 +107,9 @@ export function useActiveSection(ids: readonly string[]) {
     });
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', update);
+      resizeObserver.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('hashchange', onHashChange);
     };
   }, [ids, pathname]);

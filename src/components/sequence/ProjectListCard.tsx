@@ -51,12 +51,16 @@ export function ProjectListCard({
   const card = useOverlayWindow(progress, overlayWindow, reduceMotion);
   const [active, setActive] = useState(0);
   const listRef = useRef<HTMLOListElement>(null);
+  /** Last slot derived from scrolling; React state is only touched when it changes. */
+  const scrollSlotRef = useRef(-1);
 
   useMotionValueEvent(progress, 'change', (p) => {
     const [start, end] = overlayWindow;
     if (p < start || p > end) return;
-    const slot = Math.floor(((p - start) / (end - start)) * projects.length);
-    setActive(Math.min(projects.length - 1, slot));
+    const slot = Math.min(projects.length - 1, Math.floor(((p - start) / (end - start)) * projects.length));
+    if (slot === scrollSlotRef.current) return;
+    scrollSlotRef.current = slot;
+    setActive(slot);
   });
 
   // Small-screen cards scroll internally: bring the opened project into view inside

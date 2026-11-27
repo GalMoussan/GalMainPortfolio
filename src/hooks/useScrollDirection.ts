@@ -11,14 +11,25 @@ export function useScrollDirection() {
   useEffect(() => {
     let lastScrollY = window.scrollY;
     const SCROLL_THRESHOLD = 80;
+    // Mirrors of the state, so scroll events (dozens per second) only reach React on real changes.
+    let atTop: boolean | null = null;
+    let direction: ScrollDirection = null;
 
     const updateScrollDirection = () => {
       const scrollY = window.scrollY;
-      setScrolledToTop(scrollY < SCROLL_THRESHOLD);
+      const nowAtTop = scrollY < SCROLL_THRESHOLD;
+      if (nowAtTop !== atTop) {
+        atTop = nowAtTop;
+        setScrolledToTop(nowAtTop);
+      }
 
       if (Math.abs(scrollY - lastScrollY) < 10) return;
 
-      setScrollDirection(scrollY > lastScrollY ? 'down' : 'up');
+      const next = scrollY > lastScrollY ? 'down' : 'up';
+      if (next !== direction) {
+        direction = next;
+        setScrollDirection(next);
+      }
       lastScrollY = scrollY > 0 ? scrollY : 0;
     };
 

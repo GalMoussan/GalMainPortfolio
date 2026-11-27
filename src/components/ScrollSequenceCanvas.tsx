@@ -65,9 +65,38 @@ function shotIndexAt(p: number): number {
   return i === -1 ? SHOTS.length - 1 : i;
 }
 
+/** Fractional frame position within `shot` for timeline position `p`. */
+function framePositionAt(shot: Shot, p: number): number {
+  return clamp01((p - shot.start) / (shot.end - shot.start)) * (shot.frameCount - 1);
+}
+
 /** Frame index within `shot` for timeline position `p`. */
 function frameIndexAt(shot: Shot, p: number): number {
-  return Math.round(clamp01((p - shot.start) / (shot.end - shot.start)) * (shot.frameCount - 1));
+  return Math.round(framePositionAt(shot, p));
+}
+
+/** Largest gap (in frames) cross-faded across; wider gaps snap to the closer frame instead of double-exposing. */
+const MAX_BLEND_GAP = 8;
+/** Cross-fade amounts are quantised to this many steps, so sub-pixel scrolls don't redraw. */
+const BLEND_STEPS = 32;
+
+/** Decoded frames at or below and at or above fractional position `pos` within `shot` (-1 when none). */
+function bracketFrames(bitmaps: (ImageBitmap | undefined)[], shot: Shot, pos: number) {
+  let below = -1;
+  for (let i = Math.floor(pos); i >= 0; i--) {
+    if (bitmaps[shot.offset + i]) {
+      below = i;
+      break;
+    }
+  }
+  let above = -1;
+  for (let i = Math.ceil(pos); i < shot.frameCount; i++) {
+    if (bitmaps[shot.offset + i]) {
+      above = i;
+      break;
+    }
+  }
+  return { below, above };
 }
 
 /** Closest decoded frame to `index` within `shot`, so a frame still in flight never blanks the canvas. */
@@ -103,12 +132,14 @@ export function ScrollSequenceCanvas() {
 
   const progressRef = useRef(progress);
   progressRef.current = progress;
-  const scheduleDrawRef = useRef<() => void>(() => undefined);
+  /** Draws the current frame immediately (scroll updates arrive inside framer's own animation frame). */
+  const drawNowRef = useRef<() => void>(() => undefined);
 
   const [loadedFraction, setLoadedFraction] = useState(0);
   const [ready, setReady] = useState(false);
 
-  useMotionValueEvent(progress, 'change', () => scheduleDrawRef.current());
+  // Same frame as the scroll update, so the canvas never trails the overlays by a frame.
+  useMotionValueEvent(progress, 'change', () => drawNowRef.current());
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -174,15 +205,24 @@ export function ScrollSequenceCanvas() {
       const bridge = bridges.find((b) => p > b.start && p < b.start + 2 * b.halfWidth);
 
       if (!bridge) {
-        wanted = [shot.offset + target];
-        const frame = nearestFrame(bitmaps, shot, target);
+        const pos = framePositionAt(shot, p);
+        const lo = Math.floor(pos);
+        const hi = Math.ceil(pos);
+        wanted = lo === hi ? [shot.offset + lo] : [shot.offset + lo, shot.offset + hi];
+        const { below, above } = bracketFrames(bitmaps, shot, pos);
         // Nothing decoded for this shot yet: keep whatever is on screen.
-        if (!frame) return;
-        const key = `${shot.name}:${frame.index}`;
+        if (below < 0 && above < 0) return;
+        // Cross-fade the decoded frames either side of the exact position: sub-frame smooth when
+        // neighbours are loaded, and a soft transition instead of a jump across frames still streaming in.
+        const blend = below >= 0 && above > below && above - below <= MAX_BLEND_GAP;
+        const base = blend || above < 0 || (below >= 0 && pos - below <= above - pos) ? below : above;
+        const mix = blend ? Math.round(((pos - below) / (above - below)) * BLEND_STEPS) / BLEND_STEPS : 0;
+        const key = `${shot.name}:${base}:${blend ? above : '-'}:${mix}`;
         if (key === lastKey) return;
         lastKey = key;
         drawnShot = targetShot;
-        drawCover(ctx, frame.bitmap, width, height);
+        drawCover(ctx, bitmaps[shot.offset + base]!, width, height);
+        if (mix > 0) drawCover(ctx, bitmaps[shot.offset + above]!, width, height, mix);
         return;
       }
 
@@ -206,7 +246,13 @@ export function ScrollSequenceCanvas() {
     const scheduleDraw = () => {
       if (raf === null) raf = requestAnimationFrame(render);
     };
-    scheduleDrawRef.current = scheduleDraw;
+    drawNowRef.current = () => {
+      if (raf !== null) {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+      render();
+    };
 
     /** Next frame to decode: nearest to the frame in view, ahead and behind in the window's proportions. */
     const nextDecode = () => {
@@ -360,7 +406,7 @@ export function ScrollSequenceCanvas() {
       cancelled = true;
       resizeObserver.disconnect();
       if (raf !== null) cancelAnimationFrame(raf);
-      scheduleDrawRef.current = () => undefined;
+      drawNowRef.current = () => undefined;
       for (const bitmap of bitmaps) bitmap?.close();
     };
   }, []);
@@ -385,7 +431,8 @@ export function ScrollSequenceCanvas() {
         ))}
 
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#242633] supports-[height:100svh]:h-[100svh]">
-          <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />
+          {/* will-change: its own GPU layer, so scrolling never repaints the full-screen canvas. */}
+          <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full will-change-transform" />
           <Scrims progress={progress} />
           <SequenceOverlays progress={progress} reduceMotion={reduceMotion} />
         </div>

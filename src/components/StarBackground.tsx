@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const STAR_COUNT = 150;
@@ -50,10 +51,13 @@ function makeStar(w: number, h: number): Star {
 export function StarBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  // The home page's full-screen frame sequence covers this canvas entirely; animating it
+  // there only steals per-frame time from scrolling (most noticeable on phones).
+  const covered = usePathname() === '/';
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (covered || !canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -208,7 +212,9 @@ export function StarBackground() {
       window.removeEventListener('mouseleave', onMouseLeave);
       window.removeEventListener('click', onClick);
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, covered]);
+
+  if (covered) return null;
 
   return (
     <canvas
