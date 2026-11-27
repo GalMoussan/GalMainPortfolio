@@ -710,6 +710,8 @@
     text-transform: uppercase;
     color: var(--linen-faint);
     text-shadow: 0 1px 12px rgba(20, 21, 29, 0.6);
+    /* Own layer: its digits change on every scrolled frame; only this small layer repaints. */
+    will-change: transform;
   }
 
   .timecode-rule {
@@ -739,7 +741,6 @@
     top: 21%;
     left: 25px;
     right: 25px;
-    text-shadow: 0 1px 24px rgba(20, 21, 29, 0.45);
   }
 
   @media (min-width: 768px) {
@@ -752,6 +753,9 @@
       right: auto;
       bottom: 112px;
       left: 100px;
+      /* Large screens only: a blurred shadow behind moving words repaints with them; phones rely
+         on the scrim. */
+      text-shadow: 0 1px 24px rgba(20, 21, 29, 0.45);
     }
   }
 

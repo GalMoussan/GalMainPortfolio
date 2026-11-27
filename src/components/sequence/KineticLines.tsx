@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useRef } from 'react';
 import type { MotionValue } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import {
   DEFAULT_TIMING,
   easeInCubic,
@@ -11,7 +12,7 @@ import {
   stagger,
   type KineticTiming,
 } from '@/lib/kinetic';
-import { useIsoLayoutEffect, useKineticDriver } from './useKinetic';
+import { TYPE_MOTION_QUERY, useIsoLayoutEffect, useKineticDriver } from './useKinetic';
 
 /** Share of a phase across which successive lines start. */
 const LINE_SPREAD = 0.5;
@@ -60,7 +61,8 @@ interface KineticLinesProps {
 /**
  * Body copy revealed line by line as the timeline enters `window` (each line rises and fades in
  * after the one above) and released line by line as it leaves. Lines are measured from the
- * rendered layout and re-measured when the width or fonts change.
+ * rendered layout and re-measured when the width or fonts change. Large screens only: on phones
+ * the copy moves with its overlay, leaving the frame budget to the headline words and the video.
  */
 export function KineticLines({ parts, progress, window: span, reduceMotion = false, timing = DEFAULT_TIMING }: KineticLinesProps) {
   const tokens = tokenize(parts);
@@ -70,7 +72,8 @@ export function KineticLines({ parts, progress, window: span, reduceMotion = fal
   const lineOf = useRef<number[]>([]);
   const lineCount = useRef(1);
   const lastKey = useRef('');
-  const enabled = Boolean(progress && span) && !reduceMotion;
+  const typeMotion = useMediaQuery(TYPE_MOTION_QUERY);
+  const enabled = Boolean(progress && span) && !reduceMotion && typeMotion;
   const [start, end] = span ?? [0, 0];
 
   const apply = useCallback(
@@ -131,6 +134,8 @@ export function KineticLines({ parts, progress, window: span, reduceMotion = fal
     return () => {
       alive = false;
       observer.disconnect();
+      lastKey.current = '';
+      for (const el of refs.current) if (el) el.style.transform = el.style.opacity = '';
     };
   }, [enabled, progress, apply]);
 

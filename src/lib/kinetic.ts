@@ -1,4 +1,4 @@
-import { TIMELINE_END } from './sequenceConfig';
+import { OVERLAY_FADE, TIMELINE_END } from './sequenceConfig';
 import { clamp01 } from './sequenceTimeline';
 
 /** Timeline spans (timeline units) a kinetic element spends entering and leaving. */
@@ -7,8 +7,11 @@ export interface KineticTiming {
   exit: number;
 }
 
-/** Longer than an overlay's own fade, so the words are still settling once their card is fully up. */
-export const DEFAULT_TIMING: KineticTiming = { enter: 0.05, exit: 0.04 };
+/**
+ * Entering runs past the overlay's own fade-in, so the words are still settling once their card is
+ * fully up. Leaving matches the fade-out: a headline stays for its whole section and goes with it.
+ */
+export const DEFAULT_TIMING: KineticTiming = { enter: 0.05, exit: OVERLAY_FADE };
 
 /**
  * How far an element shown during `[start, end]` has entered and exited (each 0→1) at timeline

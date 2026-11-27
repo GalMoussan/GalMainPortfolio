@@ -53,6 +53,9 @@ export const CHAPTER_TITLES: Readonly<Record<SequenceName, string>> = {
 /** Frame rate the corner timecode counts in (the frames were cut from 24 fps footage). */
 export const TIMECODE_FPS = 24;
 
+/** Timeline span an overlay spends fading in or out; headlines leave in step with it. */
+export const OVERLAY_FADE = 0.025;
+
 /** Scroll distance (vh) per timeline unit. */
 export const VH_PER_TIMELINE_UNIT = 550;
 

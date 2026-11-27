@@ -9,9 +9,9 @@ import { KineticWords } from './KineticWords';
 import { KineticLines } from './KineticLines';
 
 const HERO_END = OVERLAY_WINDOWS.hero[1];
-/** Exits run top to bottom: name, then tagline, then body. */
-const NAME_WINDOW = [0, HERO_END - 0.016] as const;
-const TAGLINE_WINDOW = [0, HERO_END - 0.008] as const;
+/** Exits run top to bottom (name, tagline, body), all within the hero's own fade-out. */
+const NAME_WINDOW = [0, HERO_END - 0.008] as const;
+const TAGLINE_WINDOW = [0, HERO_END - 0.004] as const;
 const BODY_WINDOW = [0, HERO_END] as const;
 
 export function HeroOverlay({ progress, reduceMotion }: { progress: MotionValue<number>; reduceMotion: boolean }) {

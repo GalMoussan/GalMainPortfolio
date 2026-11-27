@@ -49,8 +49,13 @@ function ChapterCard({ progress, reduceMotion, chapter, title, cut }: ChapterCar
   const visibility = useTransform<number, string>(opacity, (o) => (o > 0.01 ? 'visible' : 'hidden'));
 
   return (
-    // Decorative: the timecode and section headings already carry the structure.
-    <motion.div aria-hidden="true" style={{ opacity, visibility }} className="pointer-events-none absolute inset-0">
+    // Decorative: the timecode and section headings already carry the structure. Own layer: the
+    // cards fade during the cuts, where the canvas is busiest, so the full-screen scrim never repaints.
+    <motion.div
+      aria-hidden="true"
+      style={{ opacity, visibility }}
+      className="pointer-events-none absolute inset-0 will-change-[opacity]"
+    >
       <div className="chapter-card-scrim" />
       <div className="chapter-card-copy">
         <p className="eyebrow m-0">Chapter {chapter}</p>

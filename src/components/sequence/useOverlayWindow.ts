@@ -1,10 +1,8 @@
 'use client';
 
 import { useTransform, type MotionValue } from 'framer-motion';
-import { TIMELINE_END } from '@/lib/sequenceConfig';
+import { OVERLAY_FADE as FADE, TIMELINE_END } from '@/lib/sequenceConfig';
 
-/** Timeline span spent fading an overlay in or out. */
-const FADE = 0.025;
 /** Vertical drift (px) while an overlay fades. */
 const DRIFT_PX = 28;
 

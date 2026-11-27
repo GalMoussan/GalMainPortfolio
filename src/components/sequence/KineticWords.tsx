@@ -75,9 +75,11 @@ export function KineticWords({
         const style = refs.current[i]?.style;
         if (!style) return;
         if (e === 1 && x === 0) {
-          style.transform = style.opacity = style.fontWeight = style.letterSpacing = '';
+          style.transform = style.opacity = style.fontWeight = style.letterSpacing = style.willChange = '';
           return;
         }
+        // Own layer while moving, so a moving word never repaints the text around it.
+        style.willChange = 'transform, opacity';
         // Rise from below the mask; on exit drift up and slightly forward.
         style.transform = `translate3d(${(0.12 * x).toFixed(3)}em, calc(${((1 - e) * 130).toFixed(1)}% - ${(0.3 * x).toFixed(3)}em), 0)`;
         style.opacity = (Math.min(1, e * 1.6) * (1 - x)).toFixed(3);
