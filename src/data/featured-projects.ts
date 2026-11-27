@@ -9,6 +9,8 @@ export interface FeaturedProject {
   /** Only for public repos. */
   github?: string;
   external?: string;
+  /** Access password for a gated live demo, revealed on request next to the project. */
+  livePassword?: string;
   image: string;
 }
 
@@ -47,6 +49,8 @@ export const featuredProjects: FeaturedProject[] = [
     tech: ['TypeScript', 'Phaser', 'Vite', 'Node.js', 'WebSockets'],
     year: 2026,
     external: 'https://ayalim-game.vercel.app',
+    // Intentionally public: the deployment is password-gated, and visitors get the password here.
+    livePassword: 'Doflamingo12',
     image: '/images/ayalim-game.png',
   },
   {
@@ -57,5 +61,15 @@ export const featuredProjects: FeaturedProject[] = [
     year: 2026,
     external: 'https://connections-friends.vercel.app',
     image: '/images/connections-friends.png',
+  },
+  {
+    title: 'Tivnili',
+    description:
+      "Personal brand landing page for Tivnili (תִּבְנִילִי — Hebrew: 'build for me'), my studio selling websites, AI tools, and strategy sessions to small business owners. Your business, finally built.",
+    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Express'],
+    year: 2026,
+    github: 'https://github.com/GalMoussan/Tivnili',
+    external: 'https://tivnili.galmoussan.com',
+    image: '/images/tivnili.png',
   },
 ];

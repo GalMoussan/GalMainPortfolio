@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useMotionValueEvent, type MotionValue } from 'framer-motion';
 import { IconExternalLink, IconGitHub } from '@/components/ui/Icons';
+import { PasswordReveal } from '@/components/ui/PasswordReveal';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SideCard } from './SideCard';
 import { useOverlayWindow } from './useOverlayWindow';
@@ -17,6 +18,8 @@ export interface ListedProject {
   image?: string;
   /** Page on this site where the project can be played. */
   play?: string;
+  /** Access password for a gated live demo, revealed on request. */
+  livePassword?: string;
 }
 
 interface ProjectListCardProps {
@@ -121,7 +124,7 @@ export function ProjectListCard({
                         <li key={t}>{t}</li>
                       ))}
                     </ul>
-                    <div className="mt-3 flex items-center gap-4">
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
                       {project.github && (
                         <a
                           href={project.github}
@@ -153,6 +156,7 @@ export function ProjectListCard({
                           Play →
                         </a>
                       )}
+                      {project.livePassword && <PasswordReveal password={project.livePassword} />}
                     </div>
                   </div>
                 </div>

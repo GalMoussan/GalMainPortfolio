@@ -3,6 +3,7 @@ import { featuredProjects } from '@/data/featured-projects';
 import { otherProjects } from '@/data/other-projects';
 import { archivedProjects } from '@/data/archive-projects';
 import { IconExternalLink, IconGitHub } from '@/components/ui/Icons';
+import { PasswordReveal } from '@/components/ui/PasswordReveal';
 
 export const metadata: Metadata = {
   title: 'Archive | Gal Moussan',
@@ -16,13 +17,14 @@ interface ArchiveProject {
   tech: string[];
   github?: string;
   external?: string;
+  livePassword?: string;
 }
 
 // Newest first; Array.prototype.sort is stable, so same-year rows keep their list order.
 const allProjects: ArchiveProject[] = [
   ...featuredProjects.map((p) => ({ ...p, madeAt: p.madeAt ?? 'Personal' })),
   ...otherProjects.map((p) => ({ ...p, madeAt: 'Personal', external: p.external ?? p.play })),
-  ...archivedProjects.map((p) => ({ ...p, madeAt: 'Personal' })),
+  ...archivedProjects.filter((p) => !p.hidden).map((p) => ({ ...p, madeAt: 'Personal' })),
 ].sort((a, b) => b.year - a.year);
 
 export default function ArchivePage() {
@@ -80,7 +82,7 @@ export default function ArchivePage() {
                   {project.tech.join(' · ')}
                 </td>
                 <td className="py-[10px]">
-                  <div className="flex items-center gap-[10px]">
+                  <div className="flex flex-wrap items-center gap-[10px]">
                     {project.github && (
                       <a
                         href={project.github}
@@ -103,6 +105,7 @@ export default function ArchivePage() {
                         <IconExternalLink size={18} />
                       </a>
                     )}
+                    {project.livePassword && <PasswordReveal password={project.livePassword} />}
                   </div>
                 </td>
               </tr>

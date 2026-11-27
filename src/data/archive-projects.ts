@@ -7,14 +7,18 @@ export interface ArchivedProject {
   /** Only for public repos. */
   github?: string;
   external?: string;
+  /** Kept on record but shown nowhere on the site (e.g. not Gal's own work). */
+  hidden?: boolean;
 }
 
 export const archivedProjects: ArchivedProject[] = [
   {
+    // One project: the old cinemaquery repo is gone; its code and deployment live on as
+    // movieSearch, which /tools/cinema-query embeds under the CinemaQuery name.
     title: 'CinemaQuery',
-    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'pgvector', 'OpenAI', 'Claude'],
-    // The cinemaquery repo no longer exists: year from when the tool page was added to this site.
+    tech: ['Next.js', 'TypeScript', 'Prisma', 'OpenAI', 'Claude', 'TanStack Query'],
     year: 2026,
+    github: 'https://github.com/GalMoussan/movieSearch',
     external: '/tools/cinema-query',
   },
   {
@@ -35,13 +39,6 @@ export const archivedProjects: ArchivedProject[] = [
     year: 2026,
     github: 'https://github.com/GalMoussan/reelSearch',
     external: 'https://reel-search-green.vercel.app',
-  },
-  {
-    title: 'movieSearch',
-    tech: ['Next.js', 'TypeScript', 'Prisma', 'OpenAI', 'Claude', 'TanStack Query'],
-    year: 2026,
-    github: 'https://github.com/GalMoussan/movieSearch',
-    external: 'https://movie-search-three-theta.vercel.app',
   },
   {
     title: 'Content Factory',
@@ -65,6 +62,7 @@ export const archivedProjects: ArchivedProject[] = [
     tech: ['Next.js', 'TypeScript', 'Supabase', 'Stripe', 'Tailwind CSS', 'Mailgun'],
     year: 2025,
     github: 'https://github.com/GalMoussan/MySassy',
+    hidden: true,
   },
   {
     title: 'LeadsFactory',
@@ -84,6 +82,7 @@ export const archivedProjects: ArchivedProject[] = [
     tech: ['JavaScript', 'Chrome Extensions API'],
     year: 2023,
     github: 'https://github.com/GalMoussan/invert-chrome-extension',
+    hidden: true,
   },
   {
     title: 'Social Net',

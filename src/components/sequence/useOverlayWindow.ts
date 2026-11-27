@@ -51,15 +51,29 @@ export function useOverlayWindow(
   return { opacity, y: reduceMotion ? 0 : drift, visibility, pointerEvents };
 }
 
-/** Cross-fade between two panels sharing one card, centred on timeline position `at`. */
-export function useCrossfade(progress: MotionValue<number>, at: number) {
-  const outgoing = useTransform(progress, [at - 0.012, at + 0.012], [1, 0]);
-  const incoming = useTransform(progress, [at - 0.012, at + 0.012], [0, 1]);
-  const outgoingVisibility = useTransform<number, string>(outgoing, (o) => (o > 0.01 ? 'visible' : 'hidden'));
-  const incomingVisibility = useTransform<number, string>(incoming, (o) => (o > 0.01 ? 'visible' : 'hidden'));
+/** Half-width of a panel cross-fade, in timeline units. */
+const PANEL_FADE = 0.012;
 
-  return [
-    { opacity: outgoing, visibility: outgoingVisibility },
-    { opacity: incoming, visibility: incomingVisibility },
-  ] as const;
+/**
+ * One of several panels sharing a card: fades in around `from` and out around `to`.
+ * Omit `from` for the first panel and `to` for the last; adjacent panels share a
+ * boundary, so they cross-fade.
+ */
+export function usePanelFade(progress: MotionValue<number>, from?: number, to?: number) {
+  const input: number[] = [];
+  const output: number[] = [];
+  if (from === undefined) {
+    input.push(0);
+    output.push(1);
+  } else {
+    input.push(from - PANEL_FADE, from + PANEL_FADE);
+    output.push(0, 1);
+  }
+  if (to !== undefined) {
+    input.push(to - PANEL_FADE, to + PANEL_FADE);
+    output.push(1, 0);
+  }
+  const opacity = useTransform(progress, input, output);
+  const visibility = useTransform<number, string>(opacity, (o) => (o > 0.01 ? 'visible' : 'hidden'));
+  return { opacity, visibility };
 }

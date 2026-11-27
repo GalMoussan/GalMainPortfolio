@@ -137,8 +137,11 @@ export const OVERLAY_WINDOWS = {
   contact: [1.4, TIMELINE_END],
 } as const satisfies Record<string, readonly [number, number]>;
 
-/** Inside the about window the card cross-fades from About to Experience here. */
-export const ABOUT_TO_EXPERIENCE = 0.37;
+/**
+ * Inside the about window the card steps through three panels: About (intro), About
+ * (workflow, interests and tech), then Experience. Cross-fades are centred on these.
+ */
+export const ABOUT_PANEL_SPLITS = [0.335, 0.39] as const;
 
 interface SectionAnchor {
   id: string;
@@ -154,7 +157,7 @@ interface SectionAnchor {
 export const SECTION_ANCHORS: readonly SectionAnchor[] = [
   { id: 'hero', progress: 0 },
   { id: 'about', progress: 0.31 },
-  { id: 'jobs', progress: 0.41 },
+  { id: 'jobs', progress: 0.42 },
   { id: 'projects', progress: 0.55 },
   { id: 'stack', progress: 0.84 },
   { id: 'other-projects', progress: 1.06 },

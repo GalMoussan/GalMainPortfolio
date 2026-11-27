@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { motion, type MotionValue } from 'framer-motion';
-import { ABOUT_TO_EXPERIENCE, OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
+import { ABOUT_PANEL_SPLITS, OVERLAY_WINDOWS } from '@/lib/sequenceConfig';
 import { jobs } from '@/data/jobs';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { SideCard } from './SideCard';
-import { useCrossfade, useOverlayWindow } from './useOverlayWindow';
+import { useOverlayWindow, usePanelFade } from './useOverlayWindow';
 
 const skills = [
   'TypeScript',
@@ -23,17 +23,29 @@ const skills = [
   'Playwright',
 ];
 
-/** About, then Experience, in one card over the sofa side of the `sitting` shot. */
+/** Shared by both About panels so the heading holds still while the body cross-fades. */
+const aboutHeading = <SectionHeading subtitle="About Me">About</SectionHeading>;
+
+/**
+ * About (two panels), then Experience, in one card over the sofa side of the `sitting`
+ * shot. Splitting About keeps the card short enough not to scroll on laptop screens.
+ */
 export function AboutExperienceCard({ progress, reduceMotion }: { progress: MotionValue<number>; reduceMotion: boolean }) {
   const card = useOverlayWindow(progress, OVERLAY_WINDOWS.about, reduceMotion);
-  const [about, experience] = useCrossfade(progress, ABOUT_TO_EXPERIENCE);
+  const [toAboutMore, toExperience] = ABOUT_PANEL_SPLITS;
+  const intro = usePanelFade(progress, undefined, toAboutMore);
+  const more = usePanelFade(progress, toAboutMore, toExperience);
+  const experience = usePanelFade(progress, toExperience);
 
   return (
     <SideCard style={card} desktopWidth="lg:w-[min(460px,34vw)]" label="About and experience">
       {/* minmax(0,1fr): the nowrap tab row must scroll, not widen the track. */}
       <div className="grid grid-cols-[minmax(0,1fr)]">
-        <motion.div style={about} className="[grid-area:1/1]">
-          <AboutPanel />
+        <motion.div style={intro} className="[grid-area:1/1]">
+          <AboutIntroPanel />
+        </motion.div>
+        <motion.div style={more} className="[grid-area:1/1]">
+          <AboutMorePanel />
         </motion.div>
         <motion.div style={experience} className="[grid-area:1/1]">
           <ExperiencePanel />
@@ -43,10 +55,10 @@ export function AboutExperienceCard({ progress, reduceMotion }: { progress: Moti
   );
 }
 
-function AboutPanel() {
+function AboutIntroPanel() {
   return (
     <>
-      <SectionHeading subtitle="About Me">About</SectionHeading>
+      {aboutHeading}
       <div className="space-y-3 text-[15px] leading-[1.6] text-white/75">
         <p>
           Hello! I&apos;m Gal, a fullstack developer and AI integration specialist working remotely from Israel. Before
@@ -62,6 +74,16 @@ function AboutPanel() {
           , where I build the school&apos;s website and internal tools and bring AI into how the school teaches and runs.
           I&apos;ve also taught AI courses for kids and youth at Shamir Institute of Technology.
         </p>
+      </div>
+    </>
+  );
+}
+
+function AboutMorePanel() {
+  return (
+    <>
+      {aboutHeading}
+      <div className="space-y-3 text-[15px] leading-[1.6] text-white/75">
         <p>
           My daily workflow runs on coding agents. I plan with a spec agent, build with worker agents, and put every
           change through a reviewer before it ships. Teaching that way of working is now part of what I do.
