@@ -17,11 +17,11 @@ interface SideCardProps {
  */
 export function SideCard({ style, desktopWidth, label, children }: SideCardProps) {
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-end justify-center px-3 pb-[calc(84px+env(safe-area-inset-bottom))] pt-24 md:justify-end md:pr-[96px] lg:items-center lg:px-4 lg:pb-8 lg:pt-24 lg:pr-[clamp(96px,7vw,150px)]">
+    <div className="pointer-events-none absolute inset-0 flex items-end justify-center px-3 pb-[calc(84px+env(safe-area-inset-bottom))] pt-24 md:justify-end md:pr-[96px] lg:items-center lg:px-4 lg:pb-8 lg:pt-24 lg:pr-[clamp(96px,7vw,150px)] [@media(min-width:1024px)_and_(max-height:820px)]:pt-20">
       <motion.section
         aria-label={label}
         style={style}
-        className={`sequence-card max-h-[42vh] w-full max-w-[460px] overflow-y-auto p-4 sm:p-5 lg:max-h-full lg:p-7 ${desktopWidth}`}
+        className={`sequence-card max-h-[42vh] w-full max-w-[460px] overflow-y-auto p-4 sm:p-5 lg:max-h-full lg:p-7 [@media(min-width:1024px)_and_(max-height:820px)]:p-6 ${desktopWidth}`}
       >
         {children}
       </motion.section>

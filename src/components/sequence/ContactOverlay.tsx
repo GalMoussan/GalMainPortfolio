@@ -10,7 +10,7 @@ import { useOverlayWindow } from './useOverlayWindow';
 export function ContactCopy({ headingId }: { headingId: string }) {
   return (
     <>
-      <p className="m-0 font-mono text-[12px] uppercase tracking-[0.24em] text-white/60">Contact</p>
+      <p className="m-0 font-mono text-[12px] uppercase tracking-[0.24em] text-white/75">Contact</p>
       <p className="m-0 mt-2 font-sans text-[15px] font-medium tracking-[0.04em] text-[var(--green)]">
         What&apos;s Next?
       </p>
@@ -48,7 +48,7 @@ export function ContactOverlay({ progress, reduceMotion }: { progress: MotionVal
       <motion.section
         aria-labelledby="contact-heading"
         style={style}
-        className="max-w-[420px] [text-shadow:0_1px_24px_rgba(20,21,29,0.55)] lg:max-w-[380px]"
+        className="max-w-[420px] [text-shadow:0_1px_24px_rgba(20,21,29,0.55)] lg:max-w-[340px]"
       >
         <ContactCopy headingId="contact-heading" />
       </motion.section>

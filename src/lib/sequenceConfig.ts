@@ -91,6 +91,16 @@ export const DECODE_AHEAD_SHARE = 0.7;
 export const DECODE_CONCURRENCY = 3;
 
 /**
+ * Largest gap (in frames) the canvas cross-fades across; wider gaps snap to the closer frame.
+ * Phones blend wider gaps (smoother while frames stream in on a small screen); on a large desktop
+ * screen a wide blend reads as a double exposure, so it stays near adjacent frames.
+ */
+export const MAX_BLEND_GAP: Readonly<Record<FrameSet, number>> = {
+  full: 3,
+  portrait: 8,
+};
+
+/**
  * Coarse-to-fine background loading. Each pass requests every `step`th frame, either
  * of the shot on screen and the next one (`near`) or of every shot (`all`), so any
  * scroll position soon has a frame close by and detail fills in where it's needed first.

@@ -29,16 +29,16 @@ export function StackCard({ progress, reduceMotion }: { progress: MotionValue<nu
   const staggered = useMediaQuery('(min-width: 1024px)') && !reduceMotion;
 
   return (
-    <SideCard style={card} desktopWidth="lg:w-[min(440px,32vw)]" label="AI orchestration and infrastructure">
+    <SideCard style={card} desktopWidth="lg:w-[min(460px,36vw)]" label="AI orchestration and infrastructure">
       <SectionHeading subtitle={modernAiStack.title}>AI Orchestration</SectionHeading>
-      <p className="m-0 text-[14px] leading-[1.55] text-white/75">
+      <p className="m-0 text-[14px] leading-[1.55] text-white/75 [@media(max-height:820px)]:text-[13px]">
         {modernAiStack.body}{' '}
         <Link href="/ai-integration" className="inline-link">
           AI Integration Services →
         </Link>
       </p>
 
-      <ol className="m-0 mt-4 list-none space-y-3 p-0">
+      <ol className="m-0 mt-4 list-none space-y-3 p-0 [@media(max-height:820px)]:mt-3 [@media(max-height:820px)]:space-y-2">
         {layers.map(({ label, study }, i) => (
           <StackLayer key={label} progress={progress} order={i} staggered={staggered} label={label}>
             <h3 className="m-0 mt-1 text-[15px] font-semibold tracking-[-0.01em] text-white">{study.title}</h3>

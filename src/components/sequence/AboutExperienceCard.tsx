@@ -118,7 +118,8 @@ function ExperiencePanel() {
       <div
         role="tablist"
         aria-label="Job tabs"
-        className="-mx-1 flex overflow-x-auto border-b border-white/10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        // Right-edge fade signals that the tab row scrolls (the later companies sit off to the right).
+        className="-mx-1 flex overflow-x-auto border-b border-white/10 [mask-image:linear-gradient(to_right,#000_85%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {jobs.map((job, i) => (
           <button

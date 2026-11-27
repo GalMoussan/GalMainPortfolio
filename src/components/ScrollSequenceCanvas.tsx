@@ -19,6 +19,7 @@ import {
   FRAME_SIZES,
   LOAD_CONCURRENCY,
   LOAD_PASSES,
+  MAX_BLEND_GAP,
   OVERLAY_WINDOWS,
   PORTRAIT_MAX_ASPECT,
   PRIORITY_FRAME_STEP,
@@ -75,10 +76,10 @@ function frameIndexAt(shot: Shot, p: number): number {
   return Math.round(framePositionAt(shot, p));
 }
 
-/** Largest gap (in frames) cross-faded across; wider gaps snap to the closer frame instead of double-exposing. */
-const MAX_BLEND_GAP = 8;
 /** Cross-fade amounts are quantised to this many steps, so sub-pixel scrolls don't redraw. */
 const BLEND_STEPS = 32;
+/** Scroll pause after which the canvas stops blending and shows the nearest single frame. */
+const SETTLE_MS = 140;
 
 /** Decoded frames at or below and at or above fractional position `pos` within `shot` (-1 when none). */
 function bracketFrames(bitmaps: (ImageBitmap | undefined)[], shot: Shot, pos: number) {
@@ -149,6 +150,7 @@ export function ScrollSequenceCanvas() {
     // Chosen once per load; a later rotation keeps this set and cover-fits it.
     const frameSet: FrameSet = window.innerWidth / window.innerHeight < PORTRAIT_MAX_ASPECT ? 'portrait' : 'full';
     const frameSize = FRAME_SIZES[frameSet];
+    const maxBlendGap = MAX_BLEND_GAP[frameSet];
     const windowFrames = Math.floor(DECODE_BUDGET_BYTES[frameSet] / (frameSize.width * frameSize.height * 4));
     const ahead = Math.round(windowFrames * DECODE_AHEAD_SHARE);
     const behind = windowFrames - ahead;
@@ -156,6 +158,9 @@ export function ScrollSequenceCanvas() {
     let cancelled = false;
     let raf: number | null = null;
     let lastKey = '';
+    /** No scroll for SETTLE_MS: show a single frame (see render). */
+    let settled = true;
+    let settleTimer = 0;
     let width = 0;
     let height = 0;
 
@@ -212,12 +217,14 @@ export function ScrollSequenceCanvas() {
         const { below, above } = bracketFrames(bitmaps, shot, pos);
         // Nothing decoded for this shot yet: keep whatever is on screen.
         if (below < 0 && above < 0) return;
-        // Cross-fade the decoded frames either side of the exact position: sub-frame smooth when
-        // neighbours are loaded, and a soft transition instead of a jump across frames still streaming in.
-        const blend = below >= 0 && above > below && above - below <= MAX_BLEND_GAP;
-        const base = blend || above < 0 || (below >= 0 && pos - below <= above - pos) ? below : above;
+        const nearest = above < 0 || (below >= 0 && pos - below <= above - pos) ? below : above;
+        // While scrolling, cross-fade the decoded frames either side of the exact position: sub-frame
+        // smooth when neighbours are loaded, a soft transition instead of a jump across frames still
+        // streaming in. At rest, one frame: a held blend reads as a double image where the subject moves.
+        const blend = !settled && below >= 0 && above > below && above - below <= maxBlendGap;
+        const base = blend ? below : nearest;
         const mix = blend ? Math.round(((pos - below) / (above - below)) * BLEND_STEPS) / BLEND_STEPS : 0;
-        const key = `${shot.name}:${base}:${blend ? above : '-'}:${mix}`;
+        const key = `${shot.name}:${base}:${mix > 0 ? above : '-'}:${mix}`;
         if (key === lastKey) return;
         lastKey = key;
         drawnShot = targetShot;
@@ -249,6 +256,12 @@ export function ScrollSequenceCanvas() {
       if (raf === null) raf = requestAnimationFrame(render);
     };
     drawNowRef.current = () => {
+      settled = false;
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => {
+        settled = true;
+        scheduleDraw();
+      }, SETTLE_MS);
       if (raf !== null) {
         cancelAnimationFrame(raf);
         raf = null;
@@ -341,6 +354,9 @@ export function ScrollSequenceCanvas() {
      * ones after it, then the ones before); in the shot on screen, frames ahead come first.
      */
     const nextFetch = () => {
+      // The exact frames in view come first, so a screen at rest settles on crisp frames instead
+      // of a blend across neighbours that are still downloading.
+      for (const g of wanted) if (!requested[g]) return g;
       const p = progressRef.current.get();
       const current = shotIndexAt(p);
       const order = [...SHOTS.slice(current), ...SHOTS.slice(0, current).reverse()];
@@ -408,6 +424,7 @@ export function ScrollSequenceCanvas() {
       cancelled = true;
       resizeObserver.disconnect();
       if (raf !== null) cancelAnimationFrame(raf);
+      window.clearTimeout(settleTimer);
       drawNowRef.current = () => undefined;
       for (const bitmap of bitmaps) bitmap?.close();
     };

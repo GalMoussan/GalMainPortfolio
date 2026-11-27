@@ -11,7 +11,8 @@ export function HeroOverlay({ progress, reduceMotion }: { progress: MotionValue<
 
   return (
     <div className="pointer-events-none absolute inset-0 flex items-end px-[25px] pb-[calc(112px+env(safe-area-inset-bottom))] md:px-[100px] xl:px-[150px]">
-      <motion.div style={style} className="max-w-[600px] [text-shadow:0_1px_24px_rgba(20,21,29,0.45)]">
+      {/* Narrow column: keeps the copy left of the subject's glasses and hands in the opening shot. */}
+      <motion.div style={style} className="max-w-[540px] [text-shadow:0_1px_24px_rgba(20,21,29,0.45)]">
         <p className="mb-4 ml-[2px] font-sans text-[15px] font-medium tracking-[0.08em] text-[var(--green)]">
           Hi, my name is
         </p>
@@ -21,7 +22,7 @@ export function HeroOverlay({ progress, reduceMotion }: { progress: MotionValue<
         <h2 className="m-0 mt-3 font-sans text-[clamp(22px,3vw,34px)] font-semibold leading-[1.15] tracking-[-0.03em] text-white/85">
           I build things for the web — and teach others to build with AI.
         </h2>
-        <p className="mt-5 max-w-[520px] text-[16px] leading-[1.55] text-white/80 md:text-[18px]">
+        <p className="mt-5 max-w-[480px] text-[16px] leading-[1.55] text-white/80 md:text-[18px]">
           I&apos;m a fullstack developer and AI integration specialist. I lead AI and development at{' '}
           <a href="https://iasanorth.com" className="inline-link" target="_blank" rel="noreferrer">
             Yassa North
