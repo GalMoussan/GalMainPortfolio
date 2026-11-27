@@ -1,3 +1,6 @@
+import { SectionTitle } from './SectionTitle';
+import { CARD } from './styles';
+
 export function ComparisonDiff() {
   const comparisons = [
     {
@@ -29,50 +32,47 @@ export function ComparisonDiff() {
 
   return (
     <section id="vs-zapier" className="max-w-[1000px] mx-auto py-[100px]">
-      <h2 className="text-[var(--fz-heading)] font-semibold text-[var(--lightest-slate)] mb-12 text-center">
+      <SectionTitle eyebrow="The difference" centered>
         What you&apos;ll hear from &quot;AI consultants&quot; vs. what I actually build.
-      </h2>
+      </SectionTitle>
 
-      {/* Git-diff styled panel */}
-      <div className="border border-[var(--lightest-navy)] rounded bg-[var(--light-navy)] overflow-hidden">
-        {/* File header bar */}
-        <div className="bg-[var(--lightest-navy)] px-4 py-2 flex items-center justify-between">
-          <span className="font-mono text-[var(--light-slate)] text-xs">
-            system-architecture.diff
-          </span>
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-[var(--dark-slate)]" />
-            <div className="w-3 h-3 rounded-full bg-[var(--dark-slate)]" />
-            <div className="w-3 h-3 rounded-full bg-[var(--dark-slate)]" />
+      <div className={`${CARD} overflow-hidden`}>
+        {/* Panel header */}
+        <div className="flex items-center justify-between border-b border-[rgba(243,236,225,0.1)] px-6 py-3 md:px-8">
+          <span className="text-[12px] tracking-[0.04em] text-[var(--linen-faint)]">system-architecture.diff</span>
+          <div className="flex gap-2" aria-hidden="true">
+            <div className="h-2.5 w-2.5 rounded-full border border-[rgba(243,236,225,0.3)]" />
+            <div className="h-2.5 w-2.5 rounded-full border border-[rgba(243,236,225,0.3)]" />
+            <div className="h-2.5 w-2.5 rounded-full border border-[rgba(243,236,225,0.3)]" />
           </div>
         </div>
 
         {/* Comparison rows */}
-        <div className="p-6">
+        <div className="px-6 md:px-8">
           {comparisons.map((row, i) => (
             <div
               key={i}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 last:mb-0"
+              className="grid grid-cols-1 gap-3 border-t border-[rgba(243,236,225,0.1)] py-6 first:border-t-0 md:grid-cols-[160px_1fr_1fr] md:gap-6"
             >
               {/* Criterion */}
-              <div className="font-mono text-xs text-[var(--green)] font-semibold">
-                {row.criterion}
-              </div>
+              <div className="eyebrow pt-[3px]">{row.criterion}</div>
 
               {/* Typical (minus) */}
-              <div className="flex gap-2">
-                <span className="text-red-400 font-mono text-sm">-</span>
-                <span className="text-[var(--light-slate)] text-sm line-through opacity-80">
+              <div className="flex gap-3">
+                <span aria-hidden="true" className="text-[15px] text-[var(--linen-faint)]">
+                  −
+                </span>
+                <span className="text-[15px] leading-[1.55] text-[var(--linen-faint)] line-through decoration-[rgba(243,236,225,0.35)]">
                   {row.typical}
                 </span>
               </div>
 
               {/* Real (plus) */}
-              <div className="flex gap-2">
-                <span className="text-[var(--green)] font-mono text-sm">+</span>
-                <span className="text-[var(--lightest-slate)] text-sm font-medium">
-                  {row.real}
+              <div className="flex gap-3">
+                <span aria-hidden="true" className="text-[15px] text-[var(--amber)]">
+                  +
                 </span>
+                <span className="text-[15px] leading-[1.55] text-[var(--linen)]">{row.real}</span>
               </div>
             </div>
           ))}

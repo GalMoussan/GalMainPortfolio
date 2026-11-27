@@ -6,6 +6,7 @@ import { track } from '@vercel/analytics';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { baseFaqs } from '../_content/faqs';
 import type { FAQEntry } from '../_lib/verticals/types';
+import { SectionTitle } from './SectionTitle';
 
 type FAQProps = {
   additionalFaqs?: FAQEntry[];
@@ -36,18 +37,18 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
 
   return (
     <section id="faq" className="max-w-[900px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">Questions you&apos;re probably asking.</h2>
+      <SectionTitle eyebrow="FAQ">Questions you&apos;re probably asking.</SectionTitle>
 
-      <div className="space-y-8">
+      <div className="space-y-12">
         {groupedFaqs.map((group) => (
           <div key={group.category}>
             {/* Category heading */}
-            <h3 className="text-[var(--green)] font-semibold mb-4 text-lg">
+            <h3 className="eyebrow m-0 mb-3">
               {group.category}
             </h3>
 
             {/* Questions in this category */}
-            <div className="space-y-3">
+            <div className="border-b border-[rgba(243,236,225,0.1)]">
               {group.questions.map((faq) => {
                 const currentIndex = globalIndex++;
                 const isOpen = openIndex === currentIndex;
@@ -55,18 +56,18 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
                 return (
                   <div
                     key={currentIndex}
-                    className="border border-[var(--lightest-navy)] rounded overflow-hidden"
+                    className="border-t border-[rgba(243,236,225,0.1)]"
                   >
                     {/* Question button */}
                     <button
                       onClick={() => toggleFAQ(currentIndex, faq.question)}
-                      className="w-full text-left px-6 py-6 bg-[var(--light-navy)] hover:bg-[var(--lightest-navy)] transition-colors flex justify-between items-center gap-4"
+                      className="group w-full text-left py-5 flex justify-between items-center gap-6"
                       style={{ minHeight: '44px' }}
                     >
-                      <span className="text-[var(--lightest-slate)] font-medium">
+                      <span className="text-[17px] leading-[1.45] text-[var(--linen)] transition-colors group-hover:text-[var(--amber)]">
                         {faq.question}
                       </span>
-                      <span className="text-[var(--green)] text-xl flex-shrink-0">
+                      <span className="display text-[26px] leading-none text-[var(--amber)] flex-shrink-0">
                         {isOpen ? '−' : '+'}
                       </span>
                     </button>
@@ -81,8 +82,8 @@ export function FAQ({ additionalFaqs = [] }: FAQProps) {
                           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
-                          <div className="px-6 py-4 bg-[var(--navy)] border-t border-[var(--lightest-navy)]">
-                            <p className="text-[var(--slate)]">{faq.answer}</p>
+                          <div className="pb-6 pr-10">
+                            <p className="text-[15px] leading-[1.7] text-[var(--linen-dim)]">{faq.answer}</p>
                           </div>
                         </motion.div>
                       )}

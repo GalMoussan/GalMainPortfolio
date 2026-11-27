@@ -12,7 +12,7 @@ export default function AIIntegrationLayout({
     <>
       <a
         href="#content"
-        className="absolute -top-10 left-0 bg-[var(--green)] text-[var(--navy)] py-3 px-5 z-[100] font-mono text-[14px] focus:top-0 transition-all duration-200"
+        className="btn-primary absolute -top-16 left-4 z-[100] transition-all duration-200 focus:top-4"
       >
         Skip to Content
       </a>

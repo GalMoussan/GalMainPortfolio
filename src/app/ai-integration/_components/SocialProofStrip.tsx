@@ -69,11 +69,11 @@ function AnimatedStat({ value, label }: { value: string; label: string }) {
   }, [isNumeric, hasAnimated, targetNumber, prefersReducedMotion]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-3xl font-bold text-[var(--green)] font-mono">
+    <div ref={ref} className="border-t border-[rgba(243,236,225,0.1)] pt-4">
+      <div className="display text-[clamp(36px,3.4vw,48px)] leading-none text-[var(--amber)]">
         {isNumeric ? `${count}${suffix}` : value}
       </div>
-      <div className="text-xs text-[var(--slate)] mt-1">{label}</div>
+      <div className="mt-2 text-[13px] leading-[1.45] text-[var(--linen-faint)]">{label}</div>
     </div>
   );
 }
@@ -96,19 +96,17 @@ export function SocialProofStrip({ tools }: SocialProofStripProps) {
   };
 
   return (
-    <section id="proof" className="bg-[var(--light-navy)] py-12">
-      <div className="max-w-[1400px] mx-auto px-[25px] sm:px-[50px] lg:px-[100px]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <section id="proof" className="border-y border-[rgba(243,236,225,0.1)] py-14">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left 60% - Tool logos marquee */}
           <div className="lg:col-span-7">
-            <p className="text-[var(--slate)] text-xs font-mono mb-4 uppercase tracking-wide">
-              Technologies I work with
-            </p>
-            <div className="flex flex-wrap gap-6 items-center">
+            <p className="eyebrow mb-5">Technologies I work with</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 items-center">
               {tools.map((tool) => (
                 <span
                   key={tool}
-                  className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors font-mono text-sm"
+                  className="text-[15px] text-[rgba(94,231,255,0.78)]"
                 >
                   {toolNames[tool]}
                 </span>
@@ -118,7 +116,7 @@ export function SocialProofStrip({ tools }: SocialProofStripProps) {
 
           {/* Right 40% - Stats */}
           <div className="lg:col-span-5">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-8">
               {stats.map((stat, i) => (
                 <AnimatedStat key={i} value={stat.value} label={stat.label} />
               ))}

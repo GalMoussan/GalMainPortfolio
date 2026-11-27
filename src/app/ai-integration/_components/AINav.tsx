@@ -31,9 +31,9 @@ export function AINav() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrollDirection === 'down' && !isOpen ? '-translate-y-full' : 'translate-y-0'
-      }`}
+      } ${scrolled || isOpen ? 'border-b border-[rgba(243,236,225,0.08)]' : 'border-b border-transparent'}`}
       style={{
-        backgroundColor: scrolled || isOpen ? 'rgba(10, 25, 47, 0.95)' : 'rgba(10, 25, 47, 0.3)',
+        backgroundColor: scrolled || isOpen ? 'rgba(20, 21, 29, 0.92)' : 'rgba(20, 21, 29, 0.3)',
         backdropFilter: scrolled ? 'blur(10px)' : 'blur(5px)',
         boxShadow: scrolled ? '0 10px 30px -10px rgba(0, 0, 0, 0.7)' : 'none',
       }}
@@ -43,12 +43,12 @@ export function AINav() {
         <Logo />
 
         {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-[var(--light-slate)] hover:text-[var(--green)] transition-colors font-mono text-sm inline-flex items-center px-2"
+              className="text-[var(--linen-dim)] hover:text-[var(--amber)] focus-visible:text-[var(--amber)] transition-colors font-sans text-[14px] inline-flex items-center px-2"
               style={{ minHeight: '44px' }}
             >
               {link.name}
@@ -57,17 +57,14 @@ export function AINav() {
         </div>
 
         {/* Desktop CTA button */}
-        <button
-          onClick={() => openBookCall('nav')}
-          className="hidden md:block outline-button py-3 px-5"
-        >
+        <button onClick={() => openBookCall('nav')} className="hidden md:inline-flex btn-chip">
           Book free call
         </button>
 
         {/* Mobile menu button: a solid pill like the home page nav, visible over any section */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(215,227,238,0.38)] bg-[rgba(12,16,22,0.86)] text-[var(--lightest-slate)] shadow-[0_0_0_1px_rgba(94,231,255,0.12),0_10px_30px_rgba(6,8,12,0.35)]"
+          className="md:hidden flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(243,236,225,0.3)] bg-[rgba(12,16,22,0.86)] text-[var(--linen)] shadow-[0_10px_30px_rgba(6,8,12,0.35)]"
           aria-label="Toggle menu"
           aria-expanded={isOpen}
         >
@@ -90,14 +87,14 @@ export function AINav() {
     {/* Mobile menu. Rendered outside the header: the header's transform and backdrop-filter would
         make it the containing block for this fixed panel, collapsing it to the header's height. */}
     {isOpen && (
-      <div className="md:hidden fixed inset-x-0 bottom-0 top-[var(--nav-height)] z-40 overflow-y-auto bg-[rgba(10,14,20,0.97)]">
-        <div className="flex flex-col items-stretch gap-2 px-6 py-8">
+      <div className="md:hidden fixed inset-x-0 bottom-0 top-[var(--nav-height)] z-40 overflow-y-auto bg-[rgba(20,21,29,0.97)]">
+        <div className="flex flex-col items-stretch px-6 py-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 font-mono text-lg text-[var(--lightest-slate)] transition-colors hover:text-[var(--green)]"
+              className="display border-b border-[rgba(243,236,225,0.1)] py-4 text-[26px] leading-[1.15] text-[var(--linen)] transition-colors hover:text-[var(--amber)] focus-visible:text-[var(--amber)]"
             >
               {link.name}
             </a>
@@ -107,7 +104,7 @@ export function AINav() {
               openBookCall('nav');
               setIsOpen(false);
             }}
-            className="mt-4 rounded-full bg-[var(--green)] px-6 py-4 font-mono text-base font-semibold text-[var(--navy)]"
+            className="btn-primary mt-8 justify-center"
           >
             Book free call
           </button>

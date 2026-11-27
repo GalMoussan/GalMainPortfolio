@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { KineticHeading } from '@/components/ui/KineticHeading';
 import type { VerticalConfig } from '../_lib/verticals/types';
 import { openBookCall } from '../_lib/cta';
 import { BeforeAfterDemo } from './BeforeAfterDemo';
@@ -28,35 +29,33 @@ export function Hero({ config }: HeroProps) {
 
   return (
     <section id="hero" className="min-h-screen flex items-center py-[100px]">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full items-center">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 w-full items-center">
         {/* Copy column - left on desktop, top on mobile */}
-        <div className="md:col-span-7">
-          {/* Pre-headline badge */}
-          <div className="inline-block mb-6 px-4 py-2 border border-[var(--green)] rounded bg-[var(--green-tint)]">
-            <p className="font-mono text-[13px] text-[var(--green)] tracking-wide">
-              {config.hero.preHeadline}
-            </p>
-          </div>
+        <div className="md:col-span-7 min-w-0">
+          {/* Pre-headline label */}
+          <p className="eyebrow mb-6 leading-[1.8]">{config.hero.preHeadline}</p>
 
           {/* Pain question */}
-          <p className="text-xl text-[var(--light-slate)] mb-4">
+          <p className="display italic text-[clamp(19px,1.8vw,24px)] leading-[1.35] text-[var(--linen-dim)] mb-5">
             {config.hero.painQuestion}
           </p>
 
           {/* Main headline */}
-          <h1 className="text-[var(--fz-hero)] font-bold leading-tight mb-6">
-            <span className="text-[var(--white)]">{config.hero.headlineLine1}</span>
-            <br />
-            <span className="text-[var(--green)]">{config.hero.headlineLine2}</span>
-          </h1>
+          <KineticHeading
+            as="h1"
+            tracking={-0.03}
+            className="display m-0 mb-7 text-[clamp(40px,5.5vw,80px)] leading-[1] tracking-[-0.03em]"
+          >
+            {`${config.hero.headlineLine1} ${config.hero.headlineLine2}`}
+          </KineticHeading>
 
           {/* Subheadline */}
-          <p className="text-lg text-[var(--slate)] mb-6 max-w-[600px]">
+          <p className="text-[17px] leading-[1.65] text-[var(--linen-dim)] mb-6 max-w-[600px]">
             {config.hero.subheadline}
           </p>
 
           {/* Cycling text with fade animation */}
-          <div className="h-[20px] mb-6 relative">
+          <div className="h-[28px] mb-6 relative">
             <AnimatePresence mode="wait">
               <motion.p
                 key={cyclingIndex}
@@ -64,7 +63,7 @@ export function Hero({ config }: HeroProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={prefersReducedMotion ? {} : { opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="font-mono text-[var(--green)] text-sm absolute"
+                className="display italic text-[20px] leading-[28px] text-[var(--amber)] absolute"
               >
                 {config.hero.cyclingTexts[cyclingIndex]}
               </motion.p>
@@ -72,29 +71,23 @@ export function Hero({ config }: HeroProps) {
           </div>
 
           {/* Trust micro-badges */}
-          <p className="text-sm text-[var(--slate)] mb-8">
+          <p className="text-[14px] text-[var(--linen-faint)] mb-9">
             Free 30-min call · Fixed prices · Built in 2–4 weeks · You own it forever
           </p>
 
           {/* Primary CTA */}
-          <div className="flex flex-col sm:flex-row gap-4 items-start">
-            <button
-              onClick={() => openBookCall('hero')}
-              className="bg-[var(--green)] text-[var(--navy)] px-8 py-4 rounded font-mono text-sm font-semibold hover:bg-[var(--green)] hover:opacity-90 transition-opacity"
-            >
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-5">
+            <button onClick={() => openBookCall('hero')} className="btn-primary">
               Book free 30-min call →
             </button>
-            <a
-              href="#how-it-works"
-              className="inline-link text-[var(--green)] py-4"
-            >
+            <a href="#how-it-works" className="btn-link">
               Or see how it works ↓
             </a>
           </div>
         </div>
 
         {/* Demo column - right on desktop, bottom on mobile */}
-        <div className="md:col-span-5">
+        <div className="md:col-span-5 min-w-0">
           <BeforeAfterDemo scenarios={config.demoScenarios} />
         </div>
       </div>

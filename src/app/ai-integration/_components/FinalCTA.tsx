@@ -1,26 +1,31 @@
 'use client';
 
 import { openBookCall } from '../_lib/cta';
+import { SectionTitle } from './SectionTitle';
+import { CARD } from './styles';
 
 export function FinalCTA() {
   return (
-    <section id="final-cta" className="bg-[var(--green-tint)] border-t-2 border-b-2 border-[var(--green)] py-20">
-      <div className="max-w-[800px] mx-auto text-center px-[25px]">
-        <h2 className="text-[var(--fz-heading)] font-bold text-[var(--lightest-slate)] mb-4">
+    <section id="final-cta" className="max-w-[1100px] mx-auto py-[80px]">
+      <div className={`${CARD} relative overflow-hidden px-6 py-16 text-center sm:px-12 md:py-20`}>
+        {/* Soft amber glow behind the headline */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-0 h-[260px] w-[min(640px,100%)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--amber-tint)] blur-[80px]"
+        />
+        <SectionTitle eyebrow="Let's talk" centered className="relative mb-5">
           Stop competing with companies that have AI. Start being one.
-        </h2>
-        <p className="text-[var(--light-slate)] text-lg mb-8">
+        </SectionTitle>
+        <p className="relative text-[17px] leading-[1.6] text-[var(--linen-dim)] mb-9">
           30 minutes. Free. I&apos;ll tell you honestly what&apos;s possible.
         </p>
 
-        <button
-          onClick={() => openBookCall('final_cta')}
-          className="inline-flex items-center gap-3 bg-[var(--green)] text-[var(--navy)] px-8 py-4 rounded font-mono text-sm font-semibold hover:opacity-90 transition-opacity"
-        >
+        <button onClick={() => openBookCall('final_cta')} className="btn-primary relative">
           {/* WhatsApp icon */}
           <svg
-            width="24"
-            height="24"
+            width="18"
+            height="18"
+            aria-hidden="true"
             viewBox="0 0 24 24"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +35,7 @@ export function FinalCTA() {
           Message me on WhatsApp →
         </button>
 
-        <p className="text-[var(--slate)] text-sm mt-4">
+        <p className="relative text-[13px] text-[var(--linen-faint)] mt-5">
           Usually replies within a few hours.
         </p>
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { SectionTitle } from './SectionTitle';
 
 const steps = [
   {
@@ -38,55 +39,40 @@ export function Process() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   return (
     <section id="how-it-works" className="max-w-[1000px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">How I work.</h2>
+      <SectionTitle eyebrow="How it works">How I work.</SectionTitle>
 
       {/* Desktop: horizontal timeline, Mobile: vertical stack */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-5">
         {steps.map((step, i) => (
           <motion.div
             key={step.number}
-            className="relative p-4 rounded-lg transition-colors cursor-default"
+            className="relative p-5 rounded-[20px] border transition-colors cursor-default"
             onHoverStart={() => setHoveredIndex(i)}
             onHoverEnd={() => setHoveredIndex(null)}
             whileHover={{ y: -4 }}
             style={{
-              backgroundColor: hoveredIndex === i ? 'var(--lightest-navy)' : 'transparent',
+              backgroundColor: hoveredIndex === i ? 'rgba(36, 38, 51, 0.72)' : 'transparent',
+              borderColor: hoveredIndex === i ? 'rgba(243, 236, 225, 0.08)' : 'transparent',
             }}
           >
-            {/* Connector line - desktop only */}
-            {i < steps.length - 1 && (
-              <div className="hidden md:block absolute top-10 left-full w-full h-[2px] bg-[var(--lightest-navy)]" />
-            )}
-
-            {/* Step number */}
-            <motion.div
-              className="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--light-navy)] border-2 mb-4 z-10"
-              style={{
-                borderColor: hoveredIndex === i ? 'var(--green)' : 'var(--lightest-navy)',
-              }}
-            >
-              <span
-                className="font-mono font-bold"
-                style={{
-                  color: hoveredIndex === i ? 'var(--green)' : 'var(--slate)',
-                }}
-              >
-                {step.number}
-              </span>
-            </motion.div>
+            {/* Step number, with a hairline running on to the next step */}
+            <div className="mb-5 flex items-center gap-4">
+              <span className="display text-[40px] italic leading-none text-[var(--amber)]">{step.number}</span>
+              <span aria-hidden="true" className="h-px flex-1 bg-[rgba(243,236,225,0.1)]" />
+            </div>
 
             {/* Title */}
-            <h3 className="text-[var(--lightest-slate)] text-xl font-semibold mb-1">
+            <h3 className="display m-0 mb-1.5 text-[24px] leading-[1.15]">
               {step.title}
             </h3>
 
             {/* Subtitle */}
-            <p className="text-[var(--green)] font-mono text-xs mb-3">
+            <p className="text-[13px] text-[var(--amber)] mb-3">
               {step.subtitle}
             </p>
 
             {/* Description */}
-            <p className="text-[var(--slate)] text-sm mb-3">
+            <p className="text-[14px] leading-[1.6] text-[var(--linen-dim)] mb-3">
               {step.description}
             </p>
 
@@ -100,7 +86,7 @@ export function Process() {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <p className="text-[var(--green)] text-xs font-mono border-l-2 border-[var(--green)] pl-3 mt-2">
+              <p className="text-[13px] leading-[1.55] text-[var(--linen)] border-l border-[var(--amber)] pl-3 mt-2">
                 {step.detail}
               </p>
             </motion.div>

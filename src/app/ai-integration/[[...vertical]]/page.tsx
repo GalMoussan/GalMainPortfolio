@@ -13,6 +13,7 @@ import { CaseStudies } from '../_components/CaseStudies';
 import { AboutGal } from '../_components/AboutGal';
 import { FAQ } from '../_components/FAQ';
 import { FinalCTA } from '../_components/FinalCTA';
+import { SectionTitle } from '../_components/SectionTitle';
 
 type PageProps = {
   params: { vertical?: string[] };
@@ -121,7 +122,9 @@ export default function AIIntegrationPage({ params }: PageProps) {
         id="demo-detail"
         className="max-w-[1200px] mx-auto py-[100px]"
       >
-        <h2 className="numbered-heading text-center mb-12">See it in action.</h2>
+        <SectionTitle eyebrow="Live example" centered>
+          See it in action.
+        </SectionTitle>
         <BeforeAfterDemo scenarios={config.demoScenarios} />
       </ScrollRevealSection>
 

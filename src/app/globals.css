@@ -93,7 +93,7 @@
   }
 
   :focus-visible {
-    outline: 2px dashed var(--green);
+    outline: 2px solid var(--amber);
     outline-offset: 3px;
   }
 
@@ -104,102 +104,11 @@
 
   a:hover,
   a:focus-visible {
-    color: var(--green);
+    color: var(--amber);
   }
 }
 
 @layer components {
-  .inline-link {
-    color: var(--green);
-    position: relative;
-    display: inline-block;
-  }
-
-  .inline-link::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 1px;
-    position: absolute;
-    bottom: 0.1em;
-    background-color: var(--green);
-    opacity: 0.5;
-    transition: var(--transition);
-  }
-
-  .inline-link:hover::after {
-    width: 100%;
-  }
-
-  .numbered-heading,
-  .section-title {
-    display: flex;
-    align-items: center;
-    font-family: var(--font-sans);
-    font-size: clamp(28px, 4vw, var(--fz-heading));
-    color: var(--lightest-slate);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    white-space: nowrap;
-    margin: 10px 0 40px;
-  }
-
-  .numbered-heading::before {
-    counter-increment: section 1;
-    content: "0" counter(section) ".";
-    color: var(--green);
-    font-family: var(--font-sans);
-    font-size: 0.55em;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    margin-right: 12px;
-    position: relative;
-    bottom: 2px;
-  }
-
-  .numbered-heading::after,
-  .section-title::after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: var(--lightest-navy);
-    flex-grow: 1;
-    margin-left: 20px;
-  }
-
-  /* Mobile responsive for numbered headings */
-  @media (max-width: 768px) {
-    .numbered-heading,
-    .section-title {
-      white-space: normal;
-      font-size: 24px;
-      flex-wrap: wrap;
-    }
-
-    .numbered-heading::before {
-      font-size: 16px;
-      margin-right: 8px;
-    }
-
-    .numbered-heading::after,
-    .section-title::after {
-      margin-left: 10px;
-      min-width: 50px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .numbered-heading,
-    .section-title {
-      font-size: 20px;
-    }
-
-    .numbered-heading::after,
-    .section-title::after {
-      display: none;
-    }
-  }
-
   .bullet-list li {
     position: relative;
     padding-left: 30px;

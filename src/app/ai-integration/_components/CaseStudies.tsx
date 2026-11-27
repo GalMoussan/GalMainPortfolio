@@ -1,4 +1,6 @@
 import { caseStudies } from '../_content/case-studies';
+import { SectionTitle } from './SectionTitle';
+import { CARD } from './styles';
 
 type CaseStudiesProps = {
   slugs: string[];
@@ -9,42 +11,35 @@ export function CaseStudies({ slugs }: CaseStudiesProps) {
 
   return (
     <section id="case-studies" className="max-w-[1200px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">Real things I&apos;ve built.</h2>
+      <SectionTitle eyebrow="Case studies">Real things I&apos;ve built.</SectionTitle>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {featured.map((project) => (
-          <div
-            key={project.slug}
-            className="noteworthy-card bg-[var(--light-navy)] border border-[var(--lightest-navy)] rounded p-6"
-          >
+        {featured.map((project, i) => (
+          <div key={project.slug} className={`${CARD} flex flex-col p-7`}>
             {/* Project name */}
-            <h3 className="text-[var(--lightest-slate)] text-xl font-bold mb-3">
-              {project.title}
-            </h3>
+            <div className="mb-5 flex items-baseline gap-3">
+              <span className="display text-[16px] italic text-[var(--amber)]">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="display m-0 text-[24px] leading-[1.15]">{project.title}</h3>
+            </div>
 
             {/* Problem */}
-            <p className="text-[var(--light-slate)] text-sm mb-2">
-              <span className="font-semibold text-[var(--green)]">Problem: </span>
+            <p className="text-[14px] leading-[1.6] text-[var(--linen-dim)] mb-3">
+              <span className="font-medium text-[var(--amber)]">Problem: </span>
               {project.problem}
             </p>
 
             {/* Solution */}
-            <p className="text-[var(--slate)] text-sm mb-4">
-              <span className="font-semibold text-[var(--green)]">Solution: </span>
+            <p className="text-[14px] leading-[1.6] text-[var(--linen-dim)] mb-6">
+              <span className="font-medium text-[var(--amber)]">Solution: </span>
               {project.solution}
             </p>
 
             {/* Tech stack */}
-            <div className="flex flex-wrap gap-2">
+            <ul className="mt-auto flex flex-wrap gap-x-3 gap-y-1 border-t border-[rgba(243,236,225,0.1)] pt-4 text-[12px] text-[rgba(94,231,255,0.78)]">
               {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="font-mono text-xs text-[var(--light-slate)] bg-[var(--lightest-navy)] px-2 py-1 rounded"
-                >
-                  {tech}
-                </span>
+                <li key={tech}>{tech}</li>
               ))}
-            </div>
+            </ul>
           </div>
         ))}
       </div>

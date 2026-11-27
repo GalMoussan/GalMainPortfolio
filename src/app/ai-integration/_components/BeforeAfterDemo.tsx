@@ -83,19 +83,19 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
   };
 
   return (
-    <div className="bg-[var(--light-navy)] border border-[var(--lightest-navy)] rounded overflow-hidden">
+    <div className="rounded-[22px] border border-[rgba(243,236,225,0.08)] bg-[rgba(36,38,51,0.72)] overflow-hidden">
       {/* Top strip */}
-      <div className="flex items-center justify-between px-6 py-3 bg-[var(--lightest-navy)] border-b border-[var(--navy)]">
-        <span className="font-mono text-xs text-[var(--light-slate)]">
+      <div className="flex items-center justify-between px-6 py-3 border-b border-[rgba(243,236,225,0.1)]">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--linen-faint)]">
           Illustrative example
         </span>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-[var(--amber)] animate-pulse" />
         </div>
       </div>
 
       {/* Scenario tabs */}
-      <div className="flex border-b border-[var(--lightest-navy)]">
+      <div className="flex border-b border-[rgba(243,236,225,0.1)]">
         {scenarios.map((scenario, i) => (
           <button
             key={scenario.id}
@@ -103,10 +103,10 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
               setActiveIndex(i);
               track('scenario_tab_switch', { scenario: scenario.id });
             }}
-            className={`flex-1 py-3 px-4 font-mono text-xs transition-colors ${
+            className={`-mb-px min-h-[44px] min-w-0 flex-1 border-b-2 px-3 py-3 font-sans text-[13px] leading-[1.3] transition-colors duration-200 ease-custom ${
               i === activeIndex
-                ? 'text-[var(--lightest-slate)] border-b-2 border-[var(--green)] bg-[var(--navy)]'
-                : 'text-[var(--slate)] hover:text-[var(--light-slate)] hover:bg-[var(--navy)]'
+                ? 'border-[var(--amber)] text-[var(--linen)]'
+                : 'border-transparent text-[var(--linen-faint)] hover:text-[var(--linen)]'
             }`}
           >
             {scenario.label}
@@ -160,10 +160,10 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
           aria-label="Adjust comparison slider"
         >
           {/* Handle bar */}
-          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-1 bg-[var(--green)]" />
+          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-[var(--linen)]" />
           {/* Handle circle */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-[var(--green)] flex items-center justify-center shadow-lg">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" strokeWidth="2">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[var(--linen)] flex items-center justify-center shadow-[0_0_0_5px_var(--amber-tint),0_10px_30px_rgba(6,8,12,0.45)]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1c1b20" strokeWidth="1.75">
               <path d="M15 18l-6-6 6-6" />
               <path d="M9 18l6-6-6-6" />
             </svg>
@@ -176,9 +176,9 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
         <motion.div
           initial={{ opacity: 1 }}
           animate={{ opacity: hasInteracted ? 0 : 1 }}
-          className="px-6 py-3 bg-[var(--lightest-navy)] border-t border-[var(--navy)] text-center"
+          className="px-6 py-3 border-t border-[rgba(243,236,225,0.1)] text-center"
         >
-          <p className="text-xs text-[var(--slate)] font-mono">
+          <p className="text-[12px] tracking-[0.04em] text-[var(--linen-faint)]">
             ← Drag to compare →
           </p>
         </motion.div>
@@ -189,23 +189,23 @@ export function BeforeAfterDemo({ scenarios }: BeforeAfterDemoProps) {
 
 function BeforeSide({ scenario }: { scenario: DemoScenario }) {
   return (
-    <div className="h-full p-8 bg-[var(--navy)] relative">
+    <div className="h-full px-6 pb-6 pt-12 md:px-8 md:pb-8 bg-[#16171f] relative">
       {/* Copy overlay */}
-      <div className="absolute top-4 left-4">
-        <p className="text-xs font-mono text-red-400 opacity-70">
+      <div className="absolute top-4 left-6 md:left-8">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--linen-faint)]">
           Manual · Slow · Errors
         </p>
       </div>
 
       <div className="h-full flex flex-col justify-between">
         <div>
-          <div className="text-[var(--light-slate)] font-semibold mb-4 text-sm">
+          <div className="display text-[20px] leading-[1.2] text-[var(--linen-dim)] mb-4">
             {scenario.before.title}
           </div>
           <ul className="space-y-3">
             {scenario.before.bullets.map((bullet, i) => (
-              <li key={i} className="text-xs text-[var(--slate)] flex items-start gap-2">
-                <span className="text-red-400 mt-0.5">✗</span>
+              <li key={i} className="text-[13px] leading-[1.5] text-[var(--linen-faint)] flex items-start gap-2.5">
+                <span aria-hidden="true" className="text-[var(--linen-faint)]">✗</span>
                 <span>{bullet}</span>
               </li>
             ))}
@@ -213,11 +213,11 @@ function BeforeSide({ scenario }: { scenario: DemoScenario }) {
         </div>
 
         {scenario.before.stat && (
-          <div className="mt-4 pt-4 border-t border-[var(--lightest-navy)]">
-            <p className="text-xs text-[var(--slate)] mb-1">
+          <div className="mt-4 pt-4 border-t border-[rgba(243,236,225,0.1)]">
+            <p className="text-[12px] text-[var(--linen-faint)] mb-1">
               {scenario.before.stat.label}
             </p>
-            <p className="text-2xl font-bold text-[var(--slate)] font-mono">
+            <p className="display text-[30px] leading-none text-[var(--linen-faint)]">
               {scenario.before.stat.value}
             </p>
           </div>
@@ -270,17 +270,17 @@ function AfterSide({
   }, [scenario.id, scenario.after.stat?.value, prefersReducedMotion]);
 
   return (
-    <div className="h-full p-8 bg-[var(--light-navy)] relative">
-      {/* Copy overlay */}
-      <div className="absolute top-4 right-4">
-        <p className="text-xs font-mono text-[var(--green)]">
+    <div className="h-full px-6 pb-6 pt-12 md:px-8 md:pb-8 bg-[#1e2029] relative">
+      {/* Copy overlay: the technical side keeps a terminal voice */}
+      <div className="absolute top-4 right-6 md:right-8">
+        <p className="text-[11px] font-mono text-[var(--green)]">
           Autonomous · 24/7 · Logged
         </p>
       </div>
 
       <div className="h-full flex flex-col justify-between">
         <div>
-          <div className="text-[var(--green)] font-semibold mb-4 text-sm">
+          <div className="display text-[20px] leading-[1.2] text-[var(--linen)] mb-4">
             {scenario.after.title}
           </div>
 
@@ -293,11 +293,11 @@ function AfterSide({
 
         <div className="space-y-3">
           {scenario.after.stat && (
-            <div className="pt-4 border-t border-[var(--green)] border-opacity-30">
-              <p className="text-xs text-[var(--slate)] mb-1">
+            <div className="pt-4 border-t border-[rgba(243,236,225,0.1)]">
+              <p className="text-[12px] text-[var(--linen-faint)] mb-1">
                 {scenario.after.stat.label}
               </p>
-              <p className="text-2xl font-bold text-[var(--green)] font-mono">
+              <p className="display text-[30px] leading-none text-[var(--amber)]">
                 {scenario.after.stat.value.replace(/\d+/, String(counter))}
               </p>
             </div>
@@ -306,7 +306,7 @@ function AfterSide({
           {scenario.after.statusLabel && (
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--green)] animate-pulse" />
-              <p className="text-xs font-mono text-[var(--green)]">
+              <p className="text-[11px] font-mono text-[var(--green)]">
                 {scenario.after.statusLabel}
               </p>
             </div>
@@ -337,8 +337,8 @@ function WorkflowDiagram({
       {stepNames.map((step, i) => (
         <div key={i} className="flex items-center gap-2">
           {/* Node */}
-          <div className="flex-shrink-0 px-3 py-1.5 rounded bg-[var(--navy)] border border-[var(--green)] border-opacity-50">
-            <span className="text-xs text-[var(--green)] font-mono">{step}</span>
+          <div className="flex-shrink-0 px-3 py-1.5 rounded-full bg-[rgba(12,16,22,0.6)] border border-[rgba(94,231,255,0.35)]">
+            <span className="text-[11px] text-[var(--green)] font-mono">{step}</span>
           </div>
 
           {/* Arrow with animated dot */}

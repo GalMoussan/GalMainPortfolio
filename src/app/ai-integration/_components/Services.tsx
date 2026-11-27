@@ -1,4 +1,6 @@
 import type { VerticalConfig } from '../_lib/verticals/types';
+import { SectionTitle } from './SectionTitle';
+import { CARD, DASH_ITEM } from './styles';
 
 type ServicesProps = {
   config: VerticalConfig;
@@ -53,54 +55,59 @@ const services = [
 export function Services({ config }: ServicesProps) {
   return (
     <section id="what-i-build" className="max-w-[1200px] mx-auto py-[100px]">
-      <h2 className="numbered-heading">What I build for you.</h2>
-      <p className="text-[var(--slate)] text-lg mb-12 text-center">
+      <SectionTitle eyebrow="Services & pricing" centered className="mb-5">
+        What I build for you.
+      </SectionTitle>
+      <p className="text-[17px] leading-[1.6] text-[var(--linen-dim)] mb-14 text-center">
         Three fixed-price packages. One-time payment. You own it forever.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         {services.map((service, i) => (
           <div
             key={service.name}
-            className="noteworthy-card bg-[var(--light-navy)] border border-[var(--lightest-navy)] rounded p-6 relative"
+            className={`${CARD} relative p-7 ${service.badge ? '!border-[rgba(244,165,65,0.45)]' : ''}`}
           >
             {/* Badge */}
             {service.badge && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[var(--green)] text-[var(--navy)] px-3 py-1 rounded font-mono text-xs font-semibold">
+              <div className="absolute -top-3 left-7 rounded-full bg-[var(--amber)] px-3 py-1.5 text-[10.5px] font-semibold uppercase leading-none tracking-[0.18em] text-[#1c1b20]">
                 {service.badge}
               </div>
             )}
 
             {/* Service name */}
-            <h3 className="text-[var(--lightest-slate)] text-xl font-semibold mb-4">
-              {service.name}
-            </h3>
+            <div className="mb-5 flex items-baseline gap-3">
+              <span className="display text-[16px] italic text-[var(--amber)]">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="display m-0 text-[24px] leading-[1.15]">{service.name}</h3>
+            </div>
 
             {/* Dual currency pricing */}
-            <div className="mb-6">
-              <div className="text-4xl font-bold text-[var(--green)] font-mono">
+            <div className="mb-6 border-b border-[rgba(243,236,225,0.1)] pb-6">
+              <div className="display text-[clamp(40px,3.6vw,52px)] leading-none tracking-[-0.03em]">
                 ${service.priceUSD.toLocaleString()}{service.suffix || ''}
               </div>
-              <div className="text-sm text-[var(--slate)] font-mono mt-1">
+              <div className="mt-2 text-[13px] text-[var(--linen-faint)]">
                 ₪{service.priceILS.toLocaleString()} ILS
               </div>
             </div>
 
             {/* Who it's for */}
-            <p className="text-[var(--light-slate)] text-sm italic mb-4 border-l-2 border-[var(--green)] pl-3">
+            <p className="display italic text-[18px] leading-[1.4] text-[var(--linen)] mb-4">
               {service.whoFor}
             </p>
 
             {/* Example from config */}
-            <p className="text-[var(--slate)] text-sm mb-4">
-              <span className="font-semibold text-[var(--lightest-slate)]">Example: </span>
+            <p className="text-[14px] leading-[1.6] text-[var(--linen-dim)] mb-5">
+              <span className="font-medium text-[var(--amber)]">Example: </span>
               {i === 0 ? config.serviceExamples.starter : i === 1 ? config.serviceExamples.business : config.serviceExamples.full}
             </p>
 
             {/* Features */}
-            <ul className="bullet-list space-y-2">
+            <ul className="m-0 list-none space-y-2.5 p-0">
               {service.features.map((feature) => (
-                <li key={feature}>{feature}</li>
+                <li key={feature} className={DASH_ITEM}>
+                  {feature}
+                </li>
               ))}
             </ul>
           </div>
@@ -108,7 +115,7 @@ export function Services({ config }: ServicesProps) {
       </div>
 
       {/* Footer disclaimer */}
-      <p className="text-[var(--slate)] text-sm text-center max-w-[800px] mx-auto">
+      <p className="text-[14px] leading-[1.6] text-[var(--linen-faint)] text-center max-w-[800px] mx-auto">
         All packages include hosting guidance. Ongoing hosting: $30–200/month (₪100–700 ILS) paid directly to your cloud provider, not to me.
       </p>
     </section>
