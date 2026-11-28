@@ -126,28 +126,6 @@
     line-height: 26px;
   }
 
-  .outline-button {
-    color: var(--green);
-    background-color: rgba(215, 227, 238, 0.06);
-    border: 1px solid rgba(215, 227, 238, 0.55);
-    border-radius: 999px;
-    font-size: var(--fz-sm);
-    font-family: var(--font-sans);
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    line-height: 1;
-    text-decoration: none;
-    cursor: pointer;
-    transition: var(--transition), box-shadow 0.3s var(--easing);
-    box-shadow: 0 0 0 0 transparent;
-  }
-
-  .outline-button:hover {
-    background-color: var(--green-tint);
-    color: var(--green);
-    box-shadow: 0 0 24px var(--cyan-bloom);
-  }
-
   .site-logo {
     position: relative;
     display: inline-flex;
